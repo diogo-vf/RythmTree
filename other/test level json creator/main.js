@@ -1,23 +1,26 @@
 "use strict";
+var stopDraw = false;
 var isRunning = false;
-var resumeTimeStamp = 0;
 var lastFrameStamp = 0;
 
 var sequence = [];
-var startTimeStamp = 0;
 var currentKeys = {};
 
 var song = new Audio();
 var songDuration = 0;
 
+var rythmDisplayContext = false;
+
 document.addEventListener("DOMContentLoaded", boot);
 function boot(){
     console.log("boot");
+    //elems
+    rythmDisplayContext = rythmDisplay.getContext('2d');
     //EVENTS
     //audio
-    song.addEventListener("ended", stop);
+    song.addEventListener("ended", songEnded);
     song.addEventListener("loadeddata", songLoaded);
-    selectSong("songs/music2.mp3");
+    selectSong("songs/music1.mp3");
     //keys
     document.body.addEventListener("keydown", keyDown);
     document.body.addEventListener("keyup", keyUp);
@@ -28,18 +31,22 @@ function boot(){
     //draw
     draw();
 }
+
+//EVENTS
 function keyDown(evt){
     if(currentKeys[evt.keyCode] || !isRunning){
         return;
     } 
-    currentKeys[evt.keyCode] = evt;
+    currentKeys[evt.keyCode] = {
+        time: getSongTime()
+    };
 }
 function keyUp(evt){
     if(!currentKeys[evt.keyCode]){
         console.warn("no prior keydown!");
         return;
     }
-    var downEvent = currentKeys[evt.keyCode];
+    var downObject = currentKeys[evt.keyCode];
     //remove from currentKeys
     currentKeys[evt.keyCode] = false;
 
@@ -49,10 +56,10 @@ function keyUp(evt){
 
     //add to sequence
     sequence.push({
-        time: downEvent.timeStamp - startTimeStamp,
+        time: downObject.time,
         //key: evt.keyCode,
         key: evt.key,
-        duration: evt.timeStamp - downEvent.timeStamp
+        duration: getSongTime() - downObject.time
     });
 
     //display
@@ -62,6 +69,10 @@ function songLoaded(evt){
     songDuration = song.duration * 1000;
     timeLeftDisplay.innerText = getSecString(songDuration);
 }
+function songEnded(evt){
+    stop();
+}
+//METHODS
 function selectSong(songName){
     var playbackRate = song.playbackRate;
     song.src = songName;
@@ -81,14 +92,12 @@ async function start(evt){
 
     await song.play();
 
-    startTimeStamp = evt.timeStamp - resumeTimeStamp;
     isRunning = true;
 }
 function pause(evt){
     if(!isRunning){
         return;
     }
-    resumeTimeStamp = evt.timeStamp - startTimeStamp;
     isRunning = false;
 
     song.pause();
@@ -99,44 +108,62 @@ function pause(evt){
 }
 function reset(evt){
     stop(evt);
+    
+    //go to begining
+    var playbackRate = song.playbackRate;
+    song.load();
+    song.playbackRate = playbackRate;
 
-    resumeTimeStamp = 0;
     sequence = [];
     currentKeys = {};
 
-    timeDisplay.innerText = "0s";
     jsonPreview.innerText = "[]"
-    timeLeftDisplay.innerText = getSecString(songDuration);
 }
 function stop(evt){
     isRunning = false;
 
     song.pause();
-    song.fastSeek(0);
 
     startBtn.innerText = "Start";
     pauseBtn.classList.add("none");
     startBtn.classList.remove("none");
 }
 function draw(timeStamp){
+    if(stopDraw){
+        return;
+    }
+    var timeFactor = (timeStamp - lastFrameStamp)/1000;
     //fps
-    fpsDisplay.innerText = Math.round(1000/(timeStamp - lastFrameStamp)) + "fps";
+    fpsDisplay.innerText = Math.round(1/timeFactor) + "fps";
     lastFrameStamp = timeStamp;
     //global time
     globalTimeDisplay.innerText = getSecString(timeStamp);
 
-    if(isRunning){
-        var levelTime = timeStamp - startTimeStamp;
-        //sequenceTime
-        timeDisplay.innerText = getSecString(levelTime);
-        //timeLeft
-        var timeLeft = songDuration - levelTime;
-        timeLeftDisplay.innerText = getSecString((timeLeft > 0)?timeLeft:0);
-    }
+    var levelTime = getSongTime();
+    //sequenceTime
+    timeDisplay.innerText = getSecString(levelTime);
+    //timeLeft
+    timeLeftDisplay.innerText = getSecString(songDuration - levelTime);
+
+    drawRythm(timeFactor);
+
     //again
     requestAnimationFrame(draw);
 }
+function drawRythm(timeFactor){
+    var width = rythmDisplay.parentElement.clientWidth;
+    var height = rythmDisplay.height;
+    //size
+    rythmDisplay.width = width;
+    //clear
+    rythmDisplayContext.clearRect(0, 0, width, height);
+    //draw center
+}
+
+function getSongTime(){
+    return Math.round(song.currentTime * 1000);
+}
 
 function getSecString(msTime){
-    return Math.floor(msTime/10)/100 + "s";
+    return Math.round(msTime/10)/100 + "s";
 }
