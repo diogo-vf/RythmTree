@@ -7,7 +7,7 @@ var sequence = [];
 var startTimeStamp = 0;
 var currentKeys = {};
 
-var song = false;
+var song = new Audio();
 var songDuration = 0;
 
 document.addEventListener("DOMContentLoaded", boot);
@@ -15,6 +15,8 @@ function boot(){
     console.log("boot");
     //EVENTS
     //audio
+    song.addEventListener("ended", stop);
+    song.addEventListener("loadeddata", songLoaded);
     selectSong("songs/music2.mp3");
     //keys
     document.body.addEventListener("keydown", keyDown);
@@ -30,7 +32,6 @@ function keyDown(evt){
     if(currentKeys[evt.keyCode] || !isRunning){
         return;
     } 
-    console.log(evt);
     currentKeys[evt.keyCode] = evt;
 }
 function keyUp(evt){
@@ -38,7 +39,6 @@ function keyUp(evt){
         console.warn("no prior keydown!");
         return;
     }
-    console.log(evt);
     var downEvent = currentKeys[evt.keyCode];
     //remove from currentKeys
     currentKeys[evt.keyCode] = false;
@@ -63,12 +63,13 @@ function songLoaded(evt){
     timeLeftDisplay.innerText = getSecString(songDuration);
 }
 function selectSong(songName){
-    if(song){
-        reset();
-    }
-    song = new Audio(songName);
-    song.addEventListener("ended", stop);
-    song.addEventListener("loadeddata", songLoaded);
+    var playbackRate = song.playbackRate;
+    song.src = songName;
+    song.playbackRate = playbackRate;
+    reset();
+}
+function selectSpeed(speed){
+    song.playbackRate = speed;
 }
 async function start(evt){
     if(isRunning){

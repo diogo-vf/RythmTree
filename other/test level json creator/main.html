@@ -18,6 +18,9 @@
         <button onclick="selectSong('songs/music1.mp3')">music1</button>
         <button onclick="selectSong('songs/music2.mp3')">music2</button>
         <button onclick="selectSong('songs/short.mp3')">short</button>
+        <br/>
+        Select speed:
+        <input id="speedInput" type="number" min="0" step="0.01" value="1" autocomplete="off" oninput="selectSpeed(this.value)"/>
         <p id="jsonPreview">[]</p>
     </body>
 </html>
