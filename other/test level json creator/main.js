@@ -5,13 +5,17 @@ var lastFrameStamp = 0;
 
 var sequence = [];
 var startTimeStamp = 0;
-
 var currentKeys = {};
+
+var song = false;
+var songDuration = 0;
 
 document.addEventListener("DOMContentLoaded", boot);
 function boot(){
     console.log("boot");
     //EVENTS
+    //audio
+    selectSong("songs/music2.mp3");
     //keys
     document.body.addEventListener("keydown", keyDown);
     document.body.addEventListener("keyup", keyUp);
@@ -54,50 +58,84 @@ function keyUp(evt){
     //display
     jsonPreview.innerText = JSON.stringify(sequence);
 }
-function start(evt){
+function songLoaded(evt){
+    songDuration = song.duration * 1000;
+    timeLeftDisplay.innerText = getSecString(songDuration);
+}
+function selectSong(songName){
+    if(song){
+        reset();
+    }
+    song = new Audio(songName);
+    song.addEventListener("ended", stop);
+    song.addEventListener("loadeddata", songLoaded);
+}
+async function start(evt){
     if(isRunning){
         return;
     }
-    startTimeStamp = evt.timeStamp - resumeTimeStamp;
-    isRunning = true;
 
     pauseBtn.classList.remove("none");
     startBtn.classList.add("none");
+
+    await song.play();
+
+    startTimeStamp = evt.timeStamp - resumeTimeStamp;
+    isRunning = true;
 }
 function pause(evt){
-    console.log(evt);
     if(!isRunning){
         return;
     }
     resumeTimeStamp = evt.timeStamp - startTimeStamp;
     isRunning = false;
+
+    song.pause();
+
     startBtn.innerText = "Resume";
     pauseBtn.classList.add("none");
     startBtn.classList.remove("none");
 }
 function reset(evt){
-    isRunning = false;
+    stop(evt);
+
     resumeTimeStamp = 0;
     sequence = [];
     currentKeys = {};
 
+    timeDisplay.innerText = "0s";
+    jsonPreview.innerText = "[]"
+    timeLeftDisplay.innerText = getSecString(songDuration);
+}
+function stop(evt){
+    isRunning = false;
+
+    song.pause();
+    song.fastSeek(0);
+
     startBtn.innerText = "Start";
     pauseBtn.classList.add("none");
     startBtn.classList.remove("none");
-    timeDisplay.innerText = "0s";
-    jsonPreview.innerText = "[]"
 }
-
 function draw(timeStamp){
     //fps
     fpsDisplay.innerText = Math.round(1000/(timeStamp - lastFrameStamp)) + "fps";
     lastFrameStamp = timeStamp;
     //global time
-    globalTimeDisplay.innerText = Math.floor(timeStamp/10) / 100 + "s"
-    //sequenceTime
+    globalTimeDisplay.innerText = getSecString(timeStamp);
+
     if(isRunning){
-        timeDisplay.innerText = Math.floor((timeStamp - startTimeStamp)/10)/100 + "s";
+        var levelTime = timeStamp - startTimeStamp;
+        //sequenceTime
+        timeDisplay.innerText = getSecString(levelTime);
+        //timeLeft
+        var timeLeft = songDuration - levelTime;
+        timeLeftDisplay.innerText = getSecString((timeLeft > 0)?timeLeft:0);
     }
     //again
     requestAnimationFrame(draw);
+}
+
+function getSecString(msTime){
+    return Math.floor(msTime/10)/100 + "s";
 }
