@@ -1,0 +1,29 @@
+.none{
+    display: none!important;
+}
+p{
+    margin: 0;
+}
+#fpsDisplay{
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: black;
+    color: white;
+    padding: 5px
+}
+#globalTimeDisplay{
+    display: inline-block;
+}
+#timeDisplay{
+    font-size: 25px;
+    color: orange;
+    font-weight: bold;
+}
+#jsonPreview{
+    border-top: 1px solid #666;
+    padding-top: 10px;
+    margin-top: 10px;
+    color: grey;
+    font-family: monospace;
+}
