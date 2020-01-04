@@ -2,6 +2,8 @@
     <head>
         <meta charset="utf-8"/>
         <link rel="stylesheet" href="style.css"/>
+        <script src="utils.js"></script>
+        <script src="songs.js"></script>
         <script src="main.js"></script>
     </head>
     <body>
@@ -15,12 +17,13 @@
         <button id="resetBtn">Reset</button>
         <br>
         Select music:
-        <button onclick="selectSong('songs/music1.mp3')">music1</button>
-        <button onclick="selectSong('songs/music2.mp3')">music2</button>
-        <button onclick="selectSong('songs/short.mp3')">short</button>
+        <div id="songSelectorsContainer"></div>
         <br/>
         Select speed:
-        <input id="speedInput" type="number" min="0" step="0.01" value="1" autocomplete="off" oninput="selectSpeed(this.value)"/>
+        <input id="speedInput" type="number" min="0" step="0.01" value="1" autocomplete="off" oninput="selectSpeed(this.value)"/>  
+        <div>
+            <canvas id="rythmDisplay" height="100"></canvas>
+        </div>
         <p id="jsonPreview">[]</p>
     </body>
 </html>

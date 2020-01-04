@@ -8,7 +8,6 @@ var currentKeys = {};
 
 var song = new Audio();
 var songDuration = 0;
-
 var rythmDisplayContext = false;
 
 document.addEventListener("DOMContentLoaded", boot);
@@ -28,6 +27,13 @@ function boot(){
     startBtn.addEventListener("click", start);
     pauseBtn.addEventListener("click", pause);
     resetBtn.addEventListener("click", reset);
+    songs.forEach(function(aSong){
+        var btn = songSelectorsContainer.addElement("button");
+        btn.innerText = aSong.name;
+        btn.addEventListener("click", function(evt){
+            selectSong(aSong.src);
+        })
+    });
     //draw
     draw();
 }
@@ -151,10 +157,17 @@ function draw(timeStamp){
     requestAnimationFrame(draw);
 }
 function drawRythm(timeFactor){
-    var width = rythmDisplay.parentElement.clientWidth;
-    var height = rythmDisplay.height;
-    //size
-    rythmDisplay.width = width;
+    var width = rythmDisplay.clientWidth;
+    var height = rythmDisplay.clientHeight;
+    //size(resize)
+    if(rythmDisplay.width!=width){
+        console.log("rythmDisplay width changed");
+        rythmDisplay.width = width;
+    }
+    if(rythmDisplay.height!=height){
+        console.log("rythmDisplay height changed");
+        rythmDisplay.height = height;
+    }
     //clear
     rythmDisplayContext.clearRect(0, 0, width, height);
     //draw center
