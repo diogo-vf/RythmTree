@@ -10,7 +10,7 @@ var songs = [
         "name": "Double Cherry Pass",
         "duration": 142870,
         "bpm": 114,
-        "start_offset": 537,
+        "start_offset": 559,
         "src": "songs/music2.mp3"
     },
     {
@@ -20,4 +20,4 @@ var songs = [
         "start_offset": false,
         "src": "songs/short.mp3"
     }
-];
+];  

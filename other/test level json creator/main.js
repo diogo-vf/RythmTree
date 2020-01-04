@@ -156,6 +156,13 @@ function draw(timeStamp){
     //again
     requestAnimationFrame(draw);
 }
+var drawConsts = {
+    CENTER_LINE_WIDTH: 4,
+    CENTER_LINE_VARIATION: 4
+}
+var drawParams = {
+    centerLineWidth: drawConsts.CENTER_LINE_WIDTH
+}
 function drawRythm(timeFactor){
     var width = rythmDisplay.clientWidth;
     var height = rythmDisplay.clientHeight;
@@ -169,8 +176,14 @@ function drawRythm(timeFactor){
         rythmDisplay.height = height;
     }
     //clear
-    rythmDisplayContext.clearRect(0, 0, width, height);
+    rythmDisplayContext.clear();
     //draw center
+    rythmDisplayContext.rect([(width - drawParams.centerLineWidth)/2, 0, drawParams.centerLineWidth, height], "black");
+    //draw rythm lines
+    drawRythmLines();
+}
+function drawRythmLines(){
+    
 }
 
 function getSongTime(){
