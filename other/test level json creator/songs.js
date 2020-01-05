@@ -19,5 +19,12 @@ var songs = [
         "bpm": false,
         "start_offset": false,
         "src": "songs/short.mp3"
-    }
+    },
+    {
+        "name": "Double Double Cherry Pass",
+        "duration": 142870,
+        "bpm": 228.15,
+        "start_offset": 559,
+        "src": "songs/music2.mp3"
+    },
 ];  

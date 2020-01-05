@@ -162,7 +162,7 @@ var drawConsts = {
     CENTER_LINE_WIDTH: 4,
     CENTER_LINE_COLOR: "black",
     CENTER_LINE_WIDTH_VARIATION: 4,
-    SCROLL_SPEED: 50,
+    SCROLL_SPEED: 300,
     SCROLL_LINES_WIDTH: 3
 };
 var drawParams = {
@@ -193,13 +193,14 @@ function drawRythm(timeFactor){
     var lineSpacing = drawConsts.SCROLL_SPEED / bps;
     var songTime = getSongTime();
     var rythmScale = 1000/bps;
+    var lineCount = Math.ceil(width/lineSpacing);
+    var measureIndex = Math.floor(songTime / rythmScale);
     var leftOffset = 
         (width/2)
-        - (Math.floor(songTime / currentSong.start_offset) * lineSpacing)
+        - (((measureIndex < (lineCount/2))?measureIndex:Math.floor(lineCount/2))/**/ * lineSpacing)
         + ((currentSong.start_offset/rythmScale) * lineSpacing)
         - ((songTime % rythmScale)/rythmScale * lineSpacing);
-    var lineCount = Math.ceil(width/lineSpacing);
-    for(var ind = 0; ind < lineCount; ind++){
+    for(var ind = 0; ind < (lineCount); ind++){
         rythmDisplayContext.rect(
             [leftOffset + ind*lineSpacing, 0, drawConsts.SCROLL_LINES_WIDTH, height],
             "grey"
