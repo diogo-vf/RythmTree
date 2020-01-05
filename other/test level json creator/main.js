@@ -11,6 +11,8 @@ var currentSong = false;
 var songDuration = 0;
 var rythmDisplayContext = false;
 
+var DEFAULT_SONG = songs[4];
+
 document.addEventListener("DOMContentLoaded", boot);
 function boot(){
     console.log("boot");
@@ -20,7 +22,7 @@ function boot(){
     //audio
     song.addEventListener("ended", songEnded);
     song.addEventListener("loadeddata", songLoaded);
-    selectSong(songs[0]);
+    selectSong(DEFAULT_SONG);
     //keys
     document.body.addEventListener("keydown", keyDown);
     document.body.addEventListener("keyup", keyUp);
