@@ -14,6 +14,13 @@ var songs = [
         "src": "songs/music2.mp3"
     },
     {
+        "name": "Nightcall",
+        "duration": 256960,
+        "bpm": 91.1,
+        "start_offset": 10850,
+        "src": "songs/nightcall.mp3"
+    },
+    {
         "name": "Short haha",
         "duration": 1008,
         "bpm": false,
