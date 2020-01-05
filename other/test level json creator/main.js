@@ -193,16 +193,17 @@ function drawRythm(timeFactor){
     var lineSpacing = drawConsts.SCROLL_SPEED / bps;
     var songTime = getSongTime();
     var rythmScale = 1000/bps;
-    var lineCount = Math.ceil(width/lineSpacing);
+    var safeWidth = width + (2*(lineSpacing + currentSong.start_offset));
+    var lineCount = Math.ceil(safeWidth/lineSpacing);
     var measureIndex = Math.floor(songTime / rythmScale);
     var leftOffset = 
-        (width/2)
+        (safeWidth/2)
         - (((measureIndex < (lineCount/2))?measureIndex:Math.floor(lineCount/2))/**/ * lineSpacing)
         + ((currentSong.start_offset/rythmScale) * lineSpacing)
         - ((songTime % rythmScale)/rythmScale * lineSpacing);
-    for(var ind = 0; ind < (lineCount); ind++){
+    for(var ind = 0; ind <= lineCount; ind++){
         rythmDisplayContext.rect(
-            [leftOffset + ind*lineSpacing, 0, drawConsts.SCROLL_LINES_WIDTH, height],
+            [(leftOffset - lineSpacing - currentSong.start_offset) + ind*lineSpacing, 0, drawConsts.SCROLL_LINES_WIDTH, height],
             "grey"
         );
     }
