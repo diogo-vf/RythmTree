@@ -7,8 +7,11 @@ var sequence = [];
 var currentKeys = {};
 
 var song = new Audio();
+var currentSong = false;
 var songDuration = 0;
 var rythmDisplayContext = false;
+
+var DEFAULT_SONG = songs[4];
 
 document.addEventListener("DOMContentLoaded", boot);
 function boot(){
@@ -19,7 +22,7 @@ function boot(){
     //audio
     song.addEventListener("ended", songEnded);
     song.addEventListener("loadeddata", songLoaded);
-    selectSong("songs/music1.mp3");
+    selectSong(DEFAULT_SONG);
     //keys
     document.body.addEventListener("keydown", keyDown);
     document.body.addEventListener("keyup", keyUp);
@@ -31,7 +34,7 @@ function boot(){
         var btn = songSelectorsContainer.addElement("button");
         btn.innerText = aSong.name;
         btn.addEventListener("click", function(evt){
-            selectSong(aSong.src);
+            selectSong(aSong);
         })
     });
     //draw
@@ -79,10 +82,11 @@ function songEnded(evt){
     stop();
 }
 //METHODS
-function selectSong(songName){
+function selectSong(theSong){
     var playbackRate = song.playbackRate;
-    song.src = songName;
+    song.src = theSong.src;
     song.playbackRate = playbackRate;
+    currentSong = theSong;
     reset();
 }
 function selectSpeed(speed){
@@ -158,8 +162,11 @@ function draw(timeStamp){
 }
 var drawConsts = {
     CENTER_LINE_WIDTH: 4,
-    CENTER_LINE_VARIATION: 4
-}
+    CENTER_LINE_COLOR: "black",
+    CENTER_LINE_WIDTH_VARIATION: 4,
+    SCROLL_SPEED: 300,
+    SCROLL_LINES_WIDTH: 3
+};
 var drawParams = {
     centerLineWidth: drawConsts.CENTER_LINE_WIDTH
 }
@@ -178,12 +185,31 @@ function drawRythm(timeFactor){
     //clear
     rythmDisplayContext.clear();
     //draw center
-    rythmDisplayContext.rect([(width - drawParams.centerLineWidth)/2, 0, drawParams.centerLineWidth, height], "black");
+    rythmDisplayContext.rect(
+        [(width - drawParams.centerLineWidth)/2, 0, drawParams.centerLineWidth, height], 
+        drawConsts.CENTER_LINE_COLOR
+    );
+
     //draw rythm lines
-    drawRythmLines();
-}
-function drawRythmLines(){
-    
+    var bps = currentSong.bpm / 60;
+    var rythmScale = 1000/bps;
+    var lineSpacing = drawConsts.SCROLL_SPEED / bps;
+    var startOffsetScale = currentSong.start_offset/rythmScale;
+    var songTime = getSongTime();
+    var lineCount = Math.ceil(width/lineSpacing);
+    var measureIndex = Math.floor(songTime / rythmScale);
+    var measureLimitIndex = Math.floor(lineCount/2 + startOffsetScale)
+    var leftOffset = 
+        (width/2)
+        - (((measureIndex < measureLimitIndex)?measureIndex:measureLimitIndex) * lineSpacing)
+        + startOffsetScale * lineSpacing
+        - ((songTime % rythmScale)/rythmScale * lineSpacing);
+    for(var ind = 0; ind <= lineCount; ind++){
+        rythmDisplayContext.rect(
+            [(leftOffset) + ind*lineSpacing, 0, drawConsts.SCROLL_LINES_WIDTH, height],
+            "grey"
+        );
+    }
 }
 
 function getSongTime(){
