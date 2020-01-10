@@ -9,7 +9,7 @@ require_relative "utils"
 class HTTP
   def listen(port) # +yield
     tcp_server = TCPServer.new port
-
+    puts "Listening on port #{port}"
     while session = tcp_server.accept
       request = session.gets
       parsedRequest = HTTP.parse_request(request)
