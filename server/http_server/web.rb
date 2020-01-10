@@ -1,5 +1,5 @@
 WEB_DIR = __dir__ + "/../../client"
-ROOT_ALIASES = [nil, "error", "welcome"]
+ROOT_ALIASES = [nil, "", "error", "login", "home", "new_game", "lobby_host", "lobby", "new_level", "level_editor", "levels", "replays", "replay_player", "game"]
 ROOT_DOCUMENT_PATH = "#{WEB_DIR}/root.html"
 
 class WebServer

@@ -293,7 +293,7 @@ function PagesManager(){
         var response = await fetch(url);
         viewsCache[viewName].isLoading = false;
         if(!response.ok){
-            console.warn("view download failed", response);
+            //DEBUG: console.warn("view download failed", response);
 
             //onload event
             for(var indEvt = 0; indEvt < viewsCache[viewName].onload.length; indEvt++){

@@ -13,7 +13,7 @@ function Actions(){
     //-------------------------------------------------------------------------------------
     this.onPageDisplay = {};
     this.onPageDisplay.error = function(){
-        errorStatusCode.innerText = globalMemory.error.code;
+        errorStatusCode.innerText = (globalMemory.error.code || "");
         errorClientMsg.innerText = globalMemory.error.msg;
     };
     
@@ -41,5 +41,17 @@ function Actions(){
     //-------------------------------------------------------------------------------------
     //other actions
     //-------------------------------------------------------------------------------------
-    
+    this.onBeforeBoot = function(){
+        console.log("whitelist to copy:", `[nil, "", "${Object.keys(pagesConfig).join('", "')}"]`);
+    }
+    this.onAfterBoot = function(){
+        for(ind in pagesConfig){
+            var link = testTopMenu.addElement("a");
+            var btn = link.addElement("button");
+            btn.innerText = ind;
+            link.href = `/${ind}`;
+        }
+        utils.setDynamicLinks(testTopMenu);
+	    console.log("init completed");
+    }
 }
