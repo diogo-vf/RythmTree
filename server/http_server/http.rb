@@ -9,7 +9,7 @@ require_relative "utils"
 class HTTP
   def listen(port) # +yield
     tcp_server = TCPServer.new port
-
+    puts "Listening on port #{port}"
     while session = tcp_server.accept
       request = session.gets
       parsedRequest = HTTP.parse_request(request)
@@ -22,8 +22,8 @@ class HTTP
       returnData = (yield(false, parsedRequest) || {})
 
       begin
-        session.print "HTTP/1.1 #{(returnData[:httpCode] || 200).to_s}\r\n" #http code
-        session.print "Content-Type: #{(returnData[:mimeType] || "text/html")}\r\n" #mime type
+        session.print "HTTP/1.1 #{(returnData[:http_code] || 200).to_s}\r\n" #http code
+        session.print "Content-Type: #{(returnData[:mime_type] || "text/html")}\r\n" #mime type
         session.print "\r\n"
         session.print "#{(returnData[:body] || "").to_s}" #body
       rescue

@@ -1,9 +1,11 @@
 var config = {
     viewsLocation: "/views",
     apiPath: false,
-    landingPage: "welcome",
+    landingPage: "login",
     viewsExtension: ".html",
-    pageTitlePrefix: "SPA Framwork - ",
+    preloadAllViews: false,
+    pagesContainerSelector: "#pagesContainer",
+    pageTitlePrefix: "Rythm Tree - ",
     //text
     messageNoData: "Nothing to show here...",
     messageErrorPageLoad: "A problem occured while loading the page."

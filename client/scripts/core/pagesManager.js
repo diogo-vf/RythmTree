@@ -291,10 +291,10 @@ function PagesManager(){
         var url = `${config.viewsLocation}/${viewName}${config.viewsExtension}`;
         
         var response = await fetch(url);
+        
         viewsCache[viewName].isLoading = false;
         if(!response.ok){
-            console.warn("view download failed", response);
-
+            //DEBUG: console.warn("view download failed", response);
             //onload event
             for(var indEvt = 0; indEvt < viewsCache[viewName].onload.length; indEvt++){
                 viewsCache[viewName].onload[indEvt]({clientMsg:"view download failed"});

@@ -1,11 +1,14 @@
+body{
+    text-align: center;
+}
 /*container*/
 #pagesContainer {
-    width: 100%;
+    min-width: 50%;
+    max-width: calc(100% - 20px);
     display: inline-block;
     overflow: hidden;
     text-align: center;
 }
 .pageContainer {
-    width: 80%;
-    display: inline-block;
+
 }
