@@ -5,8 +5,16 @@ MIME_TYPES = {
   "css": "text/css",
   "js": "application/javascript",
   "html": "text/html",
-  "text": "text/plain"
+  "text": "text/plain",
+  "svg": "image/svg+xml",
+  "png": "image/png",
+  "jpg": "image/jpeg",
+  "jpeg": "image/jpeg",
+  "ico": "image/x-icon",
+  "gif": "image/gif",
+  "webp": "image/webp"
 }
+FILE_READ_BUFFER_SIZE = 255
 
 class WebServer
   def self.on_request(request)
@@ -17,6 +25,7 @@ class WebServer
       filepath = ROOT_DOCUMENT_PATH
     end
 
+    
     #not found
     return {
         :http_code => 404,
@@ -25,9 +34,22 @@ class WebServer
 
     #read file
     begin
-      file = open filepath
-      body_content = file.read
-      file.close
+        # file = open filepath
+        # puts file.read
+        # body_content = file.read
+        # file.close
+        body_content = ""
+        # File.foreach(filepath){|line|
+        #     puts line
+        #     body_content += line
+        # }
+        puts "file data: "
+        File.open(filepath, 'rb'){|file|
+            loop do
+                break unless buf = file.gets(nil, FILE_READ_BUFFER_SIZE)
+                body_content += buf
+            end
+        }
     rescue => exception
         puts "error! " + exception.to_s
         return { 
@@ -36,10 +58,12 @@ class WebServer
         }
     end
 
+    #mime types
     extensionArray = filepath.split "."
     extension = extensionArray[extensionArray.length - 1]
     mime_type = MIME_TYPES[(extension || "text").to_sym]
 
+        #puts body_content
     #return
     {
       :body => body_content,
