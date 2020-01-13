@@ -78,19 +78,24 @@ utils.getGlobalLoader = function(){
 		elements.globalLoader.container = document.body.addElement("div", "globalLoaderContainer none");
 		elements.globalLoader.loader = elements.globalLoader.container.addElement("div", "globalLoaderImage");
 		
-		elements.globalLoader.show = function(){
+		elements.globalLoader.show = async function({withBackground = false} = {}){
+            await async_requestAnimationFrame();
+            if(withBackground){
+                elements.globalLoader.container.classList.add("withBackground");
+            }else{
+                elements.globalLoader.container.classList.remove("withBackground");
+            }
+            await async_requestAnimationFrame();
 			elements.globalLoader.container.classList.remove("none");
-			requestAnimationFrame(function(){
-				elements.globalLoader.container.style.opacity = 1;
-			});
+			await async_requestAnimationFrame()
+			elements.globalLoader.container.style.opacity = 1;
 		}
-		elements.globalLoader.hide = function(){
-			requestAnimationFrame(function(){
-				elements.globalLoader.container.style.opacity = 0;
-				setTimeout(function(){
-					elements.globalLoader.container.classList.add("none");
-				}, 200);
-			});
+		elements.globalLoader.hide = async function(){
+            await async_requestAnimationFrame();
+            elements.globalLoader.container.style.opacity = 0;
+            await async_setTimeout(200);
+            await async_requestAnimationFrame();
+            elements.globalLoader.container.classList.add("none");
 		}
 	}
 	return elements.globalLoader;

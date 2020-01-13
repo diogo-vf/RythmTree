@@ -3,10 +3,12 @@ var pagesConfig = {
         title: "Error"
     },
     login:{
-        title: "Login"
+        title: "Login",
+        pageName: "Login"
     },
     home:{
-        title: "Home"
+        title: "Home",
+        pageName: "Accueil"
     },
     new_game:{
         title: "New game"
@@ -31,7 +33,7 @@ var pagesConfig = {
         title: "Replays"
     },
     replay_player:{
-        title: "Replay (player)"
+        title: "Replay (player)" //as in video player :)
     },
     game:{
         title: "Game"

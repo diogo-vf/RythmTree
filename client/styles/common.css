@@ -14,6 +14,11 @@ p{
     display: none!important;
 }
 
+button{
+    height: 30px;
+    border-radius: 5px;
+}
+
 /*loader*/
 .globalLoaderContainer {
     position: fixed;
@@ -22,8 +27,11 @@ p{
     width: 100vw;
     height: 100vh;
     z-index: 30;
-    transition: opacity 0.2s;
+    transition: opacity 0.5s;
     opacity: 0;
+}
+.globalLoaderContainer.withBackground {
+    background-color: rgba(255, 255, 255, 0.7);
 }
 .globalLoaderImage {
     height: 50px;
