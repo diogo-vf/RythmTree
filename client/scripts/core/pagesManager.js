@@ -260,7 +260,7 @@ function PagesManager(){
             _this.loadView(viewName, function(){});
         }
     }
-    this.loadView = async function(view, callBack){
+    this.loadView = async function(view, callBack = function(){}){
         //get view name from page config
         var viewName = view;
         if(pagesConfig[view].view){

@@ -7,3 +7,5 @@
 /*specific page*/
 @import url("/styles/pages/welcome.css");
 @import url("/styles/pages/error.css");
+@import url("/styles/pages/login.css");
+@import url("/styles/pages/home.css");

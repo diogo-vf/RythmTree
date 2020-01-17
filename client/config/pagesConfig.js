@@ -3,10 +3,12 @@ var pagesConfig = {
         title: "Error"
     },
     login:{
-        title: "Login"
+        title: "Login",
+        pageName: "Login"
     },
     home:{
-        title: "Home"
+        title: "Home",
+        pageName: "Accueil"
     },
     new_game:{
         title: "New game"
@@ -25,13 +27,20 @@ var pagesConfig = {
         title: "Create level (editor)"
     },
     levels:{
-        title: "Levels"
+        title: "Levels",
+        data: [
+            {
+                source: "levels",
+                container: "#levelsContainer",
+                adapter: "levelAdapter"
+            }
+        ]
     },
     replays:{
         title: "Replays"
     },
     replay_player:{
-        title: "Replay (player)"
+        title: "Replay (player)" //as in video player :)
     },
     game:{
         title: "Game"
