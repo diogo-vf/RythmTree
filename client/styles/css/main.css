@@ -197,6 +197,13 @@ body {
 .common-text {
   color: black; }
 
+.common-page-title {
+  text-transform: uppercase;
+  font-weight: 900;
+  color: #85999a;
+  text-shadow: 0px 4px 0px #667a7b;
+  font-size: 30px; }
+
 .img-player1 {
   animation: player1 350ms 0s infinite;
   width: 72px;
@@ -318,451 +325,451 @@ body {
   left: 8px; }
 
 #leaves i:nth-of-type(1n) {
-  animation-delay: 10.84s; }
+  animation-delay: 11.45s; }
 
 #leaves i:nth-of-type(2n) {
-  animation-delay: 0.11s; }
+  animation-delay: 9.29s; }
 
 #leaves i:nth-of-type(3n) {
-  animation-delay: 12.23s; }
+  animation-delay: 14.36s; }
 
 #leaves i:nth-of-type(4n) {
-  animation-delay: 9.55s; }
+  animation-delay: 0.56s; }
 
 #leaves i:nth-of-type(5n) {
-  animation-delay: 0.12s; }
+  animation-delay: 10.43s; }
 
 #leaves i:nth-of-type(6n) {
-  animation-delay: 13s; }
+  animation-delay: 3.94s; }
 
 #leaves i:nth-of-type(7n) {
-  animation-delay: 5.37s; }
+  animation-delay: 3s; }
 
 #leaves i:nth-of-type(8n) {
-  animation-delay: 13.01s; }
+  animation-delay: 12.46s; }
 
 #leaves i:nth-of-type(9n) {
-  animation-delay: 13.01s; }
+  animation-delay: 11.29s; }
 
 #leaves i:nth-of-type(10n) {
-  animation-delay: 10.67s; }
+  animation-delay: 12.5s; }
 
 #leaves i:nth-of-type(11n) {
-  animation-delay: 7.45s; }
+  animation-delay: 0.83s; }
 
 #leaves i:nth-of-type(12n) {
-  animation-delay: 4.82s; }
+  animation-delay: 0.18s; }
 
 #leaves i:nth-of-type(13n) {
-  animation-delay: 7.4s; }
+  animation-delay: 5.13s; }
 
 #leaves i:nth-of-type(14n) {
-  animation-delay: 9.56s; }
+  animation-delay: 2.76s; }
 
 #leaves i:nth-of-type(15n) {
-  animation-delay: 5.45s; }
+  animation-delay: 5.56s; }
 
 #leaves i:nth-of-type(16n) {
-  animation-delay: 12.73s; }
+  animation-delay: 12.13s; }
 
 #leaves i:nth-of-type(17n) {
-  animation-delay: 10.4s; }
+  animation-delay: 3.55s; }
 
 #leaves i:nth-of-type(18n) {
-  animation-delay: 0.44s; }
-
-#leaves i:nth-of-type(19n) {
-  animation-delay: 6.86s; }
-
-#leaves i:nth-of-type(20n) {
-  animation-delay: 8.58s; }
-
-#leaves i:nth-of-type(21n) {
-  animation-delay: 3.05s; }
-
-#leaves i:nth-of-type(22n) {
   animation-delay: 6.25s; }
 
+#leaves i:nth-of-type(19n) {
+  animation-delay: 11.41s; }
+
+#leaves i:nth-of-type(20n) {
+  animation-delay: 9.44s; }
+
+#leaves i:nth-of-type(21n) {
+  animation-delay: 2.65s; }
+
+#leaves i:nth-of-type(22n) {
+  animation-delay: 14.31s; }
+
 #leaves i:nth-of-type(23n) {
-  animation-delay: 2.98s; }
+  animation-delay: 4.12s; }
 
 #leaves i:nth-of-type(24n) {
-  animation-delay: 11.36s; }
+  animation-delay: 10.13s; }
 
 #leaves i:nth-of-type(25n) {
-  animation-delay: 14.85s; }
+  animation-delay: 1.87s; }
 
 #leaves i:nth-of-type(26n) {
-  animation-delay: 2.8s; }
+  animation-delay: 2.49s; }
 
 #leaves i:nth-of-type(27n) {
-  animation-delay: 1.81s; }
+  animation-delay: 11.78s; }
 
 #leaves i:nth-of-type(28n) {
-  animation-delay: 8.62s; }
+  animation-delay: 9.66s; }
 
 #leaves i:nth-of-type(29n) {
-  animation-delay: 8.71s; }
+  animation-delay: 10.65s; }
 
 #leaves i:nth-of-type(30n) {
-  animation-delay: 7.49s; }
+  animation-delay: 13.54s; }
 
 #leaves i:nth-of-type(31n) {
-  animation-delay: 1.14s; }
+  animation-delay: 0.14s; }
 
 #leaves i:nth-of-type(32n) {
-  animation-delay: 13.94s; }
+  animation-delay: 4.77s; }
 
 #leaves i:nth-of-type(33n) {
-  animation-delay: 12.15s; }
+  animation-delay: 11.87s; }
 
 #leaves i:nth-of-type(34n) {
-  animation-delay: 14.47s; }
+  animation-delay: 8.92s; }
 
 #leaves i:nth-of-type(35n) {
-  animation-delay: 13.17s; }
+  animation-delay: 2.99s; }
 
 #leaves i:nth-of-type(36n) {
-  animation-delay: 0.48s; }
+  animation-delay: 3.37s; }
 
 #leaves i:nth-of-type(37n) {
-  animation-delay: 13.7s; }
+  animation-delay: 9.07s; }
 
 #leaves i:nth-of-type(38n) {
-  animation-delay: 2.28s; }
+  animation-delay: 11.89s; }
 
 #leaves i:nth-of-type(39n) {
-  animation-delay: 14.23s; }
+  animation-delay: 8.54s; }
 
 #leaves i:nth-of-type(40n) {
-  animation-delay: 7.19s; }
+  animation-delay: 0.08s; }
 
 #leaves i:nth-of-type(41n) {
-  animation-delay: 11.99s; }
-
-#leaves i:nth-of-type(42n) {
-  animation-delay: 11.48s; }
-
-#leaves i:nth-of-type(43n) {
-  animation-delay: 13.63s; }
-
-#leaves i:nth-of-type(44n) {
-  animation-delay: 3.66s; }
-
-#leaves i:nth-of-type(45n) {
-  animation-delay: 4.9s; }
-
-#leaves i:nth-of-type(46n) {
-  animation-delay: 6.42s; }
-
-#leaves i:nth-of-type(47n) {
-  animation-delay: 6.78s; }
-
-#leaves i:nth-of-type(48n) {
-  animation-delay: 4.47s; }
-
-#leaves i:nth-of-type(49n) {
   animation-delay: 4.45s; }
 
+#leaves i:nth-of-type(42n) {
+  animation-delay: 2.23s; }
+
+#leaves i:nth-of-type(43n) {
+  animation-delay: 7.6s; }
+
+#leaves i:nth-of-type(44n) {
+  animation-delay: 12.57s; }
+
+#leaves i:nth-of-type(45n) {
+  animation-delay: 12.78s; }
+
+#leaves i:nth-of-type(46n) {
+  animation-delay: 0.4s; }
+
+#leaves i:nth-of-type(47n) {
+  animation-delay: 2.96s; }
+
+#leaves i:nth-of-type(48n) {
+  animation-delay: 13.57s; }
+
+#leaves i:nth-of-type(49n) {
+  animation-delay: 6.6s; }
+
 #leaves i:nth-of-type(50n) {
-  animation-delay: 10.62s; }
+  animation-delay: 12.96s; }
 
 #leaves i:nth-of-type(51n) {
-  animation-delay: 0.8s; }
+  animation-delay: 13.58s; }
 
 #leaves i:nth-of-type(52n) {
-  animation-delay: 1.23s; }
-
-#leaves i:nth-of-type(53n) {
-  animation-delay: 10.22s; }
-
-#leaves i:nth-of-type(54n) {
-  animation-delay: 2.75s; }
-
-#leaves i:nth-of-type(55n) {
-  animation-delay: 13.37s; }
-
-#leaves i:nth-of-type(56n) {
-  animation-delay: 2.15s; }
-
-#leaves i:nth-of-type(57n) {
-  animation-delay: 14.19s; }
-
-#leaves i:nth-of-type(58n) {
-  animation-delay: 4.06s; }
-
-#leaves i:nth-of-type(59n) {
-  animation-delay: 7.52s; }
-
-#leaves i:nth-of-type(60n) {
-  animation-delay: 0.97s; }
-
-#leaves i:nth-of-type(61n) {
-  animation-delay: 12.31s; }
-
-#leaves i:nth-of-type(62n) {
-  animation-delay: 10.26s; }
-
-#leaves i:nth-of-type(63n) {
-  animation-delay: 5.35s; }
-
-#leaves i:nth-of-type(64n) {
-  animation-delay: 13.29s; }
-
-#leaves i:nth-of-type(65n) {
-  animation-delay: 10.96s; }
-
-#leaves i:nth-of-type(66n) {
-  animation-delay: 13.53s; }
-
-#leaves i:nth-of-type(67n) {
-  animation-delay: 7.01s; }
-
-#leaves i:nth-of-type(68n) {
-  animation-delay: 8.99s; }
-
-#leaves i:nth-of-type(69n) {
-  animation-delay: 3.35s; }
-
-#leaves i:nth-of-type(70n) {
-  animation-delay: 6.96s; }
-
-#leaves i:nth-of-type(71n) {
-  animation-delay: 5.55s; }
-
-#leaves i:nth-of-type(72n) {
-  animation-delay: 9.12s; }
-
-#leaves i:nth-of-type(73n) {
-  animation-delay: 6.88s; }
-
-#leaves i:nth-of-type(74n) {
-  animation-delay: 0.45s; }
-
-#leaves i:nth-of-type(75n) {
-  animation-delay: 7.34s; }
-
-#leaves i:nth-of-type(76n) {
-  animation-delay: 2.56s; }
-
-#leaves i:nth-of-type(77n) {
-  animation-delay: 11.18s; }
-
-#leaves i:nth-of-type(78n) {
-  animation-delay: 0.34s; }
-
-#leaves i:nth-of-type(79n) {
-  animation-delay: 14.11s; }
-
-#leaves i:nth-of-type(80n) {
-  animation-delay: 4.06s; }
-
-#leaves i:nth-of-type(81n) {
-  animation-delay: 9.77s; }
-
-#leaves i:nth-of-type(82n) {
-  animation-delay: 1.89s; }
-
-#leaves i:nth-of-type(83n) {
-  animation-delay: 7.45s; }
-
-#leaves i:nth-of-type(84n) {
-  animation-delay: 5.03s; }
-
-#leaves i:nth-of-type(85n) {
-  animation-delay: 2.54s; }
-
-#leaves i:nth-of-type(86n) {
-  animation-delay: 12.81s; }
-
-#leaves i:nth-of-type(87n) {
-  animation-delay: 10.52s; }
-
-#leaves i:nth-of-type(88n) {
   animation-delay: 12.94s; }
 
+#leaves i:nth-of-type(53n) {
+  animation-delay: 5.38s; }
+
+#leaves i:nth-of-type(54n) {
+  animation-delay: 5.49s; }
+
+#leaves i:nth-of-type(55n) {
+  animation-delay: 11.63s; }
+
+#leaves i:nth-of-type(56n) {
+  animation-delay: 5.87s; }
+
+#leaves i:nth-of-type(57n) {
+  animation-delay: 5.78s; }
+
+#leaves i:nth-of-type(58n) {
+  animation-delay: 12.33s; }
+
+#leaves i:nth-of-type(59n) {
+  animation-delay: 9.77s; }
+
+#leaves i:nth-of-type(60n) {
+  animation-delay: 5.76s; }
+
+#leaves i:nth-of-type(61n) {
+  animation-delay: 0.19s; }
+
+#leaves i:nth-of-type(62n) {
+  animation-delay: 8.56s; }
+
+#leaves i:nth-of-type(63n) {
+  animation-delay: 8.27s; }
+
+#leaves i:nth-of-type(64n) {
+  animation-delay: 3.12s; }
+
+#leaves i:nth-of-type(65n) {
+  animation-delay: 14.29s; }
+
+#leaves i:nth-of-type(66n) {
+  animation-delay: 6.39s; }
+
+#leaves i:nth-of-type(67n) {
+  animation-delay: 13.27s; }
+
+#leaves i:nth-of-type(68n) {
+  animation-delay: 0.58s; }
+
+#leaves i:nth-of-type(69n) {
+  animation-delay: 0.77s; }
+
+#leaves i:nth-of-type(70n) {
+  animation-delay: 4.11s; }
+
+#leaves i:nth-of-type(71n) {
+  animation-delay: 9.4s; }
+
+#leaves i:nth-of-type(72n) {
+  animation-delay: 4.44s; }
+
+#leaves i:nth-of-type(73n) {
+  animation-delay: 4.45s; }
+
+#leaves i:nth-of-type(74n) {
+  animation-delay: 4.62s; }
+
+#leaves i:nth-of-type(75n) {
+  animation-delay: 4.65s; }
+
+#leaves i:nth-of-type(76n) {
+  animation-delay: 3.05s; }
+
+#leaves i:nth-of-type(77n) {
+  animation-delay: 11.07s; }
+
+#leaves i:nth-of-type(78n) {
+  animation-delay: 11.54s; }
+
+#leaves i:nth-of-type(79n) {
+  animation-delay: 8.34s; }
+
+#leaves i:nth-of-type(80n) {
+  animation-delay: 9.28s; }
+
+#leaves i:nth-of-type(81n) {
+  animation-delay: 10.16s; }
+
+#leaves i:nth-of-type(82n) {
+  animation-delay: 14.29s; }
+
+#leaves i:nth-of-type(83n) {
+  animation-delay: 5.85s; }
+
+#leaves i:nth-of-type(84n) {
+  animation-delay: 13.39s; }
+
+#leaves i:nth-of-type(85n) {
+  animation-delay: 8.96s; }
+
+#leaves i:nth-of-type(86n) {
+  animation-delay: 0.93s; }
+
+#leaves i:nth-of-type(87n) {
+  animation-delay: 7.94s; }
+
+#leaves i:nth-of-type(88n) {
+  animation-delay: 12.9s; }
+
 #leaves i:nth-of-type(89n) {
-  animation-delay: 4.9s; }
+  animation-delay: 7.93s; }
 
 #leaves i:nth-of-type(90n) {
-  animation-delay: 9.86s; }
+  animation-delay: 8.68s; }
 
 #leaves i:nth-of-type(91n) {
-  animation-delay: 7.52s; }
+  animation-delay: 8.11s; }
 
 #leaves i:nth-of-type(92n) {
-  animation-delay: 10.12s; }
+  animation-delay: 14.02s; }
 
 #leaves i:nth-of-type(93n) {
-  animation-delay: 12.26s; }
+  animation-delay: 2.4s; }
 
 #leaves i:nth-of-type(94n) {
-  animation-delay: 13.38s; }
+  animation-delay: 0.64s; }
 
 #leaves i:nth-of-type(95n) {
-  animation-delay: 1.22s; }
+  animation-delay: 1.09s; }
 
 #leaves i:nth-of-type(96n) {
-  animation-delay: 10.47s; }
+  animation-delay: 6.58s; }
 
 #leaves i:nth-of-type(97n) {
-  animation-delay: 1.28s; }
+  animation-delay: 1.95s; }
 
 #leaves i:nth-of-type(98n) {
-  animation-delay: 2.39s; }
+  animation-delay: 11.06s; }
 
 #leaves i:nth-of-type(99n) {
-  animation-delay: 8.43s; }
+  animation-delay: 6.5s; }
 
 #leaves i:nth-of-type(100n) {
-  animation-delay: 0.69s; }
+  animation-delay: 2.64s; }
 
 #leaves i:nth-of-type(101n) {
-  animation-delay: 9.68s; }
+  animation-delay: 10.98s; }
 
 #leaves i:nth-of-type(102n) {
-  animation-delay: 7.04s; }
+  animation-delay: 9.17s; }
 
 #leaves i:nth-of-type(103n) {
-  animation-delay: 7.31s; }
+  animation-delay: 7.04s; }
 
 #leaves i:nth-of-type(104n) {
-  animation-delay: 14.04s; }
+  animation-delay: 2.98s; }
 
 #leaves i:nth-of-type(105n) {
-  animation-delay: 9.54s; }
+  animation-delay: 4.43s; }
 
 #leaves i:nth-of-type(106n) {
-  animation-delay: 8.81s; }
+  animation-delay: 13.08s; }
 
 #leaves i:nth-of-type(107n) {
-  animation-delay: 4.13s; }
+  animation-delay: 5.55s; }
 
 #leaves i:nth-of-type(108n) {
-  animation-delay: 13.8s; }
+  animation-delay: 14.02s; }
 
 #leaves i:nth-of-type(109n) {
-  animation-delay: 0.72s; }
+  animation-delay: 8.92s; }
 
 #leaves i:nth-of-type(110n) {
-  animation-delay: 8.28s; }
+  animation-delay: 14.39s; }
 
 #leaves i:nth-of-type(111n) {
-  animation-delay: 1.45s; }
+  animation-delay: 13.97s; }
 
 #leaves i:nth-of-type(112n) {
-  animation-delay: 12.26s; }
+  animation-delay: 10.57s; }
 
 #leaves i:nth-of-type(113n) {
-  animation-delay: 14.1s; }
+  animation-delay: 4.66s; }
 
 #leaves i:nth-of-type(114n) {
-  animation-delay: 9.9s; }
+  animation-delay: 5.92s; }
 
 #leaves i:nth-of-type(115n) {
-  animation-delay: 7.09s; }
+  animation-delay: 1.18s; }
 
 #leaves i:nth-of-type(116n) {
-  animation-delay: 12.31s; }
+  animation-delay: 12.65s; }
 
 #leaves i:nth-of-type(117n) {
-  animation-delay: 5.11s; }
+  animation-delay: 8.43s; }
 
 #leaves i:nth-of-type(118n) {
-  animation-delay: 3.59s; }
+  animation-delay: 13.24s; }
 
 #leaves i:nth-of-type(119n) {
-  animation-delay: 12.19s; }
+  animation-delay: 11.81s; }
 
 #leaves i:nth-of-type(120n) {
-  animation-delay: 12.98s; }
+  animation-delay: 0.82s; }
 
 #leaves i:nth-of-type(121n) {
-  animation-delay: 3.13s; }
+  animation-delay: 4.32s; }
 
 #leaves i:nth-of-type(122n) {
-  animation-delay: 1.39s; }
+  animation-delay: 12.45s; }
 
 #leaves i:nth-of-type(123n) {
-  animation-delay: 11.68s; }
+  animation-delay: 10.55s; }
 
 #leaves i:nth-of-type(124n) {
-  animation-delay: 5.2s; }
+  animation-delay: 6.33s; }
 
 #leaves i:nth-of-type(125n) {
-  animation-delay: 6.02s; }
+  animation-delay: 0.36s; }
 
 #leaves i:nth-of-type(126n) {
-  animation-delay: 6.41s; }
+  animation-delay: 12.45s; }
 
 #leaves i:nth-of-type(127n) {
-  animation-delay: 4.99s; }
+  animation-delay: 2.53s; }
 
 #leaves i:nth-of-type(128n) {
-  animation-delay: 3.33s; }
+  animation-delay: 2.71s; }
 
 #leaves i:nth-of-type(129n) {
-  animation-delay: 12.28s; }
+  animation-delay: 0.04s; }
 
 #leaves i:nth-of-type(130n) {
-  animation-delay: 1.73s; }
+  animation-delay: 12.43s; }
 
 #leaves i:nth-of-type(131n) {
-  animation-delay: 4.98s; }
+  animation-delay: 4.83s; }
 
 #leaves i:nth-of-type(132n) {
-  animation-delay: 7.72s; }
+  animation-delay: 8.59s; }
 
 #leaves i:nth-of-type(133n) {
-  animation-delay: 4.22s; }
+  animation-delay: 10.68s; }
 
 #leaves i:nth-of-type(134n) {
-  animation-delay: 14.44s; }
+  animation-delay: 13.12s; }
 
 #leaves i:nth-of-type(135n) {
-  animation-delay: 10.59s; }
+  animation-delay: 4.02s; }
 
 #leaves i:nth-of-type(136n) {
-  animation-delay: 14.13s; }
+  animation-delay: 14.37s; }
 
 #leaves i:nth-of-type(137n) {
-  animation-delay: 0.78s; }
+  animation-delay: 2.51s; }
 
 #leaves i:nth-of-type(138n) {
-  animation-delay: 7.79s; }
+  animation-delay: 4.58s; }
 
 #leaves i:nth-of-type(139n) {
-  animation-delay: 7.72s; }
+  animation-delay: 12.45s; }
 
 #leaves i:nth-of-type(140n) {
-  animation-delay: 3.8s; }
+  animation-delay: 2.64s; }
 
 #leaves i:nth-of-type(141n) {
-  animation-delay: 13.96s; }
+  animation-delay: 13.57s; }
 
 #leaves i:nth-of-type(142n) {
-  animation-delay: 6.24s; }
+  animation-delay: 12.24s; }
 
 #leaves i:nth-of-type(143n) {
-  animation-delay: 11.47s; }
+  animation-delay: 10.12s; }
 
 #leaves i:nth-of-type(144n) {
-  animation-delay: 3.75s; }
+  animation-delay: 11.04s; }
 
 #leaves i:nth-of-type(145n) {
-  animation-delay: 14.58s; }
+  animation-delay: 14.89s; }
 
 #leaves i:nth-of-type(146n) {
-  animation-delay: 6.35s; }
+  animation-delay: 2.96s; }
 
 #leaves i:nth-of-type(147n) {
-  animation-delay: 7.65s; }
+  animation-delay: 6.37s; }
 
 #leaves i:nth-of-type(148n) {
-  animation-delay: 2.48s; }
+  animation-delay: 4.01s; }
 
 #leaves i:nth-of-type(149n) {
-  animation-delay: 0.1s; }
+  animation-delay: 1.11s; }
 
 #leaves i:nth-of-type(n) {
   background: linear-gradient(to bottom right, #309900, #005600); }
@@ -792,19 +799,19 @@ body {
   0% {
     transform: translate3d(300px, 0, 0) rotate(0deg); }
   100% {
-    transform: translate3d(-350px, calc(100vh - 140px), 0) rotate(90deg);
+    transform: translate3d(-350px, calc(100vh - 100px), 0) rotate(90deg);
     opacity: 0; } }
 @keyframes falling2 {
   0% {
     transform: translate3d(450px, 0, 0) rotate(-50deg); }
   100% {
-    transform: translate3d(-450px, calc(100vh - 140px), 0) rotate(-20deg);
+    transform: translate3d(-450px, calc(100vh - 100px), 0) rotate(-20deg);
     opacity: 0; } }
 @keyframes falling3 {
   0% {
     -webkit-transform: translate3d(600px, 0, 0) rotate(0deg); }
   100% {
-    -webkit-transform: translate3d(-650px, calc(100vh - 140px), 0) rotate(-150deg);
+    -webkit-transform: translate3d(-650px, calc(100vh - 100px), 0) rotate(-150deg);
     opacity: 0; } }
 h1 > span {
   color: red; }

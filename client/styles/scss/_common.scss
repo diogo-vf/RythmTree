@@ -274,6 +274,14 @@ $marginTextureHover: calc((100% - 293px) / 2);
   color: black;
 }
 
+.common-page-title {
+  text-transform: uppercase;
+  font-weight: 900;
+  color: rgb(133, 153, 154);
+  text-shadow: 0px 4px 0px rgb(102, 122, 123);
+  font-size: 30px;
+}
+
 .img-player1 {
   animation: player1 350ms 0s infinite;
   width: 72px;
