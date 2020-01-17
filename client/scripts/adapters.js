@@ -1,10 +1,4 @@
 function Adapters(){
-	this.myDataAdapter = function(container, data){
-		var elem = container.addElement("p");
-		elem.innerText = data.text;
-        return elem;
-    }
-    
 	//adapter for when there is no data to display.
 	this.noData = function(container, data){
 		var box = container.addElement("div", "noDataContainer");
@@ -12,4 +6,10 @@ function Adapters(){
 		text.innerText = config.messageNoData;
 		return box;
 	};
+
+	//level
+	this.levelAdapter = function(container, data){
+		var box = container.addElement("div", "level");//example
+		return box;
+	}
 }

@@ -27,7 +27,14 @@ var pagesConfig = {
         title: "Create level (editor)"
     },
     levels:{
-        title: "Levels"
+        title: "Levels",
+        data: [
+            {
+                source: "levels",
+                container: "#levelsContainer",
+                adapter: "levelAdapter"
+            }
+        ]
     },
     replays:{
         title: "Replays"

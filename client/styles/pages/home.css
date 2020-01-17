@@ -3,4 +3,17 @@
     width: 30%;
     vertical-align: top;
     position: relative;
+    height: 300px;
+}
+.homeBtnContainer {
+    height: 150px;
+}
+.homeBtn {
+    margin-top: 15px;
+    width: 100%;
+    height: 40px;
+}
+#homeCharacterDisplay {
+    max-height: 200px;
+    max-width: 100%;
 }
