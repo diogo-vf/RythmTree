@@ -1,13 +1,20 @@
-<script>
-    var ws = new WebSocket(`ws://${location.host}/websocket`);
-    ws.onopen = function(){
-        console.log("opened");
-    }
-    ws.onmessage = function(evt){
-        console.log("msg", evt);
-    }
-    function sendMsg(msg){
-        ws.send(msg);
-    }
-</script>
-<button onclick="sendMsg('hello')">send a msg</button>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <script>
+            var ws = new WebSocket(`ws://${location.host}/websocket`);
+            ws.onopen = function(){
+                console.log("opened");
+            }
+            ws.onmessage = function(evt){
+                console.log("msg", evt);
+            }
+            function sendMsg(msg){
+                ws.send(msg);
+            }
+        </script>
+    </head>
+    <body>
+        <button onclick="sendMsg('hello')">send a msg</button>
+    </body>
+</html>

@@ -10,6 +10,7 @@ require_relative "../websocket_server/listener"
 class HTTPServer
     def self.start
         server = HTTP.new
+        wsServer = WebSocketServer.new
         server.listen(5678) {
             |error = false, request = false|
 
@@ -17,21 +18,18 @@ class HTTPServer
             next { :httpCode => 500 } unless request
 
             #forbidden
-            next { :httpCode => 403 } if request[:path].include? ".."
+            next { :httpCode => 403 } if request[:url][:path_string].include? ".."
 
-            puts "new request: #{request[:path]}"
+            puts "new request: #{request[:url][:path_string]}"
 
-            url_object = HTTP.decode_url(request[:path])
-            request_object = {
-              :raw_request => request,
-              :url => url_object,
-            }
-
-            #web socket
-            #pp request
-
-            #web server
-            next WebServer.on_request request_object
+            #endpoint switch
+            case request[:url][:path][0]
+                when 'websocket'
+                    next wsServer.on_http_connection request
+                else
+                    #web server
+                    next WebServer.on_request request
+            end
         }
     end
 end
