@@ -280,23 +280,32 @@ $marginTextureHover: calc((100% - 293px) / 2);
   color: rgb(133, 153, 154);
   text-shadow: 0px 4px 0px rgb(102, 122, 123);
   font-size: 30px;
+  margin-top: 50px;
 }
 
-.img-player1 {
-  animation: player1 350ms 0s infinite;
-  width: 72px;
-  height: 97px;
-  position: absolute;
-  background-image: url(../../images/Player/p1_walk/p1_walk5.png);
-}
-
-@keyframes player1 {
-  $frame: 100 / 6;
-  $i: $frame;
-  @while $i < 100 {
-    #{$i}% {
-      background-image: url(#{"../../images/Player/p1_walk/p1_walk"+$i/($frame)}.png);
+$j: 1;
+@while $j < 4 {
+  .img-player#{$j} {
+    animation: player#{$j} 350ms 0s infinite;
+    width: 72px;
+    height: 97px;
+    @if ($j == 2) {
+      width: 70px;
+      height: 94px;
     }
-    $i: $i + $frame;
+    position: absolute;
+    background-image: url(#{"../../images/Player/p"+$j}_walk/5.png);
   }
+
+  @keyframes player#{$j} {
+    $frame: 100 / 7;
+    $i: $frame;
+    @while $i < 100 {
+      #{$i}% {
+        background-image: url(#{"../../images/Player/p"+$j+"_walk/"+$i/($frame)}.png);
+      }
+      $i: $i + $frame;
+    }
+  }
+  $j: $j +1;
 }

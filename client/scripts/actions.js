@@ -18,6 +18,31 @@ function Actions(){
             pagesManager.changePage("home");
         });
     }
+    this.onPageLoad.home = function() {
+        change_player_left.onclick = function(evt) {
+            const currentClass = player_icon.classList[0];
+            const name = currentClass.substring(10, 11);
+            let newclass = "img-player";
+            if (name === "1")
+                newclass+="3";
+            else
+                newclass+=""+(parseInt(name)-1);
+
+            player_icon.classList.replace(currentClass, newclass);
+        };
+
+        change_player_right.onclick = function(evt) {
+            const currentClass = player_icon.classList[0];
+            const name = currentClass.substring(10, 11);
+            let newclass = "img-player";
+            if (name === "3")
+                newclass+="1";
+            else
+                newclass+=""+(parseInt(name)+1);
+
+            player_icon.classList.replace(currentClass, newclass);
+        };
+    }
     //-------------------------------------------------------------------------------------
     //page actions on display
     //-------------------------------------------------------------------------------------
