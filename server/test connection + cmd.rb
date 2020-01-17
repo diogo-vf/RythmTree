@@ -78,17 +78,17 @@ collection.find({ name: "niveau01" } ).each do |data|
     puts data     
 end 
 
-# select level with creator id = 1
-collection.find({ "creator.id": 1} } ).each do |data| 
+# select levels with creator id = 1
+collection.find({ "creator.id": 1}).each do |data| 
     puts data     
 end 
     
 # select
-puts collection.find( { "creator" => {id: '1' } } ).first
+puts collection.find( { "creator.id": '1' } ).first
 
 
 # update 
-collection.find_one_and_replace( { "creator.id":1, "creator.name": "nicoal"},{ "$set": {"creator.id":"2"}} )
+collection.find_one_and_replace( { "creator.id":1, "creator.name": "nicoal"},"$set" => {"creator.id":"2"} )
 
 collection.update_many({ "creator.id":1}, "$set" => {"creator.id":"03"})
 
