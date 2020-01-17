@@ -31,11 +31,11 @@ $rotate3: -150;
   box-shadow: inset 0px 0px 1px #222;
   border: 1px solid #333;
   z-index: -1;
-  -webkit-animation: falling $fallingTime 0s infinite;
+  animation: falling $fallingTime 0s infinite;
 }
 
-#leaves i:nth-of-type(2n) { -webkit-animation: falling2 $fallingTime2 0s infinite; }
-#leaves i:nth-of-type(3n) { -webkit-animation: falling3 $fallingTime 0s infinite; }
+#leaves i:nth-of-type(2n) { animation: falling2 $fallingTime2 0s infinite; }
+#leaves i:nth-of-type(3n) { animation: falling3 $fallingTime 0s infinite; }
 
 #leaves i:before {
   position: absolute;
@@ -81,7 +81,7 @@ $rotate3: -150;
 
 $i: 1;
 @while $i < 150 {
-  #leaves i:nth-of-type(#{$i}n)   { -webkit-animation-delay: random(15*100)/100 + s;}
+  #leaves i:nth-of-type(#{$i}n)   { animation-delay: random(15*100)/100 + s;}
   $i: $i + 1;
 }
 
@@ -96,41 +96,41 @@ $i: 1;
 #leaves i:nth-of-type(n)    {transform: rotate(180deg);}
 
 
-#leaves i:nth-of-type(n) { -webkit-animation-timing-function:ease-in-out;}
+#leaves i:nth-of-type(n) { animation-timing-function:ease-in-out;}
 
-@-webkit-keyframes falling {
+@keyframes falling {
 
   0% {
-    -webkit-transform:
+    transform:
             translate3d($maxFall,0,0)
             rotate($rotate*0deg);
   }
 
   100% {
-    -webkit-transform:
+    transform:
             translate3d($minFall,100vh,0)
             rotate($rotate + deg);
     opacity: 0;
   }
 }
 
-@-webkit-keyframes falling2 {
+@keyframes falling2 {
 
   0% {
-    -webkit-transform:
+    transform:
             translate3d($maxFall2,0,0)
             rotate(-50+$rotate2*0deg);
   }
 
   100% {
-    -webkit-transform:
+    transform:
             translate3d($minFall2,100vh,0)
             rotate(-50+$rotate2 + deg);
     opacity: 0;
   }
 }
 
-@-webkit-keyframes falling3 {
+@keyframes falling3 {
 
   0% {
     -webkit-transform:
