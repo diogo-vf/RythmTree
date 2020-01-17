@@ -8,48 +8,57 @@ require_relative "utils"
 
 class HTTP
     CODES = {
-        :switching_protocols => 101,
+        :switching_protocols => "101 Switching Protocols",
         :ok => 200,
         :not_found => 404,
         :teapot => 418,
         :server_error => 500,
+        :user_error => 400
     }
     def listen(port) # +yield
-        tcp_server = TCPServer.new port
+        tcp_server = TCPServer.new port #'localhost', port
         puts "Listening on port #{port}"
-        while session = tcp_server.accept
-        request_lines = [];
-        while line = session.gets
-            break if line.strip=="" #tmp
-            request_lines.push(line);
-        end
-        parsed_request = HTTP.parse_request(request_lines)
+        loop do
+            #while 
+            session = tcp_server.accept
+            request_lines = [];
+            while (line = session.gets) && (line != "\r\n") #tmp without body
+                #break if line.strip=="" #tmp
+                request_lines.push(line);
+            end
+            parsed_request = HTTP.parse_request(request_lines)
 
-        unless parsed_request
-            yield("invalid request")
-            next
-        end
+            unless parsed_request
+                yield("invalid request")
+                next
+            end
 
-        return_data = (yield(false, parsed_request) || {})
+            return_data = (yield(false, parsed_request) || {})
 
-        begin
+            #response creation
+            response_str = "";
             #status
-            session.print "HTTP/1.1 #{CODES[return_data[:http_code||:ok]]}\r\n" #http code
+            response_str += "HTTP/1.1 #{CODES[(return_data[:http_code] || :ok)]}\r\n" #http code
             #headers
             if return_data[:headers] 
                 return_data[:headers].keys.each { |header_key| 
-                    session.print "#{header_key}: #{return_data[:headers][header_key.to_sym]}\r\n" #mime type
+                    response_str += "#{header_key}: #{return_data[:headers][header_key.to_sym]}\r\n" #mime type
                 }
             end
             #body
-            session.print "\r\n"
-            session.print "#{(return_data[:body] || "").to_s}" #body
-        rescue => error
-            puts "request return print failed #{error}"
-        end
-        unless return_data[:prevent_session_close]
-            session.close
-        end
+            response_str += "\r\n#{(return_data[:body]).to_s}" if return_data[:body]
+
+            # puts response_str
+
+            begin
+                session.print response_str
+            rescue => error
+                puts "request return print failed #{error}"
+            end
+            unless return_data[:prevent_session_close]
+                session.close
+            end
+            #end
         end
     end
 

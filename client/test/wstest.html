@@ -1,18 +1,7 @@
 <html>
     <head>
         <meta charset="utf-8"/>
-        <script>
-            var ws = new WebSocket(`ws://${location.host}/websocket`);
-            ws.onopen = function(){
-                console.log("opened");
-            }
-            ws.onmessage = function(evt){
-                console.log("msg", evt);
-            }
-            function sendMsg(msg){
-                ws.send(msg);
-            }
-        </script>
+        <script src="wstest.js"></script>
     </head>
     <body>
         <button onclick="sendMsg('hello')">send a msg</button>
