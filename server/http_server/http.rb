@@ -43,6 +43,7 @@ class HTTP
     #pp requestLines
     #return nil unless request.class == String
     request = requestLines[0] #tmp
+    return unless request
     requestArray = request.split(" ")
 
     return {

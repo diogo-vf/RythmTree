@@ -1,23 +1,9 @@
-/*general*/
-*{
-  box-sizing: border-box;
-}
-body {
-  padding: 0;
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
-p{
-  margin: 0;
-}
-.none{
-  display: none!important;
-}
-
-button{
-  height: 30px;
-  border-radius: 5px;
-}
+$timeAnim: 0.2s;
+$goodColor: #0E9A00;
+$badColor: #9d0006;
+$defaultColor: #008CBA;
+$marginTexture: calc((100% - 266px) / 2);
+$marginTextureHover: calc((100% - 293px) / 2);
 
 /*loader*/
 .globalLoaderContainer {
@@ -74,4 +60,169 @@ button{
   font-size: 20px;
   color:
           #666;
+}
+
+/* Common */
+
+.common-button {
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: .25rem;
+  opacity: 1;
+  padding: 5px 10px;
+  text-align: center;
+  border: none;
+  text-decoration: none !important;
+  display: block;
+  width: 100%;
+
+  transition: $timeAnim;
+
+  &:hover {
+    opacity: 1;
+    text-decoration: none !important;
+  }
+
+  /* Enable button style */
+  &.good {
+    background-color: white;
+    border: 1pt solid $goodColor;
+    color: $goodColor;
+
+    &:hover {
+      background-color: $goodColor;
+      border: 1pt solid white;
+      color: white;
+    }
+  }
+
+  /* Bad/danger button style */
+  &.bad {
+    background-color: white;
+    border: 1pt solid $badColor;
+    color: $badColor;
+
+    &:hover {
+      background-color: $badColor;
+      border: 1pt solid white;
+      color: white;
+    }
+  }
+
+  &.default {
+    background-color: white;
+    border: 1pt solid $defaultColor;
+    color: $defaultColor;
+
+    &:hover {
+      background-color: $defaultColor;
+      border: 1pt solid $defaultColor;
+      color: white;
+    }
+  }
+
+  &.xs {
+    font-size: 13px;
+  }
+
+  &.texture {
+    color: white;
+    height: 68px;
+    width: 266px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-left: $marginTexture;
+    margin-right: $marginTexture;
+
+    &:hover {
+      height: 69px;
+      width: 293px;
+      margin-left: $marginTextureHover;
+      margin-right: $marginTextureHover;
+    }
+
+    &.wood {
+      background-image: url(../../images/textures/buttonLong_brown.png);
+      background-repeat: no-repeat;
+      background-size: cover;
+
+      &:hover {
+        background-image: url(../../images/textures/buttonLong_brown_pressed.png);
+      }
+    }
+
+    &.brick {
+      background-image: url(../../images/textures/buttonLong_blue.png);
+      background-repeat: no-repeat;
+      background-size: cover;
+
+      &:hover {
+        background-image: url(../../images/textures/buttonLong_blue_pressed.png);
+      }
+    }
+  }
+
+  cursor: url(../../images/textures/cursorHand_blue.png), pointer !important;
+}
+
+.common-input {
+  font-size: 17px;
+  color: black;
+  background-color: white;
+  border: 1pt solid darkgrey;
+  width: 100%;
+
+  &:focus {
+    font-size: 17px;
+    color: black;
+    background-color: white;
+    border: 1pt solid darkgrey;
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    -webkit-text-fill-color: black;
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+    font-size: 17px;
+    -webkit-border-color: darkgrey;
+  }
+
+  &:focus {
+    outline: none !important;
+  }
+
+  &.texture {
+
+    color: black;
+    height: 68px;
+    width: 266px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-left: $marginTexture;
+    margin-right: $marginTexture;
+
+    border: none;
+
+    &::placeholder {
+      color: darkgrey;
+    }
+
+    &.light {
+      background-image: url(../../images/textures/buttonLong_grey.png);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  }
+}
+
+.common-box {
+  border: 1pt solid darkgrey;
+  background: rgba(255,255,255,0.8);
+}
+
+.common-text {
+  color: black;
 }

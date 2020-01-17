@@ -1,22 +1,47 @@
-<div class="homeCol">
-    <div class="homeBtnContainer">
-        <a href="/new_game"><button class="homeBtn">Créer un partie</button></a>
-    </div>
-    <div class="homeBtnContainer">
-        <a href="/lobby"><button class="homeBtn">Rejoindre une partie</button></a>
-    </div>
-</div>
-<div class="homeCol">
-    <p id="homeUserNameDisplay"></p>
-    <img id="homeCharacterDisplay" src="/images/characters/default.png"/>
-    <br/>
-    <button id="homeCharacterBtn">Personnage</button>
-</div>
-<div class="homeCol">
-    <div class="homeBtnContainer">
-        <a href="/new_level"><button class="homeBtn">Créateur de niveau</button></a>
-    </div>
-    <div class="homeBtnContainer">
-        <a href="/levels"><button class="homeBtn">Replays</button></a>
+<div class="container">
+    <div class="row">
+        <div class="col-5">
+            <div class="container big-space-top big-space-bottom">
+                <div class="row">
+                    <div class="col-10 offset-1">
+                        <a href="/new_game" class="common-button texture wood">Créer une partie...</a>
+                    </div>
+                </div>
+                <div class="row big-space-top">
+                    <div class="col-10 offset-1">
+                        <a href="/lobby" class="common-button texture wood">Rejoindre une partie</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="container big-space-top">
+                <div class="row space-top">
+                    <div class="col center">
+                        <p class="common-text">Player 1</p>
+                        <img src="/images/Player/p1_duck.png"/>
+                    </div>
+                </div>
+                <div class="row space-top">
+                    <div class="col">
+                        <button class="common-button texture brick">Personnage...</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="container big-space-top">
+                <div class="row">
+                    <div class="col-10 offset-1">
+                        <a href="/new_level" class="common-button texture wood">Créateur de niveau...</a>
+                    </div>
+                </div>
+                <div class="row big-space-top">
+                    <div class="col-10 offset-1">
+                        <a href="/levels" class="common-button texture wood">Replays...</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

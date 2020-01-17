@@ -1,8 +1,6 @@
 function Actions(){
     var _this = this;
-    this.onHeadButtonClick = function(evt){
-        pagesManager.changePage(globalMemory.headButtonTarget, {path:globalMemory.headButtonTargetPath});
-    };
+
     //-------------------------------------------------------------------------------------
     //page actions on load
     //-------------------------------------------------------------------------------------
@@ -61,6 +59,9 @@ function Actions(){
             var btn = link.addElement("button");
             btn.innerText = ind;
             link.href = `/${ind}`;
+        }
+        for (let i=0;i<window.innerWidth/8;i++) {
+            leaves.addElement("i");
         }
         utils.setDynamicLinks(testTopMenu);
 	    console.log("init completed");

@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/styles/css/main.css"/>
     <!--libs-->
         <!--add your external libraries here-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!--config-->
     <script src="/scripts/adapters.js"></script>
 	<script src="/scripts/dataSources.js"></script>
@@ -23,9 +24,20 @@
 <!-- template, build your base page template here-->
 <body>
     <menu id="testTopMenu"></menu>
-    <h1>Rythm Tree</h1>
-    <div id="pagesContainer">
-        <h2 id="pageNameDisplay">...</h2>
-        <!--page built at the bottom-->
+    <div id="leaves"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col center">
+                <h1>Rythm Tree</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div id="pagesContainer" class="common-box">
+                    <h2 id="pageNameDisplay" class="center"></h2>
+                    <!--page built at the bottom-->
+                </div>
+            </div>
+        </div>
     </div>
 </body>
