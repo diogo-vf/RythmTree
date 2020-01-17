@@ -67,7 +67,7 @@ $marginTextureHover: calc((100% - 293px) / 2);
 .common-button {
   text-decoration: none;
   font-weight: 600;
-  border-radius: .25rem;
+  border-radius: 6px;
   opacity: 1;
   padding: 5px 10px;
   text-align: center;
@@ -81,6 +81,10 @@ $marginTextureHover: calc((100% - 293px) / 2);
   &:hover {
     opacity: 1;
     text-decoration: none !important;
+  }
+
+  &:focus {
+    outline: none !important;
   }
 
   /* Enable button style */
@@ -147,8 +151,15 @@ $marginTextureHover: calc((100% - 293px) / 2);
       background-repeat: no-repeat;
       background-size: cover;
 
+      text-transform: uppercase;
+      font-weight: 900;
+      color: rgba(121, 83, 44, 1);
+      text-shadow: -1pt -1pt rgba(55, 35, 27, 1);
+      font-size: 20px;
+
       &:hover {
         background-image: url(../../images/textures/buttonLong_brown_pressed.png);
+        font-size: 22px;
       }
     }
 
@@ -163,6 +174,26 @@ $marginTextureHover: calc((100% - 293px) / 2);
     }
   }
 
+  &.arrow-left {
+    background: url(../../images/textures/arrowBlue_left.png) no-repeat;
+    width: 22px;
+    height: 22px;
+  }
+
+  &.arrow-right {
+    background: url(../../images/textures/arrowBlue_right.png) no-repeat;
+    width: 22px;
+    height: 22px;
+  }
+
+  &.arrow-right:hover, &.arrow-left:hover {
+    transform: scale(1.2);
+  }
+
+  &.arrow-right:active, &.arrow-left:active {
+    transform: scale(1.5);
+  }
+
   cursor: url(../../images/textures/cursorHand_blue.png), pointer !important;
 }
 
@@ -172,6 +203,7 @@ $marginTextureHover: calc((100% - 293px) / 2);
   background-color: white;
   border: 1pt solid darkgrey;
   width: 100%;
+  border-radius: 6px;
 
   &:focus {
     font-size: 17px;
@@ -219,10 +251,44 @@ $marginTextureHover: calc((100% - 293px) / 2);
 }
 
 .common-box {
+  background: url(../../images/textures/houseGrayTopRight.png) calc(100%) 0 no-repeat,
+          url(../../images/textures/houseGrayTopLeft.png) 0 0 no-repeat,
+          url(../../images/textures/houseGrayBottomRight.png) calc(100%) calc(100%) no-repeat,
+          url(../../images/textures/houseGrayBottomLeft.png) 0 calc(100%) no-repeat,
+          url(../../images/textures/houseGrayTopMid.png) calc(100%) 0 repeat-x,
+          url(../../images/textures/houseGrayMidLeft.png) 0 0 repeat-y,
+          url(../../images/textures/houseGrayMidRight.png) calc(100%) 0 repeat-y,
+          url(../../images/textures/houseGrayBottomMid.png) 0 calc(100%) repeat-x,
+          url(../../images/textures/houseGrayAlt2.png) 15% 15% no-repeat,
+          url(../../images/textures/houseGrayAlt2.png) 40% 30% no-repeat,
+          url(../../images/textures/houseGrayAlt2.png) 70% 55% no-repeat,
+          url(../../images/textures/houseGrayAlt.png) 30% 85% no-repeat,
+          url(../../images/textures/houseGrayAlt.png) 80% 25% no-repeat,
+          url(../../images/textures/houseGrayAlt.png) 95% 85% no-repeat,
+          url(../../images/textures/houseGrayAlt.png) 60% 80% no-repeat,
+          url(../../images/textures/houseGray.png) repeat;
   border: 1pt solid darkgrey;
-  background: rgba(255,255,255,0.8);
 }
 
 .common-text {
   color: black;
+}
+
+.img-player1 {
+  animation: player1 350ms 0s infinite;
+  width: 72px;
+  height: 97px;
+  position: absolute;
+  background-image: url(../../images/Player/p1_walk/p1_walk5.png);
+}
+
+@keyframes player1 {
+  $frame: 100 / 6;
+  $i: $frame;
+  @while $i < 100 {
+    #{$i}% {
+      background-image: url(#{"../../images/Player/p1_walk/p1_walk"+$i/($frame)}.png);
+    }
+    $i: $i + $frame;
+  }
 }
