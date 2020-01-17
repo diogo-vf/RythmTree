@@ -1,70 +1,85 @@
+require "json"
 class BasicAPI
 
     public
+    def initialize(collection_name, action, data, dataToReplace = nil)
+        puts collection_name
+        puts action
+        puts data
+        
+        
+        return [] unless collection_name.is_a?(String)
+        return [] unless action.is_a?(String)
+        return [] unless data.is_a?(Hash) 
 
-    def initialize(collection_name, action, data, dataToReplace)
-        return [] unless collection_name &&  collection_name.is_a?(String)
-        return [] unless action &&  action.is_a?(String)
-        return [] unless data &&  data.is_a?(Hash) 
-        return [] unless dataToReplace && dataToReplace.is_a?(Hash)
-       
-        puts MongoDB = MongoDB.new
-        @collection_name = collection_name
+        if dataToReplace.is_a?(Hash) then
+            @dataToReplace = dataToReplace
+        elsif dataToReplace then
+            return [] 
+        end
+
+        @mongo = MongoDB.new
+        @mongo.collection=collection_name
+
         @action = action
         @data = data
+
+       puts choice_action
     end
 
     private
-    def choiceAction
+    def choice_action
         case @action         
-        when "getAll"
-            getAll
-        when "getOne"
-            getOne
-        when "InsertOne"
-            insertOne
-        when "updateOne"
-            updateOne
-        when "updateMany"
-            updateMany
-        when "deleteOne"
-            deleteOne
-        when "deleteMany"
-            deleteMany
+        when "get_many"
+            get_many
+        when "get_one"
+            get_one
+        when "insert_one"
+            insert_one
+        when "update_one"
+            update_one
+        when "update_many"
+            update_many
+        when "delete_one"
+            delete_one
+        when "delete_many"
+            delete_many
         else
             return []
         end
         
     end
 
-        # TODO       
-    def getAll 
-        @collection.find( @data ).each do |value| 
-            puts value     
+    def get_one        
+        [ @mongo.collection.find( @data ).first.to_json ]
+    end
+
+    def get_many 
+        array=[]
+        @mongo.collection.find( @data ).each do |value| 
+            array.push value.to_json     
         end 
+
+        array
     end
 
-    def getOne        
-        result = collection.find( @data ).first
+    def insert_one
+        @mongo.collection.insert_one( @data )
     end
 
-    def insertOne
-        collection.insert_one( @data )
+    def update_one
+        @mongo.collection.find_one_and_replace( @data, "$set" => @dataToReplace )
     end
 
-    def updateOne
-        collection.find_one_and_replace( @data, "$set" => @dataToReplace )
+    def update_many
+        @mongo.collection.update_many( @data, "$set" => @dataToReplace )
     end
 
-    def updateMany
-        collection.update_many( @data, "$set" => @dataToReplace )
+    def delete_one
+        @mongo.collection.delete_one( @data )
     end
 
-    def deleteOne
-        collection.delete_one( @data )
-    end
-
-    def deleteMany
-        collection.delete_many( @data )
+    def delete_many
+        @mongo.collection.delete_many( @data )
     end
 end
