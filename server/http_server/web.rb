@@ -34,16 +34,7 @@ class WebServer
 
     #read file
     begin
-        # file = open filepath
-        # puts file.read
-        # body_content = file.read
-        # file.close
         body_content = ""
-        # File.foreach(filepath){|line|
-        #     puts line
-        #     body_content += line
-        # }
-        puts "file data: "
         File.open(filepath, 'rb'){|file|
             loop do
                 break unless buf = file.gets(nil, FILE_READ_BUFFER_SIZE)
@@ -63,7 +54,6 @@ class WebServer
     extension = extensionArray[extensionArray.length - 1]
     mime_type = MIME_TYPES[(extension || "text").to_sym]
 
-        #puts body_content
     #return
     {
       :body => body_content,

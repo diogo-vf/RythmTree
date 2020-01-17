@@ -11,8 +11,12 @@ class HTTP
     tcp_server = TCPServer.new port
     puts "Listening on port #{port}"
     while session = tcp_server.accept
-      request = session.gets
-      parsedRequest = HTTP.parse_request(request)
+      requestLines = [];
+      while line = session.gets
+        break if line.strip=="" #tmp
+        requestLines.push(line);
+      end
+      parsedRequest = HTTP.parse_request(requestLines)
 
       unless parsedRequest
         yield("invalid request")
@@ -35,15 +39,17 @@ class HTTP
   end
 
   #STATIC METHODS
-  def self.parse_request(request)
-    return nil unless request.class == String
-
+  def self.parse_request(requestLines)
+    #pp requestLines
+    #return nil unless request.class == String
+    request = requestLines[0] #tmp
     requestArray = request.split(" ")
 
     return {
              :method => requestArray[0],
              :path => requestArray[1],
              :protocol => requestArray[2],
+             :req => requestLines
            }
   end
 
