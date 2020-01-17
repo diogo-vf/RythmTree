@@ -58,6 +58,7 @@ class HTTP
         #pp request_lines
         #return nil unless request.class == String
         request = request_lines[0] #tmp
+        return unless request
         request_array = request.split(" ")
         headers = HTTP.parse_headers(request_lines.slice(1, request_lines.length - 1))
         url_object = HTTP.decode_url(request_array[1])
@@ -73,11 +74,10 @@ class HTTP
     def self.parse_headers(headers_lines)
         headers = {};
         headers_lines.each{ |line|
-        components = line.split(': ')
-        next if components.length < 2
-        headers[components[0].strip] = components[1].strip
+            components = line.split(': ')
+            next if components.length < 2
+            headers[components[0].strip] = components[1].strip
         }
-
         headers
     end
 
