@@ -41,6 +41,8 @@ Sec-WebSocket-Accept: #{ response_key }
 
   STDERR.puts "Handshake completed. Starting to parse the websocket frame."
 
+  next;
+  puts "?????"
   first_byte = socket.getbyte
   fin = first_byte & 0b10000000 
   opcode = first_byte & 0b00001111

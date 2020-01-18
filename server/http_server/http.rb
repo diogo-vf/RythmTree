@@ -33,8 +33,13 @@ class HTTP
                 next
             end
 
-            return_data = (yield(false, parsed_request) || {})
+            return_data = (yield(parsed_request, session) || {})
 
+            if(return_data[:no_following])
+                print "stop here: no_following paranmeter specified"
+                next
+            end
+            
             #response creation
             response_str = "";
             #status
@@ -49,9 +54,20 @@ class HTTP
             response_str += "\r\n#{(return_data[:body]).to_s}" if return_data[:body]
 
             # puts response_str
-
             begin
-                session.print response_str
+                #session.write response_str
+                session.puts "HTTP/1.1 #{CODES[(return_data[:http_code] || :ok)]}"
+                #headers
+                if return_data[:headers] 
+                    return_data[:headers].keys.each { |header_key| 
+                        session.puts "#{header_key}: #{return_data[:headers][header_key.to_sym]}"
+                    }
+                end
+                #body
+                session.puts ""
+                session.print return_data[:body].to_s if return_data[:body]
+
+
             rescue => error
                 puts "request return print failed #{error}"
             end

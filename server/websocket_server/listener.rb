@@ -1,6 +1,6 @@
 #https://www.honeybadger.io/blog/building-a-simple-websockets-server-from-scratch-in-ruby/
 
-require "digest"
+require 'digest/sha1'
 
 WS_SECURITY_KEY = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 class WebSocketServer
@@ -8,7 +8,7 @@ class WebSocketServer
     def initialize
 
     end
-    def on_http_connection(req)
+    def on_http_connection(req, session)
         headers = req[:headers]
         return {
             :body => "<h1>Error 418</h1> What the hell are you doing?",
@@ -31,7 +31,7 @@ class WebSocketServer
         res_ws_key = Digest::SHA1.base64digest(ws_key + WS_SECURITY_KEY)
         puts res_ws_key.length
         puts "respond with key #{res_ws_key}"
-
+        
         {
             :http_code => :switching_protocols,
             :headers => {
@@ -39,7 +39,7 @@ class WebSocketServer
                 "Connection": "Upgrade",
                 "Sec-WebSocket-Accept": res_ws_key
             },
-            :prevent_session_close => false
+            :prevent_session_close => true
         }        
     end
 end
