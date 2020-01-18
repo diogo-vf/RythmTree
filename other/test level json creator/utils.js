@@ -1,9 +1,13 @@
-Element.prototype.addElement = function(type = "div", attributes = []){
+Element.prototype.addElement = function(type = "div", attributes = {}){
     var elem = document.createElement(type);
     this.appendChild(elem);
     for(var indAttr in attributes){
         elem.setAttribute(indAttr, attributes[indAttr]);
     }
+    //special attributes (setters/other)
+    if(attributes._innerText) elem.innerText = attributes._innerText;
+    if(attributes._innerHTML) elem.innerHTML = attributes._innerHTML;
+    
     return elem;
 };
 CanvasRenderingContext2D.prototype.clear = function(){
