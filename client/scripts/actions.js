@@ -1,3 +1,4 @@
+"use strict";
 function Actions(){
     var _this = this;
 
@@ -42,7 +43,15 @@ function Actions(){
 
             player_icon.classList.replace(currentClass, newclass);
         };
-    }
+    };
+    this.onPageLoad.options = function(){
+        pagesManager.pages.options.container.addEventListener("change", function(){
+            applyUserOptions({
+                leavesAnimation: chkUserOptionsLeaves.checked
+            });
+        });
+    };
+    
     //-------------------------------------------------------------------------------------
     //page actions on display
     //-------------------------------------------------------------------------------------
@@ -53,10 +62,21 @@ function Actions(){
             errorClientMsg.innerText = (globalMemory.error.msg || "");
         }
     };
+    //options
+    this.onPageDisplay.options = function(){
+        var userOptions = getUserOptions();
+        chkUserOptionsLeaves.checked = userOptions.leavesAnimation;
+    };
     
     //page action on ANY page display
     this.onAnyPageDisplay = function({pageName = false, pageConfig = false}){
         pageNameDisplay.innerText = (pageConfig.pageName || "");
+        //options button
+        if(pageConfig.hideOptionsBtn){
+            userOptionsBtn.classList.add("none");
+        } else {
+            userOptionsBtn.classList.remove("none");
+        }
     }
 
     //-------------------------------------------------------------------------------------
@@ -85,10 +105,42 @@ function Actions(){
             btn.innerText = ind;
             link.href = `/${ind}`;
         }
-        for (let i=0;i<window.innerWidth/8;i++) {
-            leaves.addElement("i");
-        }
+        applyUserOptions();
         utils.setDynamicLinks(testTopMenu);
 	    console.log("init completed");
+    }
+    //functions
+    function applyUserOptions(userOptions = false){
+        var oldUserOptions = getUserOptions();
+        if(!userOptions){//bricolage de first load
+            userOptions = oldUserOptions;
+            oldUserOptions = {};
+        }
+        
+        //apply
+        if((oldUserOptions.leavesAnimation != userOptions.leavesAnimation)){
+            if(userOptions.leavesAnimation){//yes
+                generateLeaves(leaves);
+            }else{//no
+                leaves.removeChilds();
+            }
+        }
+        //store
+        Cookies.set("userOptions", JSON.stringify(userOptions));
+    }
+    function getUserOptions(){
+        var userOptionsStr = Cookies.get("userOptions");
+        if(userOptionsStr){
+            console.log(userOptionsStr);
+            return JSON.parse(userOptionsStr);
+        }
+        return{ //default
+            leavesAnimation: true
+        }
+    }
+    function generateLeaves(container){
+        for (let i=0;i<window.innerWidth/8;i++) {
+            container.addElement("i");
+        }
     }
 }

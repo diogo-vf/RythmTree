@@ -10,6 +10,11 @@ var pagesConfig = {
         title: "Home",
         pageName: "Accueil"
     },
+    options:{
+        title: "Options",
+        pageName: "Options",
+        hideOptionsBtn: true
+    },
     new_game:{
         title: "New game"
     },
