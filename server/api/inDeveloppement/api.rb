@@ -1,36 +1,4 @@
-require 'mongo'
-
-db_ip = "127.0.0.1"
-db_port = 27017
-db_name = "RythmTree"
-client = Mongo::Client.new([ "#{db_ip}:#{db_port}" ], :database => db_name)
-
-# module Level
-#     ID
-#     NAME
-#     DIFFICULTY
-#     HARDCORE
-#     module Music
-#         ID
-#         NAME
-#         DURATION
-#     end
-#     module Sequence
-#         TIME
-#         KEY
-#         DURATION
-#     end
-#     module Texture
-#         TREE
-#         PLATFORM    
-#     end
-#     module Creator
-#         ID
-#         Name    
-#     end
-# end
-
-require 'json'
+require "json"
 
 class DBElement
     def initialize(data = false)
@@ -130,63 +98,17 @@ class DBArray < DBElementFundamental
     end
 end
 
-class Player < DBElement
-    attributes = {
-        :id => MongoID,
-        :name => DBString,
-        :character => DBInteger
-    }
-end
 
-class PlayerArray < DBArray
-    def initialize (value=nil)
-        @contentClass = Player
-        super value(value)
-    end
-end
 
-class SequenceArray < DBArray      
-    def initialize(value=nil)
-        @contentClass = SequenceItem
-    end
-end
 
-class SequenceItem
-    attributes = {
-        :time => DBInteger,
-        :key => DBString,
-        :duration => DBInteger
-    }
-end
 
-class sequence < DBElement
-    attributes = {
-        :id => MongoID,
-        :sequence_array => SequenceArray,
-        :player => Player
-    }
-end
 
-class Player < DBElement
-    attributes = {
-        :id => MongoID,
-        :name => DBString,
-        :character => DBString
-    }
-end
 
-class Texture
-    attributes = {
-        :tree => DBString,
-        :platform => DBString
-    }
-end
-class Creator
-    attributes = {
-        :id => MongoID,
-        :name => DBString
-    }
-end
+
+
+
+
+
 
 class Replay < DBElement
     # module Replay
@@ -215,39 +137,6 @@ class Replay < DBElement
     # end
 end
 
-class Sequence < DBElement
-    attributes = {
-        :id => MongoID,
-        :level => Level,
-        :creator => Creator,
-        :players => PlayerArray,
-        :sequence_array => SequenceArray
-    }
-end
-
-class Music < DBElement
-    attributes = {
-        :id => MongoID,
-        :name => DBString,
-        :duration => DBInteger,
-        :src => DBString,
-        :bpm => DBInteger,
-        :start_offset => DBInteger
-    }
-end
-
-class Level < DBElement
-    attributes = {
-        :id => MongoID,
-        :name => DBString,
-        :difficulty => DBString,
-        :hardcore => DBBoolean
-        :music => Music,
-        :sequence => Sequence,
-        :texture => Texture,
-        :creator => Creator
-    }
-end
 
 moninstancemoche = Level.from_id "jgdj";
 moninstancemoche.save

@@ -1,7 +1,8 @@
 
 require_relative "../config/config"
 require_relative "mongoDB"
-require_relative "basicAPI"
+#require_relative "basicAPI/basicAPI"
+require_relative "inDeveloppement/api_diogo"
 
 hash={
     "action": "get",
@@ -11,7 +12,6 @@ hash={
          name: "niveau" 
     }
 }
-
 
 connection=BasicAPI.connection
 BasicAPI.actions(connection,hash)
