@@ -11,6 +11,7 @@ $minFall3: -650px;
 $rotate: 90;
 $rotate2: 30;
 $rotate3: -150;
+$maxHeight: calc(100vh - 100px);
 
 #leaves {
   top:-100px;
@@ -108,7 +109,7 @@ $i: 1;
 
   100% {
     transform:
-            translate3d($minFall,100vh,0)
+            translate3d($minFall,$maxHeight,0)
             rotate($rotate + deg);
     opacity: 0;
   }
@@ -124,7 +125,7 @@ $i: 1;
 
   100% {
     transform:
-            translate3d($minFall2,100vh,0)
+            translate3d($minFall2,$maxHeight,0)
             rotate(-50+$rotate2 + deg);
     opacity: 0;
   }
@@ -140,7 +141,7 @@ $i: 1;
 
   100% {
     -webkit-transform:
-            translate3d($minFall3,100vh,0)
+            translate3d($minFall3, $maxHeight,0)
             rotate($rotate3 + deg);
     opacity: 0;
   }
