@@ -1,12 +1,15 @@
 //_PROTOTYPES_METHODS_
-Element.prototype.addElement = function(type, className, options){
-	var newElement = document.createElement(type); //create
-	this.appendChild(newElement); //append to parent
-	if(typeof className === 'string'){
-		newElement.setAttribute('class', className); //set class name
-	}
-	return newElement;
-}
+Element.prototype.addElement = function(type = "div", attributes = {}){
+    var elem = document.createElement(type);
+    this.appendChild(elem);
+    for(var indAttr in attributes){
+        elem.setAttribute(indAttr, attributes[indAttr]);
+    }
+    //special attributes (setters/other)
+    if(attributes._innerText) elem.innerText = attributes._innerText;
+    if(attributes._innerHTML) elem.innerHTML = attributes._innerHTML;
+    return elem;
+};
 
 Element.prototype.removeChilds = function(elemQuerySelector = false){
 	if(elemQuerySelector){
@@ -75,8 +78,8 @@ var utils = {};
 utils.getGlobalLoader = function(){
 	if(!elements.globalLoader){
 		elements.globalLoader = {};
-		elements.globalLoader.container = document.body.addElement("div", "globalLoaderContainer none");
-		elements.globalLoader.loader = elements.globalLoader.container.addElement("div", "globalLoaderImage");
+		elements.globalLoader.container = document.body.addElement("div", {class: "globalLoaderContainer none"});
+		elements.globalLoader.loader = elements.globalLoader.container.addElement("div", {class: "globalLoaderImage"});
 		
 		elements.globalLoader.show = async function({withBackground = false} = {}){
             await async_requestAnimationFrame();
@@ -101,7 +104,7 @@ utils.getGlobalLoader = function(){
 	return elements.globalLoader;
 };
 utils.infoBox = function(message, time = 5000){
-	var infoBox = document.body.addElement("div", "infoMessageBox");
+	var infoBox = document.body.addElement("div", {class: "infoMessageBox"});
 	infoBox.innerText = message;
 	requestAnimationFrame(function(){
 		infoBox.style.opacity = 1;
