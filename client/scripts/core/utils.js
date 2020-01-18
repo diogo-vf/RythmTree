@@ -1,12 +1,15 @@
 //_PROTOTYPES_METHODS_
-Element.prototype.addElement = function(type, className, options){
-	var newElement = document.createElement(type); //create
-	this.appendChild(newElement); //append to parent
-	if(typeof className === 'string'){
-		newElement.setAttribute('class', className); //set class name
-	}
-	return newElement;
-}
+Element.prototype.addElement = function(type = "div", attributes = {}){
+    var elem = document.createElement(type);
+    this.appendChild(elem);
+    for(var indAttr in attributes){
+        elem.setAttribute(indAttr, attributes[indAttr]);
+    }
+    //special attributes (setters/other)
+    if(attributes._innerText) elem.innerText = attributes._innerText;
+    if(attributes._innerHTML) elem.innerHTML = attributes._innerHTML;
+    return elem;
+};
 
 Element.prototype.removeChilds = function(elemQuerySelector = false){
 	if(elemQuerySelector){
@@ -34,9 +37,9 @@ Element.prototype.addElemAfter = function(ref){
 HTMLCollection.prototype.forEach = Array.prototype.forEach;
 
 var Cookies = {};
-Cookies.get = function(){
+Cookies.get = function(key = false){
     var cookiesStr = document.cookie;
-    var cookiesArray = cookiesStr.split(";");
+	var cookiesArray = cookiesStr.split(";");
     var cookies = {};
     cookiesArray.forEach((cookie) => {
         var cookieComponents = cookie.split("=");
@@ -46,14 +49,17 @@ Cookies.get = function(){
         var cookey = decodeURIComponent(cookieComponents[0].trim());
         var value = decodeURIComponent(cookieComponents[1]);
         cookies[cookey] = value;
-    });
+	});
+	if(key){
+		return cookies[key];
+	}
     return cookies;
 }
-Cookies.set = function(key, value, expiration = (1000 * 60 * 60 * 24 * 365)/*1 year*/, path = false){
+Cookies.set = function(key, value, expiration = (1000 * 60 * 60 * 24 * 365)/*1 year*/, path = "/"){
     var expirationDate = new Date(Date.now() + expiration);
     var cookieStr = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
     cookieStr += `; expires=${expirationDate.toUTCString()}`
-    cookieStr += (path?`; path=${path}`:"");
+    cookieStr += `; path=${path}`;
     document.cookie = cookieStr;
 }
 Cookies.delete = function(key){
@@ -75,8 +81,8 @@ var utils = {};
 utils.getGlobalLoader = function(){
 	if(!elements.globalLoader){
 		elements.globalLoader = {};
-		elements.globalLoader.container = document.body.addElement("div", "globalLoaderContainer none");
-		elements.globalLoader.loader = elements.globalLoader.container.addElement("div", "globalLoaderImage");
+		elements.globalLoader.container = document.body.addElement("div", {class: "globalLoaderContainer none"});
+		elements.globalLoader.loader = elements.globalLoader.container.addElement("div", {class: "globalLoaderImage"});
 		
 		elements.globalLoader.show = async function({withBackground = false} = {}){
             await async_requestAnimationFrame();
@@ -101,7 +107,7 @@ utils.getGlobalLoader = function(){
 	return elements.globalLoader;
 };
 utils.infoBox = function(message, time = 5000){
-	var infoBox = document.body.addElement("div", "infoMessageBox");
+	var infoBox = document.body.addElement("div", {class: "infoMessageBox"});
 	infoBox.innerText = message;
 	requestAnimationFrame(function(){
 		infoBox.style.opacity = 1;
