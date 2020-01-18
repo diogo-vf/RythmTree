@@ -140,7 +140,8 @@ function Actions(){
     }
     function generateLeaves(container){
         for (let i=0;i<window.innerWidth/8;i++) {
-            container.addElement("i");
+            let delay = Math.random() * 15;
+            let leaf = container.addElement("i", {style: `animation-delay: ${delay}s`});
         }
     }
 }
