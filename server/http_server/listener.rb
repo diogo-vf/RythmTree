@@ -12,7 +12,10 @@ class HTTPServer
         server = HTTP.new
         wsServer = WebSocketServer.new
         server.listen(5678) {
-            |error = false, request = false|
+            |error = false, request = false, session = false|
+
+            #error
+            next {:httpCode => 500, :body => "<h1>Error 500</h1> #{error.to_s}"} if error
 
             #no request
             next { :httpCode => 500 } unless request
@@ -25,7 +28,7 @@ class HTTPServer
             #endpoint switch
             case request[:url][:path][0]
                 when 'websocket'
-                    next wsServer.on_http_connection request
+                    next wsServer.on_http_connection request, session
                 else
                     #web server
                     next WebServer.on_request request

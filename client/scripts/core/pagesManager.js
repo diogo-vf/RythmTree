@@ -35,7 +35,7 @@ function PagesManager(){
                 memory: {}
             };
             //build container
-            _this.pages[pageName].container = elements.pagesContainer.addElement('div', `pageContainer ${pageName}PageContainer none`);
+            _this.pages[pageName].container = elements.pagesContainer.addElement('div', {class: `pageContainer ${pageName}PageContainer none`});
         }
 
         //display page

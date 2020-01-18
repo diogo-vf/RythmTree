@@ -1,5 +1,5 @@
 WEB_DIR = __dir__ + "/../../client"
-ROOT_ALIASES = [nil, "", "error", "login", "home", "new_game", "lobby_host", "lobby", "new_level", "level_editor", "levels", "replays", "replay_player", "game"]
+ROOT_ALIASES = [nil, "", "error", "login", "home", "options", "new_game", "lobby_host", "lobby", "new_level", "level_editor", "levels", "replays", "replay_player", "game"]
 ROOT_DOCUMENT_PATH = "#{WEB_DIR}/root.html"
 MIME_TYPES = {
   "css": "text/css",
@@ -17,7 +17,7 @@ MIME_TYPES = {
 FILE_READ_BUFFER_SIZE = 255
 
 class WebServer
-  def self.on_request(request)
+  def self.on_request request
     request_url = request[:url]
 
     filepath = WEB_DIR + request[:url][:path_string]

@@ -1,7 +1,7 @@
 $timeAnim: 0.2s;
-$goodColor: #0E9A00;
+$goodColor: #0e9a00;
 $badColor: #9d0006;
-$defaultColor: #008CBA;
+$defaultColor: #008cba;
 $marginTexture: calc((100% - 266px) / 2);
 $marginTextureHover: calc((100% - 293px) / 2);
 
@@ -34,7 +34,7 @@ $marginTextureHover: calc((100% - 293px) / 2);
   bottom: 20px;
   right: 20px;
   padding: 10px;
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(0, 0, 0, 0.8);
   color: white;
   border: 1px solid white;
   border-radius: 5px;
@@ -58,8 +58,57 @@ $marginTextureHover: calc((100% - 293px) / 2);
 .noDataContainer {
   margin: 20px;
   font-size: 20px;
-  color:
-          #666;
+  color: #666;
+}
+
+.cursor-pointer {
+  cursor: url(../../images/textures/cursorHand_blue.png), pointer !important;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+/*checkbox*/
+.slideCheckBox {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 3px;
+  border: 1px solid#ccc;
+  background-color: #eee;
+  border-radius: 30px;
+  min-width: 52px;
+  input {
+    display: none;
+    &:checked + label::after {
+      margin-left: 30px;
+      margin-right: 0;
+    }
+  }
+  label {
+    cursor: pointer;
+    margin: 0;
+    &::after {
+      content: "";
+      display: inline-block;
+      height: 20px;
+      width: 20px;
+      border: 1px solid black;
+      background-color: #666;
+      border-radius: 50%;
+      margin-left: 0;
+      margin-right: 30px;
+      transition: margin-left 0.2s, margin-right 0.2s;
+    }
+  }
+  &.dark {
+    border-color: #333;
+    background-color: #666;
+    label::after {
+      border-color: 1px solid #666;
+      background-color: #ccc;
+    }
+  }
 }
 
 /* Common */
@@ -186,15 +235,18 @@ $marginTextureHover: calc((100% - 293px) / 2);
     height: 22px;
   }
 
-  &.arrow-right:hover, &.arrow-left:hover {
+  cursor: url(../../images/textures/cursorHand_blue.png), pointer !important;
+}
+
+.zoom-interaction {
+  transform: scale(1);
+  transition: transform 0.2s;
+  &:hover {
     transform: scale(1.2);
   }
-
-  &.arrow-right:active, &.arrow-left:active {
-    transform: scale(1.5);
+  &:active {
+    transform: scale(1.4);
   }
-
-  cursor: url(../../images/textures/cursorHand_blue.png), pointer !important;
 }
 
 .common-input {
@@ -226,7 +278,6 @@ $marginTextureHover: calc((100% - 293px) / 2);
   }
 
   &.texture {
-
     color: black;
     height: 68px;
     width: 266px;
@@ -252,22 +303,37 @@ $marginTextureHover: calc((100% - 293px) / 2);
 
 .common-box {
   background: url(../../images/textures/houseGrayTopRight.png) calc(100%) 0 no-repeat,
-          url(../../images/textures/houseGrayTopLeft.png) 0 0 no-repeat,
-          url(../../images/textures/houseGrayBottomRight.png) calc(100%) calc(100%) no-repeat,
-          url(../../images/textures/houseGrayBottomLeft.png) 0 calc(100%) no-repeat,
-          url(../../images/textures/houseGrayTopMid.png) calc(100%) 0 repeat-x,
-          url(../../images/textures/houseGrayMidLeft.png) 0 0 repeat-y,
-          url(../../images/textures/houseGrayMidRight.png) calc(100%) 0 repeat-y,
-          url(../../images/textures/houseGrayBottomMid.png) 0 calc(100%) repeat-x,
-          url(../../images/textures/houseGrayAlt2.png) 15% 15% no-repeat,
-          url(../../images/textures/houseGrayAlt2.png) 40% 30% no-repeat,
-          url(../../images/textures/houseGrayAlt2.png) 70% 55% no-repeat,
-          url(../../images/textures/houseGrayAlt.png) 30% 85% no-repeat,
-          url(../../images/textures/houseGrayAlt.png) 80% 25% no-repeat,
-          url(../../images/textures/houseGrayAlt.png) 95% 85% no-repeat,
-          url(../../images/textures/houseGrayAlt.png) 60% 80% no-repeat,
-          url(../../images/textures/houseGray.png) repeat;
+    url(../../images/textures/houseGrayTopLeft.png) 0 0 no-repeat,
+    url(../../images/textures/houseGrayBottomRight.png) calc(100%) calc(100%) no-repeat,
+    url(../../images/textures/houseGrayBottomLeft.png) 0 calc(100%) no-repeat,
+    url(../../images/textures/houseGrayTopMid.png) calc(100%) 0 repeat-x,
+    url(../../images/textures/houseGrayMidLeft.png) 0 0 repeat-y,
+    url(../../images/textures/houseGrayMidRight.png) calc(100%) 0 repeat-y,
+    url(../../images/textures/houseGrayBottomMid.png) 0 calc(100%) repeat-x,
+    url(../../images/textures/houseGrayAlt2.png) 15% 15% no-repeat,
+    url(../../images/textures/houseGrayAlt2.png) 40% 30% no-repeat,
+    url(../../images/textures/houseGrayAlt2.png) 70% 55% no-repeat,
+    url(../../images/textures/houseGrayAlt.png) 30% 85% no-repeat,
+    url(../../images/textures/houseGrayAlt.png) 80% 25% no-repeat,
+    url(../../images/textures/houseGrayAlt.png) 95% 85% no-repeat,
+    url(../../images/textures/houseGrayAlt.png) 60% 80% no-repeat, url(../../images/textures/houseGray.png) repeat;
   border: 1pt solid darkgrey;
+  padding: 10px 15px 25px 15px; //layout margin
+}
+
+.mainTitle {
+  font-weight: bold;
+  text-shadow: -2px 1px 0 blue;
+  color: #16a7d7;
+  text-decoration: none;
+}
+
+#userOptionsBtn > img {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  right: 40px;
+  top: 20px;
 }
 
 .common-text {
@@ -307,5 +373,5 @@ $j: 1;
       $i: $i + $frame;
     }
   }
-  $j: $j +1;
+  $j: $j + 1;
 }

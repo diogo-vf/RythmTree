@@ -1,7 +1,7 @@
 /* leaf animations */
 
 $fallingTime: 8s;
-$fallingTime2: $fallingTime*1.7;
+$fallingTime2: $fallingTime * 1.7;
 $maxFall: 300px;
 $minFall: -350px;
 $maxFall2: 450px;
@@ -14,8 +14,8 @@ $rotate3: -150;
 $maxHeight: calc(100vh - 100px);
 
 #leaves {
-  top:-100px;
-  width:100%;
+  top: -100px;
+  width: 100%;
   text-align: right;
   z-index: -1;
   height: 0;
@@ -35,12 +35,16 @@ $maxHeight: calc(100vh - 100px);
   animation: falling $fallingTime 0s infinite;
 }
 
-#leaves i:nth-of-type(2n) { animation: falling2 $fallingTime2 0s infinite; }
-#leaves i:nth-of-type(3n) { animation: falling3 $fallingTime 0s infinite; }
+#leaves i:nth-of-type(2n) {
+  animation: falling2 $fallingTime2 0s infinite;
+}
+#leaves i:nth-of-type(3n) {
+  animation: falling3 $fallingTime 0s infinite;
+}
 
 #leaves i:before {
   position: absolute;
-  content: '';
+  content: "";
   top: 117px;
   right: 9px;
   height: 27px;
@@ -51,98 +55,130 @@ $maxHeight: calc(100vh - 100px);
   border-bottom: 1px solid #222;
   border-left: 0px solid #222;
   border-right: 1px solid #222;
-  background: linear-gradient(to right, rgba(0,100,0,1), #005600);
+  background: linear-gradient(to right, rgba(0, 100, 0, 1), #005600);
   z-index: -1;
 }
 
 #leaves i:after {
-  content: '';
+  content: "";
   height: 125px;
   width: 10px;
-  background: linear-gradient(to right, rgba(0,0,0,.15), rgba(0,0,0,0));
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
   display: block;
   transform: rotate(125deg);
   position: absolute;
   left: 85px;
-  border-radius:50%;
+  border-radius: 50%;
 }
 
-
-#leaves i:nth-of-type(n)    { height:23px; width:30px; }
-#leaves i:nth-of-type(n):before { width:7px; height:5px; top:17px; right:1px; }
-#leaves i:nth-of-type(n):after { width:2px; height:17px; left: 12px; top:0px; }
-
-#leaves i:nth-of-type(2n+1)    { height:11px; width:16px; }
-#leaves i:nth-of-type(2n+1):before { width:4px; height:3px; top:7px; right:0px; }
-#leaves i:nth-of-type(2n+1):after { width:2px; height:6px; left: 5px; top:1px; }
-
-#leaves i:nth-of-type(3n+2)  { height:17px; width:23px; }
-#leaves i:nth-of-type(3n+2):before  { height:4px; width:4px; top:12px; right:1px; }
-#leaves i:nth-of-type(3n+2):after  { height:10px; width:2px; top:1px; left:8px; }
-
-$i: 1;
-@while $i < 150 {
-  #leaves i:nth-of-type(#{$i}n)   { animation-delay: random(15*100)/100 + s;}
-  $i: $i + 1;
+#leaves i:nth-of-type(n) {
+  height: 23px;
+  width: 30px;
+}
+#leaves i:nth-of-type(n):before {
+  width: 7px;
+  height: 5px;
+  top: 17px;
+  right: 1px;
+}
+#leaves i:nth-of-type(n):after {
+  width: 2px;
+  height: 17px;
+  left: 12px;
+  top: 0px;
 }
 
-#leaves i:nth-of-type(n)    { background: linear-gradient(to bottom right, #309900, #005600); }
-#leaves i:nth-of-type(2n+2)  { background: linear-gradient(to bottom right, #5e9900, #2b5600); }
-#leaves i:nth-of-type(4n+1)  { background: linear-gradient(to bottom right, #990, #564500); }
+#leaves i:nth-of-type(2n + 1) {
+  height: 11px;
+  width: 16px;
+}
+#leaves i:nth-of-type(2n + 1):before {
+  width: 4px;
+  height: 3px;
+  top: 7px;
+  right: 0px;
+}
+#leaves i:nth-of-type(2n + 1):after {
+  width: 2px;
+  height: 6px;
+  left: 5px;
+  top: 1px;
+}
 
-#leaves i:nth-of-type(n)    { opacity: 1;}
-#leaves i:nth-of-type(3n+1)  { opacity: 1;}
-#leaves i:nth-of-type(3n+2)  { opacity: 1;}
+#leaves i:nth-of-type(3n + 2) {
+  height: 17px;
+  width: 23px;
+}
+#leaves i:nth-of-type(3n + 2):before {
+  height: 4px;
+  width: 4px;
+  top: 12px;
+  right: 1px;
+}
+#leaves i:nth-of-type(3n + 2):after {
+  height: 10px;
+  width: 2px;
+  top: 1px;
+  left: 8px;
+}
 
-#leaves i:nth-of-type(n)    {transform: rotate(180deg);}
+#leaves i:nth-of-type(n) {
+  background: linear-gradient(to bottom right, #309900, #005600);
+}
+#leaves i:nth-of-type(2n + 2) {
+  background: linear-gradient(to bottom right, #5e9900, #2b5600);
+}
+#leaves i:nth-of-type(4n + 1) {
+  background: linear-gradient(to bottom right, #990, #564500);
+}
 
+#leaves i:nth-of-type(n) {
+  opacity: 1;
+}
+#leaves i:nth-of-type(3n + 1) {
+  opacity: 1;
+}
+#leaves i:nth-of-type(3n + 2) {
+  opacity: 1;
+}
 
-#leaves i:nth-of-type(n) { animation-timing-function:ease-in-out;}
+#leaves i:nth-of-type(n) {
+  transform: rotate(180deg);
+}
+
+#leaves i:nth-of-type(n) {
+  animation-timing-function: ease-in-out;
+}
 
 @keyframes falling {
-
   0% {
-    transform:
-            translate3d($maxFall,0,0)
-            rotate($rotate*0deg);
+    transform: translate3d($maxFall, 0, 0) rotate($rotate * 0deg);
   }
 
   100% {
-    transform:
-            translate3d($minFall,$maxHeight,0)
-            rotate($rotate + deg);
+    transform: translate3d($minFall, $maxHeight, 0) rotate($rotate + deg);
     opacity: 0;
   }
 }
 
 @keyframes falling2 {
-
   0% {
-    transform:
-            translate3d($maxFall2,0,0)
-            rotate(-50+$rotate2*0deg);
+    transform: translate3d($maxFall2, 0, 0) rotate(-50 + $rotate2 * 0deg);
   }
 
   100% {
-    transform:
-            translate3d($minFall2,$maxHeight,0)
-            rotate(-50+$rotate2 + deg);
+    transform: translate3d($minFall2, $maxHeight, 0) rotate(-50 + $rotate2 + deg);
     opacity: 0;
   }
 }
 
 @keyframes falling3 {
-
   0% {
-    -webkit-transform:
-            translate3d($maxFall3,0,0)
-            rotate($rotate3*0 + deg);
+    -webkit-transform: translate3d($maxFall3, 0, 0) rotate($rotate3 * 0 + deg);
   }
 
   100% {
-    -webkit-transform:
-            translate3d($minFall3, $maxHeight,0)
-            rotate($rotate3 + deg);
+    -webkit-transform: translate3d($minFall3, $maxHeight, 0) rotate($rotate3 + deg);
     opacity: 0;
   }
 }
