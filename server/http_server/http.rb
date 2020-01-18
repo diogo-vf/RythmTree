@@ -4,7 +4,6 @@
 
 require "socket"
 require "uri"
-require_relative "utils"
 
 class HTTP
     CODES = {

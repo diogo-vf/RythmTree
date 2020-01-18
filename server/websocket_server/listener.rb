@@ -1,12 +1,13 @@
 #https://www.honeybadger.io/blog/building-a-simple-websockets-server-from-scratch-in-ruby/
 
-require 'digest/sha1'
+
+#require_relative '../utils'
 
 WS_SECURITY_KEY = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 class WebSocketServer
     public
     def initialize
-
+        @connections = {}
     end
     def on_http_connection req, session
         headers = req[:headers]
@@ -25,9 +26,25 @@ class WebSocketServer
 
         puts "initiating connection with key #{ws_key}"
         #handshake
-        res_ws_key = Digest::SHA1.base64digest ws_key + WS_SECURITY_KEY
+        res_ws_key = base64_encode ws_key + WS_SECURITY_KEY
         puts "respond with key #{res_ws_key}"
         
+        connection_id = gen_uuid
+        connection_handler = Thread.new{
+            puts "thread handling connection #{ws_key}"
+            loop do
+                puts "hello! #{ws_key}"
+                sleep 1
+            end
+        }
+        #store connection
+        @connections[ws_key] = {
+            :ws_key => ws_key,
+            :session => session,
+            :handler_thread => connection_handler
+        }
+
+        puts "websocket handshake complete for #{ws_key}"
         {
             :http_code => :switching_protocols,
             :headers => {
@@ -37,5 +54,10 @@ class WebSocketServer
             },
             :prevent_session_close => true
         }        
+    end
+
+    private
+    def handleConnection id
+
     end
 end
