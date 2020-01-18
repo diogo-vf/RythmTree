@@ -8,7 +8,7 @@ class WebSocketServer
     def initialize
 
     end
-    def on_http_connection(req, session)
+    def on_http_connection req, session
         headers = req[:headers]
         return {
             :body => "<h1>Error 418</h1> What the hell are you doing?",
@@ -22,14 +22,10 @@ class WebSocketServer
                 :body => "<h1>Error 400</h1> user error xD"
             }
         end
-        puts (ws_key || "nope")
 
         puts "initiating connection with key #{ws_key}"
-        puts ws_key.length
-        puts WS_SECURITY_KEY
         #handshake
-        res_ws_key = Digest::SHA1.base64digest(ws_key + WS_SECURITY_KEY)
-        puts res_ws_key.length
+        res_ws_key = Digest::SHA1.base64digest ws_key + WS_SECURITY_KEY
         puts "respond with key #{res_ws_key}"
         
         {

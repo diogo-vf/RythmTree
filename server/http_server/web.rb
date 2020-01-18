@@ -17,7 +17,7 @@ MIME_TYPES = {
 FILE_READ_BUFFER_SIZE = 255
 
 class WebServer
-  def self.on_request(request)
+  def self.on_request request
     request_url = request[:url]
 
     filepath = WEB_DIR + request[:url][:path_string]

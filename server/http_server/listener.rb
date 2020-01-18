@@ -12,7 +12,10 @@ class HTTPServer
         server = HTTP.new
         wsServer = WebSocketServer.new
         server.listen(5678) {
-            |request = false, session = false|
+            |error = false, request = false, session = false|
+
+            #error
+            next {:httpCode => 500, :body => "<h1>Error 500</h1> #{error.to_s}"} if error
 
             #no request
             next { :httpCode => 500 } unless request
