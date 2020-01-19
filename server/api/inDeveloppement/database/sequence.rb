@@ -1,11 +1,9 @@
 
 class Sequence < DBElement
     attributes = {
-        :id => MongoID,
-        :level => Level,
-        :creator => Creator,
-        :players => PlayerArray,
-        :sequence_array => SequenceArray
+        id: MongoID,
+        sequence_item_array: SequenceItemArray,
+        players: PlayerArray
     }
 end
 

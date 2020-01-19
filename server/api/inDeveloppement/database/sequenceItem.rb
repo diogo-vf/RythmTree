@@ -1,7 +1,8 @@
-class SequenceItem
+class SequenceItem < DBElement
     attributes = {
-        :time => DBInteger,
-        :key => DBString,
-        :duration => DBInteger
+        key: DBString, 
+        time: DBInteger,
+        duration: DBInteger
     }
 end
+

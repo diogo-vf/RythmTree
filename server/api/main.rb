@@ -1,8 +1,9 @@
 
 require_relative "../config/config"
 require_relative "mongoDB"
-#require_relative "basicAPI/basicAPI"
+# require_relative "basicAPI/basicAPI"
 require_relative "inDeveloppement/api_diogo"
+
 
 hash={
     "action": "get",
@@ -13,5 +14,5 @@ hash={
     }
 }
 
-connection=BasicAPI.connection
-BasicAPI.actions(connection,hash)
+# connection=BasicAPI.connection
+# BasicAPI.actions(connection,hash)

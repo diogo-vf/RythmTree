@@ -1,6 +1,6 @@
 class Texture
     attributes = {
-        :tree => DBString,
-        :platform => DBString
+        tree: DBString,
+        platform: DBString
     }
 end

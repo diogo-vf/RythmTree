@@ -1,6 +1,6 @@
-class Creator
+class Creator < DBElement
     attributes = {
-        :id => MongoID,
-        :name => DBString
+        id: MongoID,
+        name: DBString
     }
 end
