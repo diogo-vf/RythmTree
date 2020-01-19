@@ -74,12 +74,65 @@ class WebSocketServer
         # +---------------------------------------------------------------+
         connection = @connections[connection_id]
         session = connection[:session]
-        header_byte = session.getbyte
-        puts header_byte
-        puts "hmm"
-        # loop do
-        #     puts "hello! #{connection_id} #{Time.now}"
-        #     sleep 1
-        # end
+        loop do
+            #header
+            header_byte = session.getbyte
+            fin = header_byte & 0b10000000
+            rsv = header_byte & 0b01110000
+            opcode = header_byte & 0b00001111
+
+            puts "ws header | fin: #{fin}, rsv: #{rsv}, opcode: #{opcode}"
+            unless fin
+                puts "ws currently only supports single frame payloads"
+                return
+            end
+            unless opcode == 1
+                puts "ws currently only supports text requests"
+                return
+            end
+            
+            #payload header
+            payload_header_byte = session.getbyte
+            has_mask = payload_header_byte & 0b10000000
+            payload_length = payload_header_byte & 0b01111111
+            if payload_length >= 126
+                lengths_array = [payload_length]
+                while (current_length = session.getbyte)
+                    break;
+                    puts "current_length: #{current_length}"
+                    lengths_array.push current_length
+                    #break if current_length < 254
+                end
+                puts "lengths array: #{lengths_array}"
+                puts "ws currently only supports request of up to 126 bits in length"
+                return
+            end
+
+            puts "ws payload header | has_mask: #{has_mask}, payload_length: #{payload_length} bytes"
+
+            #masking key
+            masking_key_array = 4.times.map{session.getbyte}
+            puts "ws masking key #{masking_key_array}"
+
+            #body
+            masked_body_array = payload_length.times.map {session.getbyte}
+            unmasked_body_array = masked_body_array.each_with_index.map{
+                |body_byte, index|
+                mask_key_byte = masking_key_array[index % 4]
+                body_byte ^ mask_key_byte #xor body byte with mask byte to unmask it
+            }
+            body = unmasked_body_array.pack('C*').force_encoding("utf-8") #encode array into 8-bit integers str then convert to utf8 str
+
+            puts "ws body : #{body}"
+
+            # loop do
+            #     puts "hello! #{connection_id} #{Time.now}"
+            #     sleep 1
+            # end
+        end
+    end
+
+    def self.decode_request bytes_array
+
     end
 end
