@@ -76,6 +76,16 @@ function async_setTimeout(time){
         setTimeout(res, time);
     });
 }
+//uuid generator stolen from https://stackoverflow.com/a/8809472 (then simplified a bit)
+function generateUUID() { // Public Domain/MIT
+    var d = Date.now();//Timestamp
+    var d2 = performance.now()*1000;//Time in microseconds since page-load
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		var r = (d2 + (Math.random() * 16))%16 | 0;
+		d2 = Math.floor(d2/16);
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+}
 //_UTILS METHODS
 var utils = {};
 utils.getGlobalLoader = function(){

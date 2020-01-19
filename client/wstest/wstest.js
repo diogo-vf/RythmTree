@@ -8,7 +8,7 @@ ws.onopen = function(ev){
 }
 ws.onmessage = function(evt){
     var response = JSON.parse(evt.data);
-    console.log("msg 1", evt);
+    console.log("onmessage", evt);
     if(response.requestId){
         awaitingResponse[response.requestId](response.data);
         delete awaitingResponse[response.requestId];
@@ -20,7 +20,7 @@ async function sendMsg(action, data = false, waitForResponse = false){ //if call
         data
     }
     if(waitForResponse){
-        var requestId = genUUID();
+        var requestId = generateUUID();
         msgObject.requestId = requestId
         var promise = new Promise(function(resolve, reject) {
             awaitingResponse[requestId] = resolve;
@@ -46,9 +46,6 @@ async function fakeSend(objstr){
     console.log("[server] on message", obj);
     await async_setTimeout(500);
     ws.onmessage({ data: JSON.stringify({requestId: obj.requestId, data:{connectionId: "12344321", player:{id: "717171", userName: obj.userName}}})});
-}
-/*bad*/ function genUUID(){
-    return (Math.random() + "").split(".")[1]
 }
 //2
 if(false){
