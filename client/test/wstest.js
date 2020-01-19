@@ -40,6 +40,13 @@ async function register(userName){
     var result = await sendRequest("register", {userName});
     console.log("auth result", result);
 }
+function bytesSend(count){
+    var str = "";
+    for(var ind = 0; ind < count; ind++){
+        str += "j"
+    }
+    ws.send(str);
+}
 async function fakeSend(objstr){
     var obj = JSON.parse(objstr);
     await async_setTimeout(500);

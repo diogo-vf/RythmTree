@@ -1,4 +1,5 @@
 #https://www.honeybadger.io/blog/building-a-simple-websockets-server-from-scratch-in-ruby/
+#readable spec: https://lucumr.pocoo.org/2012/9/24/websockets-101/
 
 require 'pp'
 
@@ -94,19 +95,17 @@ class WebSocketServer
             #payload header
             payload_header_byte = session.getbyte
             has_mask = payload_header_byte & 0b10000000
-            payload_length = payload_header_byte & 0b01111111
-            if payload_length >= 126
-                lengths_array = [payload_length]
-                while (current_length = session.getbyte)
-                    break;
-                    puts "current_length: #{current_length}"
-                    lengths_array.push current_length
-                    #break if current_length < 254
-                end
-                puts "lengths array: #{lengths_array}"
-                puts "ws currently only supports request of up to 126 bits in length"
-                return
-            end
+            #length
+            payload_initial_length = payload_header_byte & 0b01111111
+            length_array = [payload_initial_length]
+            length_array = 2.times.map {session.getbyte} if payload_initial_length == 126
+            length_array = 8.times.map {session.getbyte} if payload_initial_length == 127
+            payload_length = 0;
+            length_array.each_with_index{
+                |value, index|
+                power_index = length_array.size - index - 1
+                payload_length += value * (256**power_index)
+            }
 
             puts "ws payload header | has_mask: #{has_mask}, payload_length: #{payload_length} bytes"
 
@@ -124,11 +123,6 @@ class WebSocketServer
             body = unmasked_body_array.pack('C*').force_encoding("utf-8") #encode array into 8-bit integers str then convert to utf8 str
 
             puts "ws body : #{body}"
-
-            # loop do
-            #     puts "hello! #{connection_id} #{Time.now}"
-            #     sleep 1
-            # end
         end
     end
 
