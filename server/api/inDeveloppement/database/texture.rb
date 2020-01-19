@@ -1,6 +1,9 @@
-class Texture
-    attributes = {
-        tree: DBString,
-        platform: DBString
-    }
+class Texture < DBElement
+    def initialize
+        @attributes = {
+            tree: String,
+            platform: String
+        }
+        super
+    end
 end

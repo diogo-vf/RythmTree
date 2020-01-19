@@ -1,8 +1,11 @@
 class SequenceItem < DBElement
-    attributes = {
-        key: DBString, 
-        time: DBInteger,
-        duration: DBInteger
-    }
+    def initialize
+        @attributes = {
+            key: String, 
+            time: Integer,
+            duration: Integer
+        }
+        super
+    end
 end
 

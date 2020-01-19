@@ -1,10 +1,13 @@
 class Music < DBElement
-    attributes = {
-        id: MongoID,
-        name: DBString,
-        duration: DBInteger,
-        src: DBString,
-        bpm: DBInteger,
-        start_offset: DBInteger
-    }
+    def initialize
+        @attributes = {
+            id: MongoID,
+            name: String,
+            duration: Integer,
+            src: String,
+            bpm: Integer,
+            start_offset: Integer
+        }
+        super
+    end
 end

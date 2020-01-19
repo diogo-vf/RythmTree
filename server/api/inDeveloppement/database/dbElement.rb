@@ -1,30 +1,31 @@
 class DBElement
     attr_accessor :attributes
 
-    def initialize
-        puts attributes
+    def initialize(data = nil)
+        # puts @attributes
+        create_accessors @attributes
     end
 
     def find id
-        puts "lol"
+        "un id"
     end
-end
-#special cases
-class DBElementFundamental
-    #attr_accessor :value
-    def initialize(val = nil)
-        @value = val
+
+    def create_accessors ( attributes = {} )
+        attributes.each do |attr, value|
+
+            if value.class == Class && value < DBElement 
+                attributes[attr] = value.new
+            else                
+                # Setter
+                define_singleton_method("#{attr}=") { |val| attributes[attr] = val } 
+            end
+
+            # Getter
+            define_singleton_method(attr) { attributes[attr] }
+        end
     end
-end
-class DBString < DBElementFundamental
 
 end
-class DBBoolean < DBElementFundamental
 
-end
-class DBInteger < DBElementFundamental
-    
-end
-class DBArray < DBElementFundamental
-
+class DBArray
 end

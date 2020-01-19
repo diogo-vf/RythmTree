@@ -1,7 +1,10 @@
 class Player < DBElement
-    @attributes = {
-        id: MongoID,
-        name: DBString,
-        character: DBString
-    }
+    def initialize
+        @attributes = {
+            id: MongoID,
+            name: String,
+            character: String
+        }
+        super
+    end
 end

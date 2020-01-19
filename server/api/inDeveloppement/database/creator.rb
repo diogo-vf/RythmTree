@@ -1,6 +1,9 @@
 class Creator < DBElement
-    attributes = {
-        id: MongoID,
-        name: DBString
-    }
+    def initialize
+        @attributes = {
+            id: MongoID,
+            name: String
+        }
+        super
+    end
 end

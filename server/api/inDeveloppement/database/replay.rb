@@ -1,7 +1,10 @@
 class Replay < DBElement
-    attributes = {
-        id: MongoID,
-        level: Level,
-        sequences: SequenceArray
-    }
+    def initialize
+        @attributes = {
+            id: MongoID,
+            level: Level,
+            sequences: SequenceArray
+        }
+        super
+    end
 end
