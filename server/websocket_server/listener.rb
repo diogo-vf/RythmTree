@@ -1,7 +1,6 @@
 #https://www.honeybadger.io/blog/building-a-simple-websockets-server-from-scratch-in-ruby/
 
-
-#require_relative '../utils'
+require 'pp'
 
 WS_SECURITY_KEY = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 class WebSocketServer
@@ -31,14 +30,11 @@ class WebSocketServer
         
         connection_id = gen_uuid
         connection_handler = Thread.new{
-            puts "thread handling connection #{ws_key}"
-            loop do
-                puts "hello! #{ws_key}"
-                sleep 1
-            end
+            puts "thread handling connection #{ws_key} with id #{connection_id}"
+            handleConnection(connection_id)
         }
         #store connection
-        @connections[ws_key] = {
+        @connections[connection_id] = {
             :ws_key => ws_key,
             :session => session,
             :handler_thread => connection_handler
@@ -57,7 +53,33 @@ class WebSocketServer
     end
 
     private
-    def handleConnection id
-
+    def handleConnection connection_id
+        # frame schema
+        # 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+        # +-+-+-+-+-------+-+-------------+-------------------------------+
+        # |F|R|R|R| opcode|M| Payload len |    Extended payload length    |
+        # |I|S|S|S|  (4)  |A|     (7)     |             (16/64)           |
+        # |N|V|V|V|       |S|             |   (if payload len==126/127)   |
+        # | |1|2|3|       |K|             |                               |
+        # +-+-+-+-+-------+-+-------------+ - - - - - - - - - - - - - - - +
+        # |     Extended payload length continued, if payload len == 127  |
+        # + - - - - - - - - - - - - - - - +-------------------------------+
+        # |                               |Masking-key, if MASK set to 1  |
+        # +-------------------------------+-------------------------------+
+        # | Masking-key (continued)       |          Payload Data         |
+        # +-------------------------------- - - - - - - - - - - - - - - - +
+        # :                     Payload Data continued ...                :
+        # + - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +
+        # |                     Payload Data continued ...                |
+        # +---------------------------------------------------------------+
+        connection = @connections[connection_id]
+        session = connection[:session]
+        header_byte = session.getbyte
+        puts header_byte
+        puts "hmm"
+        # loop do
+        #     puts "hello! #{connection_id} #{Time.now}"
+        #     sleep 1
+        # end
     end
 end
