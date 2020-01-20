@@ -16,7 +16,8 @@ var pagesConfig = {
         hideOptionsBtn: true
     },
     new_game:{
-        title: "New game"
+        title: "New game",
+        view: "newgame"
     },
     lobby_host:{
         title: "Lobby (host)",
