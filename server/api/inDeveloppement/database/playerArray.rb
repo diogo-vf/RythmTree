@@ -1,5 +1,5 @@
 class PlayerArray < DBArray
-    def initialize(value=nil)
-        @contentClass = Player
+    def initialize
+        @contentClass=Player
     end
 end

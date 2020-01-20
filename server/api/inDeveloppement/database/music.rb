@@ -1,7 +1,8 @@
 class Music < DBElement
     def initialize
+        @collection_name = "musics"
         @attributes = {
-            id: MongoID,
+            id: String,
             name: String,
             duration: Integer,
             src: String,

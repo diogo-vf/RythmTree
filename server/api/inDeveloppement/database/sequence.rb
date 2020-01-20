@@ -1,9 +1,9 @@
-
 class Sequence < DBElement
     def initialize
+        @collection_name = "sequence"
         @attributes = {
-            id: MongoID,
-            sequence_item_array: SequenceItemArray,
+            id: String,
+            sequences: SequenceItemArray,
             players: PlayerArray
         }
         super

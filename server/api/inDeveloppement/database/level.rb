@@ -1,7 +1,8 @@
 class Level < DBElement
     def initialize
+        @collection_name = "levels"
         @attributes = {
-            id: MongoID,
+            id: String,
             name: String,
             difficulty: String,
             hardcore: Integer,

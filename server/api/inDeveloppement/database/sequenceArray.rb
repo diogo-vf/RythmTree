@@ -1,5 +1,7 @@
-class SequenceArray < DBArray      
-    def initialize(value=nil)
-        @contentClass = Sequence
+class SequenceArray < Array      
+    public
+
+    def add(sequence)        
+        self.push(Sequence) if sequence <= Sequence
     end
 end

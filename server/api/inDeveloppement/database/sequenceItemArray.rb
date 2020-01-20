@@ -1,5 +1,5 @@
-class SequenceItemArray < DBArray      
-    def initialize(value=nil)
-        @contentClass = SequenceItem
+class SequenceItemArray < DBArray   
+    def initialize
+        @contentClass=SequenceItem
     end
 end
