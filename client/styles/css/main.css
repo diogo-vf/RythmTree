@@ -1,10 +1,10 @@
 @import "https://fonts.googleapis.com/css?family=Nunito:200,600";
-html {
-  font-family: Nunito;
-  cursor: url(../../images/textures/cursorGauntlet_blue.png), auto; }
-
 body {
+  min-height: 100vh;
+  font-family: Nunito;
   background: url(../../images/textures/hill_small.png) 42vw calc(100vh - 246px) no-repeat fixed, url(../../images/textures/hill_large.png) 35vw calc(100vh - 286px) no-repeat fixed, url(../../images/textures/hill_large.png) 70vw calc(100vh - 286px) no-repeat fixed, url(../../images/textures/bush.png) 15vw calc(100vh - 212px) no-repeat fixed, url(../../images/textures/grassMid.png) 0 calc(100vh - 140px) repeat-x fixed, url(../../images/textures/grassCenter.png) 0 calc(100vh - 70px) repeat-x fixed, url(../../images/textures/liquidWater.png) repeat fixed; }
+  body, body * {
+    cursor: url(../../images/textures/cursorGauntlet_blue.png), auto; }
 
 body {
   text-align: center; }
@@ -62,7 +62,7 @@ body {
   font-size: 20px;
   color: #666; }
 
-.cursor-pointer {
+.cursor-pointer, .slideCheckBox label {
   cursor: url(../../images/textures/cursorHand_blue.png), pointer !important; }
 
 a {
@@ -83,7 +83,6 @@ a {
       margin-left: 30px;
       margin-right: 0; }
   .slideCheckBox label {
-    cursor: pointer;
     margin: 0; }
     .slideCheckBox label::after {
       content: "";

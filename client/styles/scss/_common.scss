@@ -86,7 +86,7 @@ a {
     }
   }
   label {
-    cursor: pointer;
+    @extend .cursor-pointer;
     margin: 0;
     &::after {
       content: "";
