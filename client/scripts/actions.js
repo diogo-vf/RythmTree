@@ -70,7 +70,7 @@ function Actions(){
     
     //page action on ANY page display
     this.onAnyPageDisplay = function({pageName = false, pageConfig = false}){
-        pageNameDisplay.innerText = (pageConfig.pageName || "");
+        pageNameDisplay.innerText = (pageConfig.pageName || pageConfig.title || "");
         //options button
         if(pageConfig.hideOptionsBtn){
             userOptionsBtn.classList.add("none");
