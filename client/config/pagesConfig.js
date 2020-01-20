@@ -17,14 +17,17 @@ var pagesConfig = {
     },
     new_game:{
         title: "Choix de la partie",
+        pageName: "Choix de la partie",
         view: "newgame"
     },
     lobby_host:{
-        title: "Création_de_la_partie",
+        title: "Création de la partie",
+        pageName: "Création de la partie",
         view: "lobby"
     },
     lobby:{
         title: "Création de la partie",
+        pageName: "Création de la partie",
         view: "lobby"
     },
     new_level:{
