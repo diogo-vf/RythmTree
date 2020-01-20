@@ -1,4 +1,8 @@
 @import "https://fonts.googleapis.com/css?family=Nunito:200,600";
+html {
+  cursor: url(../../images/textures/cursorGauntlet_blue.png), auto;
+}
+
 body {
   min-height: 100vh;
   font-family: Nunito;
