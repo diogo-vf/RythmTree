@@ -16,15 +16,16 @@ var pagesConfig = {
         hideOptionsBtn: true
     },
     new_game:{
-        title: "New game",
+        title: "Choix de la partie",
         view: "newgame"
     },
     lobby_host:{
-        title: "Lobby (host)",
+        title: "Création_de_la_partie",
         view: "lobby"
     },
     lobby:{
-        title: "Lobby"
+        title: "Création de la partie",
+        view: "lobby"
     },
     new_level:{
         title: "Create level"
