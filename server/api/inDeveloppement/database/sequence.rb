@@ -4,7 +4,7 @@ class Sequence < DBElement
         @attributes = {
             id: String,
             sequences: SequenceItemArray,
-            players: PlayerArray
+            player: Player
         }
         super
     end

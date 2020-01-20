@@ -4,10 +4,10 @@ class Music < DBElement
         @attributes = {
             id: String,
             name: String,
-            duration: Integer,
+            duration: Fixnum,
             src: String,
-            bpm: Integer,
-            start_offset: Integer
+            bpm: Fixnum,
+            start_offset: Fixnum
         }
         super
     end

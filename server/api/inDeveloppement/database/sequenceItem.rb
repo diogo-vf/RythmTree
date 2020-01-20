@@ -2,8 +2,8 @@ class SequenceItem < DBElement
     def initialize
         @attributes = {
             key: String, 
-            time: Integer,
-            duration: Integer
+            time: Fixnum,
+            duration: Fixnum 
         }
         super
     end

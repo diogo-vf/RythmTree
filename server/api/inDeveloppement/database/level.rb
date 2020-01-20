@@ -5,7 +5,7 @@ class Level < DBElement
             id: String,
             name: String,
             difficulty: String,
-            hardcore: Integer,
+            hardcore: Fixnum,
             music: Music,
             sequence: Sequence,
             texture: Texture,

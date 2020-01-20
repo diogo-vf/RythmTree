@@ -1,4 +1,4 @@
-class SequenceItemArray < DBArray   
+class SequenceItemArray < DBArray
     def initialize
         @contentClass=SequenceItem
     end

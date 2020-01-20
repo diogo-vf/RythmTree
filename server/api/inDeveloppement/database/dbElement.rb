@@ -12,12 +12,12 @@ class DBElement
             else
                 # Setter
                 define_singleton_method("#{attr}=") { |val| 
-                    raise "Sorry my friend, it's not the right class... I expect #{expected_class}, your class is a #{val.class}" unless val.class == expected_class
+                    raise "#{self.class}.#{attr}=#{val } | Sorry, it's not the right class... I expect #{expected_class}, your class is a #{val.class}" unless val.class == expected_class
                     @attributes_data[attr] = val 
                 } 
                 if attr == :id
                     define_singleton_method("#{attr}=") { |val| 
-                        raise "Sorry my friend, it's not the right class... I expect #{expected_class}, your class is a #{val.class}" unless val.class == expected_class
+                        raise "#{self.class}.#{attr}=#{val } | Sorry, it's not the right class... I expect #{expected_class}, your class is a #{val.class}" unless val.class == expected_class
                         begin
                             val = BSON::ObjectId.from_string(val)
                         rescue => exception
@@ -30,15 +30,16 @@ class DBElement
             end
 
             # Getter
-            define_singleton_method(attr) { @attributes_data[attr] }
+            define_singleton_method(attr) { @attributes_data[attr] }            
         end
     end
+
     # create an hash of our object
-    def to_hash 
+    def to_hash
         hash={}
         @attributes_data.each { |key, value|
 
-            if @attributes[key.to_sym] < DBElement || @attributes[key.to_sym] < DBArray
+            if @attributes[key.to_sym] < DBElement || @attributes[key.to_sym] < DBArray                
                 hash[key.to_sym] = value.to_hash
             else
                 hash[key.to_sym] = value
@@ -58,7 +59,11 @@ class DBElement
         raise "object #{self.class} not saveable" unless @collection_name
         puts "saving #{self} into #{@collection_name} collection
         --------------------------------"
-        to_hash   
+        to_hash
+
+        # mongo = Mongo.new
+        # mongo.collection = collection_name.to_sym
+        # mongo.collection.insert_one(hash)
     end
 
 end
@@ -75,8 +80,6 @@ class DBArray < Array
     end
 
     def to_hash
-        {
-            xd: "lol"
-        }
+        raise "TODO HASH.... I didn't yet understand"
     end
 end

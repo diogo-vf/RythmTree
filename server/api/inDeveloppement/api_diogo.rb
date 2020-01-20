@@ -20,19 +20,20 @@ level = Level.new
 # replay = Replay.new
 
 puts "---------Add data to object-------------"
-
+#level.id=3
+level.name="DiogoTeste"
 level.music.name="bondour"
 level.texture.tree="arbre a fleurs"
 level.creator.name="sdasd"
-a = SequenceItem.new
+a = SequenceItem.new # zone danger pour le to_hash
 a.key="a"
+a.time=5546
+a.duration=120
 level.sequence.sequences.push a
 
 puts "----------It's Show TIME------------"
 
 require "pp"
-level.id="5e2198f66e955215e787420f"
-pp level.id
 
 pp level.save
 
