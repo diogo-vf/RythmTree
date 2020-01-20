@@ -127,7 +127,7 @@ function Actions(){
             toggleSwitchClass();
             pagesManager.changePage(link);
         },500);
-    }
+    };
 
     //functions
     function applyUserOptions(userOptions = false){
