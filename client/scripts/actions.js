@@ -43,6 +43,30 @@ function Actions(){
 
             player_icon.classList.replace(currentClass, newclass);
         };
+
+        const switchMenu = async function(evt){
+            const classSwitch = "switch-menu";
+            const toggleClass = () => {
+                switch1.classList.toggle(classSwitch);
+                switch2.classList.toggle(classSwitch);
+                switch3.classList.toggle(classSwitch);
+                switch4.classList.toggle(classSwitch);
+                change_player_right.classList.toggle(classSwitch);
+                change_player_left.classList.toggle(classSwitch);
+            }
+            toggleClass();
+
+            const link = evt.target.dataset.redirect;
+            setTimeout(() => {
+                toggleClass();
+                pagesManager.changePage(link);
+            },500);
+        };
+
+        switch1.onclick = switchMenu;
+        switch2.onclick = switchMenu;
+        switch3.onclick = switchMenu;
+        switch4.onclick = switchMenu;
     };
     this.onPageLoad.options = function(){
         pagesManager.pages.options.container.addEventListener("change", function(){

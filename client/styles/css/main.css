@@ -190,6 +190,17 @@ a {
     width: 22px;
     height: 22px; }
 
+.switch-menu {
+  animation: switchmenu 500ms 0s forwards;
+  position: absolute; }
+
+@keyframes switchmenu {
+  0% {
+    transform: scale(1) rotate(0);
+    opacity: 1; }
+  100% {
+    transform: scale(0) rotate(180deg);
+    opacity: 0; } }
 .zoom-interaction {
   transform: scale(1);
   transition: transform 0.2s; }
@@ -254,10 +265,10 @@ a {
   top: 20px; }
 
 .common-text {
-  text-transform: uppercase;
   font-weight: 900;
   color: #85999a;
-  text-shadow: 0px 1px 0px #667a7b; }
+  text-shadow: 0px 3px 0px #667a7b;
+  font-size: 25px; }
 
 .common-page-title {
   text-transform: uppercase;
