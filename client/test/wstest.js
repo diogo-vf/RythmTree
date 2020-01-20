@@ -8,8 +8,8 @@ ws.onopen = function(ev){
 }
 ws.onmessage = function(evt){
     var response = JSON.parse(evt.data);
-    console.log("onmessage", evt);
-    if(response.requestId){
+    console.log("onmessage", response);
+    if(response.action = "respond" && response.requestId){
         awaitingResponse[response.requestId](response.data);
         delete awaitingResponse[response.requestId];
     }
