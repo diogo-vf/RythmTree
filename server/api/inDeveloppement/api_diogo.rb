@@ -1,41 +1,71 @@
 require "json"
 require "mongo"
-require "#{__dir__}/database/dbElement"
-require "#{__dir__}/database/creator"
-require "#{__dir__}/database/texture"
-require "#{__dir__}/database/music"
-require "#{__dir__}/database/player"
-require "#{__dir__}/database/playerArray"
-require "#{__dir__}/database/sequenceItem"
-require "#{__dir__}/database/sequenceItemArray"
-require "#{__dir__}/database/sequence"
-require "#{__dir__}/database/sequenceArray"
-require "#{__dir__}/database/level"
-require "#{__dir__}/database/replay"
+require "pp"
 
-level = Level.new
+require_relative "../mongoDB"
+require_relative "../../config/config"
+require_relative "database/dbElement"
+require_relative "database/creator"
+require_relative "database/texture"
+require_relative "database/music"
+require_relative "database/player"
+require_relative "database/sequenceItem"
+require_relative "database/sequenceItemArray"
+require_relative "database/sequence"
+require_relative "database/sequenceArray"
+require_relative "database/level"
+require_relative "database/replay"
+
+puts "---------Add data to object-------------"
 # player = Player.new
 # music = Music.new
 # sequence = Sequence.new
 # replay = Replay.new
 
-puts "---------Add data to object-------------"
-#level.id=3
+level = Level.new
 level.name="DiogoTeste"
 level.music.name="bondour"
 level.texture.tree="arbre a fleurs"
+level.creator.name="sdasd"
+
+a = SequenceItem.new # zone danger pour le to_hash
+a.key="a"
+a.time=5546
+a.duration=120
+level.sequence.sequences.push a
 level.creator.name="sdasd"
 a = SequenceItem.new # zone danger pour le to_hash
 a.key="a"
 a.time=5546
 a.duration=120
 level.sequence.sequences.push a
+level.creator.name="sdasd"
+a = SequenceItem.new # zone danger pour le to_hash
+a.key="a"
+a.time=5546
+a.duration=120
+level.sequence.sequences.push a
+level.creator.name="sdasd"
+a = SequenceItem.new # zone danger pour le to_hash
+a.key="a"
+a.time=5546
+a.duration=120
+level.sequence.sequences.push a
+a = SequenceItem.new # zone danger pour le to_hash
+a.key="a"
+a.time=5546
+a.duration=120
+level.sequence.sequences.push a
+level.sequence.player.name ="a"
+#level.sequence.players=player
 
 puts "----------It's Show TIME------------"
 
-require "pp"
-
 pp level.save
+
+# level.id="5e26fc566e955259fc3dde08"
+# pp level.update
+# pp level.delete
 
 
 # faire une méthode find statique qui va récup des données dans la db par rapport à l'id

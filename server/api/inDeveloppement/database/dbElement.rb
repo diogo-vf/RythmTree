@@ -1,5 +1,4 @@
 class DBElement
-
     def initialize(data = nil)
         @attributes_data = {}
         create_accessors @attributes        
@@ -11,8 +10,8 @@ class DBElement
                 @attributes_data[attr] = expected_class.new
             else
                 # Setter
-                define_singleton_method("#{attr}=") { |val| 
-                    raise "#{self.class}.#{attr}=#{val } | Sorry, it's not the right class... I expect #{expected_class}, your class is a #{val.class}" unless val.class == expected_class
+                define_singleton_method("#{attr}=") { |val|                     
+                    raise "#{self.class}.#{attr}=#{ val } | Sorry, it's not the right class... I expect #{expected_class}, your class is a #{val.class}" unless val.class == expected_class
                     @attributes_data[attr] = val 
                 } 
                 if attr == :id
@@ -39,13 +38,12 @@ class DBElement
         hash={}
         @attributes_data.each { |key, value|
 
-            if @attributes[key.to_sym] < DBElement || @attributes[key.to_sym] < DBArray                
-                hash[key.to_sym] = value.to_hash
+            if @attributes[key.to_sym] < DBElement || @attributes[key.to_sym] < DBArray               
+                hash[key.to_sym] = value.to_hash            
             else
                 hash[key.to_sym] = value
             end
-        }
-        
+        }        
         hash
     end
 
@@ -57,18 +55,35 @@ class DBElement
 
     def save
         raise "object #{self.class} not saveable" unless @collection_name
-        puts "saving #{self} into #{@collection_name} collection
-        --------------------------------"
-        to_hash
+        puts "\nsaving #{self} into #{@collection_name} collection\n\n"
+        
+        hash = to_hash
+        
+        mongo = MongoDB.new
+        mongo.collection = @collection_name.to_sym
+        unless hash[:id]
+            puts "#{self.class} added"
+            mongo.collection.insert_one(hash) 
+        else
+            id=hash[:id]
+            hash.delete(:id)
+            puts "#{self.class} updated"
+            mongo.collection.update_one({_id: id}, "$set" => hash)
+        end   
+    end
 
-        # mongo = Mongo.new
-        # mongo.collection = collection_name.to_sym
-        # mongo.collection.insert_one(hash)
+    def delete         
+        mongo = MongoDB.new
+        mongo.collection = @collection_name.to_sym
+        mongo.collection.delete_one({_id: @attributes_data[:id]})
     end
 
 end
 
 class DBArray < Array    
+    def initialize
+    end
+
     def push value
         raise "Sorry, but isn't the right class! I expect a #{@contentClass}, your class is a #{value.class}" unless value.is_a? @contentClass
         super value
@@ -79,7 +94,11 @@ class DBArray < Array
         super index, value 
     end
 
+    def each
+        super
+    end
+
     def to_hash
-        raise "TODO HASH.... I didn't yet understand"
+        map{|val| val.to_hash}
     end
 end
