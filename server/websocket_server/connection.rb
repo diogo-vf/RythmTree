@@ -21,7 +21,7 @@ class WSConnection
                 loop do
                     self.send_message({
                         action: "salut",
-                        data: "coucou :)"
+                        data: "coucou :) AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     }.to_json)
                     sleep 2
                 end
@@ -41,9 +41,10 @@ class WSConnection
     def unregister_onmessage evt_id
         @evt_call_backs.delete(evt_id)
     end
-    
+
     def send_message body
         puts "send_message body:#{body}"
+        puts "body size:#{body.size}"
         #header
         fin = 1
         opcode = 1
@@ -55,18 +56,22 @@ class WSConnection
         has_mask_val = has_mask * 128
         #length
         payload_header_array = [has_mask_val + body.size] # <126
-        if body.size >= 125
-            payload_header_array = [has_mask_val + 126, "suite 16bit (2 byte)..."]
-            raise "16 bit not supported yet"
-        end
-        if body.size >= (2**16 - 1) #>16bit
-            payload_header_array = [has_mask_val + 127, "suite 64bit (8 byte)..."]
-            raise "64 bit not supported yet"
+        if body.size >= (2**16 - 1)#>16bit
+            payload_header_array = [has_mask_val + 127] + to_base_array(body.size, 256, 8)
+        elsif body.size >= 125 #>~7bit
+            payload_header_array = [has_mask_val + 126] + to_base_array(body.size, 256, 2)
         end
 
         #response
         response_array = [header_byte] + payload_header_array + [body]
-        response = response_array.pack "CCA#{body.size}" #writes 2 8-bit ints followed by body string (should be changed when supporting longer payloads)
+        response_pack_param_str = (payload_header_array.size.times.map{"C"}).join("")
+        puts response_pack_param_str
+        response = response_array.pack "C#{response_pack_param_str}A#{body.size}" #writes 2 8-bit ints followed by body string (should be changed when supporting longer payloads)
+        puts "response:->#{response}"
+        File.open("other/binaryws.txt", "w"){
+            |file|
+            file.write response
+        }
         begin
             @session.write response
         rescue => exception
@@ -96,12 +101,7 @@ class WSConnection
             length_array = [payload_initial_length]
             length_array = 2.times.map {@session.getbyte} if payload_initial_length == 126
             length_array = 8.times.map {@session.getbyte} if payload_initial_length == 127
-            payload_length = 0;
-            length_array.each_with_index{
-                |value, index|
-                power_index = length_array.size - index - 1
-                payload_length += value * (256**power_index)
-            }
+            payload_length = from_array_to_base(length_array, 256);
 
             puts "ws payload header | has_mask: #{has_mask}, payload_length: #{payload_length} bytes"
 

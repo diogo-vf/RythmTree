@@ -14,7 +14,7 @@ def base64_encode data
     Digest::SHA1.base64digest data
 end
 
-def to_base_array(value, base = 256)
+def to_base_array(value, base = 256, min_array_length = 0)
     array = []
     current = value
     loop do
@@ -23,6 +23,11 @@ def to_base_array(value, base = 256)
         array.unshift remain
         break if current == 0
     end
+    #min array length
+    while array.size < min_array_length
+        array.unshift 0
+    end
+    pp array
     array
 end
 def from_array_to_base(array, base = 256)
