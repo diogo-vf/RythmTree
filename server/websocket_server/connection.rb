@@ -14,31 +14,19 @@ class WSConnection
 
         #listener
         @thread = Thread.new{
-            puts "thread handling connection #{@ws_key} with id #{@id}"
-
-            #test
-            Thread.new{
-                loop do
-                    self.send_message({
-                        action: "salut",
-                        data: "coucou :) AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                    }.to_json)
-                    sleep 2
-                end
-            }
-
+            puts "thread handling connection id #{@id} (key: #{@ws_key})"
             handleConnection
         }
     end
 
-    def register_onmessage #+yield
+    def on_msg_register #+yield
         evt_id = gen_uuid
         @evt_call_backs[evt_id] = lambda{
             |data|
             yield data
         }
     end
-    def unregister_onmessage evt_id
+    def on_msg_unregister evt_id
         @evt_call_backs.delete(evt_id)
     end
 
@@ -86,8 +74,7 @@ class WSConnection
             fin = header_byte & 0b10000000
             rsv = header_byte & 0b01110000
             opcode = header_byte & 0b00001111
-
-            puts "ws header | fin: #{fin}, rsv: #{rsv}, opcode: #{opcode}"
+                # puts "ws header | fin: #{fin}, rsv: #{rsv}, opcode: #{opcode}"
             
             raise "ws currently only supports single frame payloads" unless fin
             raise "ws currently only supports text requests" unless opcode == 1
@@ -102,11 +89,11 @@ class WSConnection
             length_array = 8.times.map {@session.getbyte} if payload_initial_length == 127
             payload_length = from_array_to_base(length_array, 256);
 
-            puts "ws payload header | has_mask: #{has_mask}, payload_length: #{payload_length} bytes"
+                # puts "ws payload header | has_mask: #{has_mask}, payload_length: #{payload_length} bytes"
 
             #masking key
             masking_key_array = 4.times.map{@session.getbyte}
-            puts "ws masking key #{masking_key_array}"
+                # puts "ws masking key #{masking_key_array}"
 
             #body
             masked_body_array = payload_length.times.map {@session.getbyte}

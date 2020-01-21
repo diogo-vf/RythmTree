@@ -35,7 +35,7 @@ class WebSocketServer
         connection = WSConnection.new(session: session, ws_key: ws_key)
         @connections[connection.id] = connection
 
-        connection.register_onmessage{
+        connection.on_msg_register{
             |data|
             puts "hello! i got the data: #{data}"
         }
