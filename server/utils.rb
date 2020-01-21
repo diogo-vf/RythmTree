@@ -34,8 +34,8 @@ def from_array_to_base(array, base = 256)
     value = 0
     array.each_with_index{
         |val, key|
-        multiplier = array.size - key - 1
-        value += val * (base**multiplier)
+        power = array.size - key - 1
+        value += val * (base**power)
     }
     value
 end

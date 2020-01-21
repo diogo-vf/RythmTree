@@ -64,9 +64,8 @@ class WSConnection
 
         #response
         response_array = [header_byte] + payload_header_array + [body]
-        response_pack_param_str = (payload_header_array.size.times.map{"C"}).join("")
-        puts response_pack_param_str
-        response = response_array.pack "C#{response_pack_param_str}A#{body.size}" #writes 2 8-bit ints followed by body string (should be changed when supporting longer payloads)
+        puts response_pack_param_str = "CC#{payload_header_array.size}A#{body.size}"
+        response = response_array.pack response_pack_param_str#writes 2 8-bit ints followed by body string (should be changed when supporting longer payloads)
         puts "response:->#{response}"
         File.open("other/binaryws.txt", "w"){
             |file|
