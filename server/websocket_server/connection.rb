@@ -41,6 +41,38 @@ class WSConnection
     def unregister_onmessage evt_id
         @evt_call_backs.delete(evt_id)
     end
+    
+    def send_message body
+        puts "send_message body:#{body}"
+        #header
+        fin = 1
+        opcode = 1
+        header_byte = (opcode * 128) + (opcode)
+
+        #payload header
+        #mask
+        has_mask = 0 #develop that if you want to encrypt data
+        has_mask_val = has_mask * 128
+        #length
+        payload_header_array = [has_mask_val + body.size] # <126
+        if body.size >= 125
+            payload_header_array = [has_mask_val + 126, "suite 16bit (2 byte)..."]
+            raise "16 bit not supported yet"
+        end
+        if body.size >= (2**16 - 1) #>16bit
+            payload_header_array = [has_mask_val + 127, "suite 64bit (8 byte)..."]
+            raise "64 bit not supported yet"
+        end
+
+        #response
+        response_array = [header_byte] + payload_header_array + [body]
+        response = response_array.pack "CCA#{body.size}" #writes 2 8-bit ints followed by body string (should be changed when supporting longer payloads)
+        begin
+            @session.write response
+        rescue => exception
+            puts "error during send_message print"
+        end
+    end
 
     private
     def handleConnection
@@ -95,36 +127,5 @@ class WSConnection
             |call_back_key|
             @evt_call_backs[call_back_key].call data
         }
-    end
-    def send_message body
-        puts "send_message body:#{body}"
-        #header
-        fin = 1
-        opcode = 1
-        header_byte = (opcode * 128) + (opcode)
-
-        #payload header
-        #mask
-        has_mask = 0 #develop that if you want to encrypt data
-        has_mask_val = has_mask * 128
-        #length
-        payload_header_array = [has_mask_val + body.size] # <126
-        if body.size >= 125
-            payload_header_array = [has_mask_val + 126, "suite 16bit (2 byte)..."]
-            raise "16 bit not supported yet"
-        end
-        if body.size >= (2**16 - 1) #>16bit
-            payload_header_array = [has_mask_val + 127, "suite 64bit (8 byte)..."]
-            raise "64 bit not supported yet"
-        end
-
-        #response
-        response_array = [header_byte] + payload_header_array + [body]
-        response = response_array.pack "CCA#{body.size}" #writes 2 8-bit ints followed by body string (should be changed when supporting longer payloads)
-        begin
-            @session.write response
-        rescue => exception
-            puts "error during send_message print"
-        end
     end
 end
