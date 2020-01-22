@@ -253,6 +253,11 @@ a {
   border: 1pt solid darkgrey;
   padding: 10px 15px 25px 15px; }
 
+.common-player-box {
+  box-shadow: 0px 3px 0px #667a7b;
+  border: 3px solid #85999a;
+  margin-left: 15% !important; }
+
 .mainTitle {
   font-weight: bold;
   text-shadow: -2px 1px 0 blue;
