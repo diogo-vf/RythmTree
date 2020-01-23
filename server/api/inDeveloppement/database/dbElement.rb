@@ -39,19 +39,89 @@ class DBElement
         @attributes_data.each { |key, value|
 
             if @attributes[key.to_sym] < DBElement || @attributes[key.to_sym] < DBArray               
-                hash[key.to_sym] = value.to_hash            
-            else
-                hash[key.to_sym] = value
-            end
+                hash[key.to_sym] = value.to_hash  
+                next
+            end          
+            hash[key.to_sym] = value
         }        
         hash
     end
 
-    public 
+    protected
+    # hash_to_convert -> hash get by mongoDB
+    # attributes_data -> @attributes_data of object
+    def apply_hash_data(hash_to_convert)
+        hash_to_convert.each{ |key, value|
+            if key == "_id"
+                @attributes_data[:id]=value 
+                next
+            end
 
-    def find id
-        "un id"
+            puts "ATTENTION"
+            puts "-key", key
+            puts "-value", value
+            puts "-class", value.class
+
+            if value.is_a? BSON::Document
+                puts "--- ACHTUNG BSON!"
+                value = bson_doc_to_hash value
+                #value = value.to_hash
+                # puts "-revalue", value
+                # puts "-reclass", value.class
+            end
+
+            if value.is_a?(Hash) || value.is_a?(Array)
+                @attributes_data[key.to_sym].apply_hash_data(hash_to_convert[key.to_sym])
+                next
+            end
+            @attributes_data[key.to_sym] = value
+        }
     end
+
+    public
+
+    def refresh_data
+        # get information of object
+        hash = to_hash
+
+        mongo = MongoDB.new
+        mongo.collection = @collection_name
+        
+        collection = mongo.collection.find( {_id: hash[:id]} ).first 
+        
+        raise "#{self.class} object without data" if collection.to_s == ""
+        
+        puts "
+        -----------------------------
+        
+        "  
+        
+
+        # puts "-----------------------"
+        # old = @attributes_data
+        pp collection
+        puts " -----------------------------
+        
+        "
+
+        apply_hash_data(collection)
+        puts " ********************************
+        
+        "  
+        
+        pp @attributes_data
+        self.name="ma valeur"
+
+    end
+
+    def self.find id        
+        obj = self.new
+        obj.id = id
+        obj.name = "saucisswe"
+        
+        obj.refresh_data       
+    end
+
 
     def save
         raise "object #{self.class} not saveable" unless @collection_name
@@ -94,6 +164,12 @@ class DBArray < Array
         super index, value 
     end
 
+    def apply_hash_data array
+        array.each{ | key, value |
+            puts "->-> #{key} <==> #{value} <-<-"
+        }
+    end
+
     def each
         super
     end
@@ -101,4 +177,18 @@ class DBArray < Array
     def to_hash
         map{|val| val.to_hash}
     end
+end
+
+
+
+def bson_doc_to_hash bson_doc
+    hash = {}
+    puts "/*-/*-/*-/*-/*-/*-/*- #{}"
+    bson_doc.each{ |key, val|
+        if val.is_a? BSON::Document
+            hash[key.to_sym] = bson_doc_to_hash val
+            next
+        end
+        hash[key.to_sym] = val
+    }
 end

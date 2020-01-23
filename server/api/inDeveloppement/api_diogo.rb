@@ -16,55 +16,56 @@ require_relative "database/sequenceArray"
 require_relative "database/level"
 require_relative "database/replay"
 
-puts "---------Add data to object-------------"
-# player = Player.new
+#  player = Player.new
 # music = Music.new
 # sequence = Sequence.new
 # replay = Replay.new
 
 level = Level.new
-level.name="DiogoTeste"
+level.id="5e2704eb6e95525bbc2b1f7b";
+level.name="Nicoal le charbon"
 level.music.name="bondour"
 level.texture.tree="arbre a fleurs"
 level.creator.name="sdasd"
 
-a = SequenceItem.new # zone danger pour le to_hash
-a.key="a"
-a.time=5546
-a.duration=120
-level.sequence.sequences.push a
-level.creator.name="sdasd"
-a = SequenceItem.new # zone danger pour le to_hash
-a.key="a"
-a.time=5546
-a.duration=120
-level.sequence.sequences.push a
-level.creator.name="sdasd"
-a = SequenceItem.new # zone danger pour le to_hash
-a.key="a"
-a.time=5546
-a.duration=120
-level.sequence.sequences.push a
-level.creator.name="sdasd"
-a = SequenceItem.new # zone danger pour le to_hash
-a.key="a"
-a.time=5546
-a.duration=120
-level.sequence.sequences.push a
-a = SequenceItem.new # zone danger pour le to_hash
-a.key="a"
-a.time=5546
-a.duration=120
-level.sequence.sequences.push a
-level.sequence.player.name ="a"
-#level.sequence.players=player
+pp level
 
-puts "----------It's Show TIME------------"
+# a = SequenceItem.new # zone danger pour le to_hash
+# a.key="a"
+# a.time=5546
+# a.duration=120
+# level.sequence.sequences.push a
+# level.creator.name="sdasd"
+# a = SequenceItem.new # zone danger pour le to_hash
+# a.key="a"
+# a.time=5546
+# a.duration=120
+# level.sequence.sequences.push a
+# level.creator.name="sdasd"
+# a = SequenceItem.new # zone danger pour le to_hash
+# a.key="a"
+# a.time=5546
+# a.duration=120
+# level.sequence.sequences.push a
+# level.creator.name="sdasd"
+# a = SequenceItem.new # zone danger pour le to_hash
+# a.key="a"
+# a.time=5546
+# a.duration=120
+# level.sequence.sequences.push a
+# a = SequenceItem.new # zone danger pour le to_hash
+# a.key="a"
+# a.time=5546
+# a.duration=120
+# level.sequence.sequences.push a
 
-pp level.save
+# # level.sequence
+# level.sequence.player.name="lol"
 
-# level.id="5e26fc566e955259fc3dde08"
-# pp level.update
+pp Level.find("5e2704eb6e95525bbc2b1f7b")
+
+# pp level.save
+
 # pp level.delete
 
 
