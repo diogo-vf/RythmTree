@@ -1,13 +1,16 @@
 #https://www.honeybadger.io/blog/building-a-simple-websockets-server-from-scratch-in-ruby/
 #readable spec: https://lucumr.pocoo.org/2012/9/24/websockets-101/
+#spec https://tools.ietf.org/html/rfc6455
 
 require 'pp'
 require_relative 'connection'
 
 WS_SECURITY_KEY = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 class WebSocketServer
+    @@instance = nil
     public
-    def initialize
+    def initialize pineapple = "nope"
+        raise "this class uses the singleton principle. use \"WebsocketServer.inst\" to get the instance." until pineapple == "pamplemousse"
         @connections = {}
     end
     def on_http_connection req, session
@@ -49,5 +52,13 @@ class WebSocketServer
             },
             :prevent_session_close => true
         }        
+    end
+    def on_connection_close connection
+        @connections.delete(connection.id.to_sym)
+    end
+
+    def self.inst
+        return @@instance if @@instance
+        @@instance = self.new "pamplemousse"
     end
 end

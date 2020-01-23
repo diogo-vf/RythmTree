@@ -1,5 +1,16 @@
+#https://tools.ietf.org/html/rfc6455
 class WSConnection
     attr_reader :id, :session, :key
+
+    OPCODES = {
+        "0": "Continuation",
+        "1": "Text",
+        "2": "Binary",
+        "8": "Connection Close",
+        "9": "Ping",
+        "10": "Pong"
+    }
+    SUPPORTED_OPCODES = [1, 8]
 
     public
     def initialize session:, ws_key:
@@ -7,6 +18,7 @@ class WSConnection
         @session = session
         @key = ws_key
         @evt_call_backs = {}
+        @status = "open"
 
         puts "ws_key #{ws_key}"
         puts "session #{session}"
@@ -36,7 +48,7 @@ class WSConnection
         #header
         fin = 1
         opcode = 1
-        header_byte = (opcode * 128) + (opcode)
+        header_byte = (fin * 128) + (opcode)
 
         #payload header
         #mask
@@ -55,15 +67,24 @@ class WSConnection
         puts response_pack_param_str = "CC#{payload_header_array.size}A#{body.size}"
         response = response_array.pack response_pack_param_str#writes 2 8-bit ints followed by body string (should be changed when supporting longer payloads)
         puts "response:->#{response}"
-        File.open("other/binaryws.txt", "w"){
-            |file|
-            file.write response
-        }
         begin
             @session.write response
         rescue => exception
             puts "error during send_message print"
         end
+    end
+
+    def close propagate = true
+        if propagate && false
+            fin = 1
+            opcode = 8
+            header_byte = (opcode * 128) + (opcode)
+            @session.write [header_byte].pack "C"
+        end
+        puts("closing connection");
+        @status = "closed"
+        @session.close
+        @thread.exit
     end
 
     private
@@ -77,7 +98,9 @@ class WSConnection
                 # puts "ws header | fin: #{fin}, rsv: #{rsv}, opcode: #{opcode}"
             
             raise "ws currently only supports single frame payloads" unless fin
-            raise "ws currently only supports text requests" unless opcode == 1
+            raise "unsupported opcode #{opcode} -> \"#{OPCODES[opcode.to_s.to_sym]}\"" unless SUPPORTED_OPCODES.include? opcode
+
+            return close(false) if opcode == 8 #connection close
             
             #payload header
             payload_header_byte = @session.getbyte
@@ -106,6 +129,7 @@ class WSConnection
 
             puts "ws body : #{body}"
             on_message body
+            close
         end
     end
     def on_message data
