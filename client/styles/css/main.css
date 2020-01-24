@@ -246,8 +246,13 @@ a {
       background-size: cover;
       color: #a3a3a3; }
 
+.gray-texture {
+  background: url(../../images/textures/houseGrayTopRight.png) calc(100%) 0 no-repeat, url(../../images/textures/houseGrayTopLeft.png) 0 0 no-repeat, url(../../images/textures/houseGrayBottomRight.png) calc(100%) calc(100%) no-repeat, url(../../images/textures/houseGrayBottomLeft.png) 0 calc(100%) no-repeat, url(../../images/textures/houseGrayTopMid.png) calc(100%) 0 repeat-x, url(../../images/textures/houseGrayMidLeft.png) 0 0 repeat-y, url(../../images/textures/houseGrayMidRight.png) calc(100%) 0 repeat-y, url(../../images/textures/houseGrayBottomMid.png) 0 calc(100%) repeat-x, url(../../images/textures/houseGrayAlt2.png) 15% 15% no-repeat, url(../../images/textures/houseGrayAlt2.png) 40% 30% no-repeat, url(../../images/textures/houseGrayAlt2.png) 70% 55% no-repeat, url(../../images/textures/houseGrayAlt.png) 30% 85% no-repeat, url(../../images/textures/houseGrayAlt.png) 80% 25% no-repeat, url(../../images/textures/houseGrayAlt.png) 95% 85% no-repeat, url(../../images/textures/houseGrayAlt.png) 60% 80% no-repeat, url(../../images/textures/houseGray.png) repeat; }
+
+.wood-texture {
+  background: url(../../images/textures/woodTopRight.png) calc(100%) 0 no-repeat, url(../../images/textures/woodTopLeft.png) 0 0 no-repeat, url(../../images/textures/woodBottomRight.png) calc(100%) calc(100%) no-repeat, url(../../images/textures/woodBottomLeft.png) 0 calc(100%) no-repeat, url(../../images/textures/woodTop.png) calc(100%) 0 repeat-x, url(../../images/textures/woodLeft.png) 0 0 repeat-y, url(../../images/textures/woodRight.png) calc(100%) 0 repeat-y, url(../../images/textures/woodBottom.png) 0 calc(100%) repeat-x, url(../../images/textures/woodBgTop.png) 0 35px repeat-x, url(../../images/textures/woodBg.png) repeat; }
+
 .common-box {
-  background: url(../../images/textures/houseGrayTopRight.png) calc(100%) 0 no-repeat, url(../../images/textures/houseGrayTopLeft.png) 0 0 no-repeat, url(../../images/textures/houseGrayBottomRight.png) calc(100%) calc(100%) no-repeat, url(../../images/textures/houseGrayBottomLeft.png) 0 calc(100%) no-repeat, url(../../images/textures/houseGrayTopMid.png) calc(100%) 0 repeat-x, url(../../images/textures/houseGrayMidLeft.png) 0 0 repeat-y, url(../../images/textures/houseGrayMidRight.png) calc(100%) 0 repeat-y, url(../../images/textures/houseGrayBottomMid.png) 0 calc(100%) repeat-x, url(../../images/textures/houseGrayAlt2.png) 15% 15% no-repeat, url(../../images/textures/houseGrayAlt2.png) 40% 30% no-repeat, url(../../images/textures/houseGrayAlt2.png) 70% 55% no-repeat, url(../../images/textures/houseGrayAlt.png) 30% 85% no-repeat, url(../../images/textures/houseGrayAlt.png) 80% 25% no-repeat, url(../../images/textures/houseGrayAlt.png) 95% 85% no-repeat, url(../../images/textures/houseGrayAlt.png) 60% 80% no-repeat, url(../../images/textures/houseGray.png) repeat;
   border: 1pt solid darkgrey;
   padding: 10px 15px 25px 15px; }
 
@@ -258,12 +263,22 @@ a {
 
 .common-canvas {
   width: 100%;
-  height: 200px;
-  background: url(../../images/textures/woodTopRight.png) calc(100%) 0 no-repeat, url(../../images/textures/woodTopLeft.png) 0 0 no-repeat, url(../../images/textures/woodBottomRight.png) calc(100%) calc(100%) no-repeat, url(../../images/textures/woodBottomLeft.png) 0 calc(100%) no-repeat, url(../../images/textures/woodTop.png) calc(100%) 0 repeat-x, url(../../images/textures/woodLeft.png) 0 0 repeat-y, url(../../images/textures/woodRight.png) calc(100%) 0 repeat-y, url(../../images/textures/woodBottom.png) 0 calc(100%) repeat-x, url(../../images/textures/woodBgTop.png) 0 35px repeat-x, url(../../images/textures/woodBg.png) repeat; }
+  height: 200px; }
   .common-canvas canvas {
     width: calc(100% - 70px);
     height: calc(100% - 70px);
     margin: 35px 0 0 35px; }
+
+.common-card {
+  width: calc(100% - 50px);
+  height: 100%;
+  min-height: 200px;
+  margin-left: 25px;
+  transition: 500ms;
+  z-index: 0; }
+  .common-card:hover {
+    transform: scale(1.2);
+    z-index: 1; }
 
 .mainTitle {
   font-weight: bold;
@@ -283,14 +298,18 @@ a {
 .common-text {
   font-weight: 900;
   color: #85999a;
-  text-shadow: 0px 3px 0px #667a7b;
+  text-shadow: 0 3px 0 #667a7b;
   font-size: 25px; }
+  .common-text.wood {
+    color: white;
+    font-size: 23px;
+    opacity: 0.8; }
 
 .common-page-title {
   text-transform: uppercase;
   font-weight: 900;
   color: #85999a;
-  text-shadow: 0px 4px 0px #667a7b;
+  text-shadow: 0 4px 0 #667a7b;
   font-size: 30px;
   margin-top: 50px; }
 
