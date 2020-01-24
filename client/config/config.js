@@ -1,6 +1,6 @@
 var config = {
     viewsLocation: "/views",
-    apiPath: false,
+    websocketLocation: false,
     landingPage: "login",
     viewsExtension: ".html",
     preloadAllViews: false,

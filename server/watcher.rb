@@ -69,7 +69,7 @@ loop do
         #start and kill process instead
         if current_pid
             puts "stopping process: #{current_pid}"
-            Process.kill("KILL", current_pid)
+            Process.kill "KILL", current_pid
         end
         puts "starting process: #{script_path}";
         puts "______________"

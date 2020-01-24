@@ -35,7 +35,7 @@ function PagesManager(){
                 memory: {}
             };
             //build container
-            _this.pages[pageName].container = elements.pagesContainer.addElement('div', `pageContainer ${pageName}PageContainer none`);
+            _this.pages[pageName].container = elements.pagesContainer.addElement('div', {class: `pageContainer ${pageName}PageContainer none`});
         }
 
         //display page
@@ -260,7 +260,7 @@ function PagesManager(){
             _this.loadView(viewName, function(){});
         }
     }
-    this.loadView = async function(view, callBack){
+    this.loadView = async function(view, callBack = function(){}){
         //get view name from page config
         var viewName = view;
         if(pagesConfig[view].view){

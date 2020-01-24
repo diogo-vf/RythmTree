@@ -1,2 +1,3 @@
 .idea
-server/config/config.rb
+server/config.rb
+.sass-cache/*
