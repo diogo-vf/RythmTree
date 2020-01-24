@@ -8,8 +8,9 @@ function Adapters(){
 	};
 
 	//level
-	this.levelAdapter = function(container, data){
+	this.levelAdapter = function(container, data) {
 		var box = container.addElement("div", {class:"level"});//example
+		box.textContent = data.name;
 		return box;
 	}
 }

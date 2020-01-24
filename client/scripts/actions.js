@@ -55,7 +55,20 @@ function Actions() {
     this.onPageLoad.game = function () {
         mainDiv.classList.remove("container");
         mainDiv.classList.add("container-fluid");
-        this.gameContext = canvasGame.getContext("2d");
+        const gameContext = canvasGame.getContext("2d");
+        gameInput.focus()
+        gameInput.onkeypress = function (evt) {
+            let char = evt.key;
+            canvasGame.width = canvasGame.clientWidth;
+            canvasGame.height = canvasGame.clientHeight;
+            gameContext.clearRect(0,0,canvasGame.clientWidth,canvasGame.clientHeight);
+            gameContext.font = "30px Arial";
+            gameContext.fillStyle = "red";
+            gameContext.textAlign = "center";
+            gameContext.fillText(char.toUpperCase(), canvasGame.clientWidth/2, canvasGame.clientHeight/2);
+        };
+        // Focus the field when unfocus to continue to listen key even after a "tab"
+        gameInput.addEventListener("focusout", () => {gameInput.focus()});
     };
     
     //-------------------------------------------------------------------------------------
@@ -83,7 +96,7 @@ function Actions() {
         } else {
             userOptionsBtn.classList.remove("none");
         }
-
+        // Remove class set by game to be non-fluid
         mainDiv.classList.remove("container-fluid");
         mainDiv.classList.add("container");
     };

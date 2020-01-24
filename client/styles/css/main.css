@@ -3,7 +3,6 @@ html {
 
 body {
   min-height: 100vh;
-  font-family: Nunito;
   background: url(../../images/textures/hill_small.png) 42vw calc(100vh - 246px) no-repeat fixed, url(../../images/textures/hill_large.png) 35vw calc(100vh - 286px) no-repeat fixed, url(../../images/textures/hill_large.png) 70vw calc(100vh - 286px) no-repeat fixed, url(../../images/textures/bush.png) 15vw calc(100vh - 212px) no-repeat fixed, url(../../images/textures/grassMid.png) 0 calc(100vh - 140px) repeat-x fixed, url(../../images/textures/grassCenter.png) 0 calc(100vh - 70px) repeat-x fixed, url(../../images/textures/liquidWater.png) repeat fixed; }
   body, body * {
     cursor: url(../../images/textures/cursorGauntlet_blue.png), auto; }
@@ -261,6 +260,10 @@ a {
   width: 100%;
   height: 200px;
   background: url(../../images/textures/woodTopRight.png) calc(100%) 0 no-repeat, url(../../images/textures/woodTopLeft.png) 0 0 no-repeat, url(../../images/textures/woodBottomRight.png) calc(100%) calc(100%) no-repeat, url(../../images/textures/woodBottomLeft.png) 0 calc(100%) no-repeat, url(../../images/textures/woodTop.png) calc(100%) 0 repeat-x, url(../../images/textures/woodLeft.png) 0 0 repeat-y, url(../../images/textures/woodRight.png) calc(100%) 0 repeat-y, url(../../images/textures/woodBottom.png) 0 calc(100%) repeat-x, url(../../images/textures/woodBgTop.png) 0 35px repeat-x, url(../../images/textures/woodBg.png) repeat; }
+  .common-canvas canvas {
+    width: calc(100% - 70px);
+    height: calc(100% - 70px);
+    margin: 35px 0 0 35px; }
 
 .mainTitle {
   font-weight: bold;
@@ -545,5 +548,8 @@ h1 > span {
 
 .tab-left {
   margin-left: 30px; }
+
+.hidden {
+  display: none; }
 
 /*# sourceMappingURL=main.css.map */

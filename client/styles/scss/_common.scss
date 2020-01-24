@@ -359,6 +359,12 @@ a {
     url(../../images/textures/woodBottom.png) 0 calc(100%) repeat-x,
     url(../../images/textures/woodBgTop.png) 0 35px repeat-x,
     url(../../images/textures/woodBg.png) repeat;
+
+  & canvas {
+    width: calc(100% - 70px);
+    height: calc(100% - 70px);
+    margin: 35px 0 0 35px;
+  }
 }
 
 .mainTitle {
