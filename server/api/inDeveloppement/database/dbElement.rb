@@ -46,10 +46,12 @@ class DBElement
         }        
         hash
     end
+    def to_json
+        to_hash.to_json
+    end
 
-    protected
+    public
     # hash_to_convert -> hash get by mongoDB
-    # attributes_data -> @attributes_data of object
     def apply_hash_data(hash_to_convert)
         hash_to_convert.each{ |key, value|
             if key == "_id"
@@ -57,28 +59,13 @@ class DBElement
                 next
             end
 
-            puts "ATTENTION"
-            puts "-key", key
-            puts "-value", value
-            puts "-class", value.class
-
-            if value.is_a? BSON::Document
-                puts "--- ACHTUNG BSON!"
-                value = bson_doc_to_hash value
-                #value = value.to_hash
-                # puts "-revalue", value
-                # puts "-reclass", value.class
-            end
-
             if value.is_a?(Hash) || value.is_a?(Array)
-                @attributes_data[key.to_sym].apply_hash_data(hash_to_convert[key.to_sym])
+                @attributes_data[key.to_sym].apply_hash_data(value)
                 next
             end
             @attributes_data[key.to_sym] = value
         }
     end
-
-    public
 
     def refresh_data
         # get information of object
@@ -90,36 +77,18 @@ class DBElement
         collection = mongo.collection.find( {_id: hash[:id]} ).first 
         
         raise "#{self.class} object without data" if collection.to_s == ""
-        
-        puts "
-        -----------------------------
-        
-        "  
-        
 
-        # puts "-----------------------"
-        # old = @attributes_data
-        pp collection
-        puts " -----------------------------
-        
-        "
-
-        apply_hash_data(collection)
-        puts " ********************************
-        
-        "  
-        
-        pp @attributes_data
-        self.name="ma valeur"
-
+        clean_collection = bson_doc_to_hash collection
+        apply_hash_data(clean_collection)  
     end
 
     def self.find id        
         obj = self.new
         obj.id = id
-        obj.name = "saucisswe"
         
-        obj.refresh_data       
+        obj.refresh_data    
+
+        obj
     end
 
 
@@ -165,8 +134,15 @@ class DBArray < Array
     end
 
     def apply_hash_data array
-        array.each{ | key, value |
-            puts "->-> #{key} <==> #{value} <-<-"
+        clear
+        array.each{ | value |
+            if value.is_a?(Hash) || value.is_a?(Array)
+                item = @contentClass.new
+                item.apply_hash_data(value)
+                push item
+                next
+            end
+            push value
         }
     end
 
@@ -177,18 +153,38 @@ class DBArray < Array
     def to_hash
         map{|val| val.to_hash}
     end
+    def to_json
+        to_hash.to_json
+    end
 end
 
 
 
 def bson_doc_to_hash bson_doc
     hash = {}
-    puts "/*-/*-/*-/*-/*-/*-/*- #{}"
     bson_doc.each{ |key, val|
         if val.is_a? BSON::Document
             hash[key.to_sym] = bson_doc_to_hash val
-            next
+        elsif val.is_a? Array
+            hash[key.to_sym] = bson_doc_to_array val
+        else
+            hash[key.to_sym] = val
         end
-        hash[key.to_sym] = val
     }
+    
+    hash
+end
+def bson_doc_to_array bson_array
+    array = []
+    bson_array.each{ |val|
+        if val.is_a? BSON::Document
+            array.push bson_doc_to_hash val
+        elsif val.is_a? Array
+            array.push bson_doc_to_array val
+        else
+            array.push val
+        end
+    }
+
+    array
 end

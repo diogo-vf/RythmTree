@@ -21,14 +21,14 @@ require_relative "database/replay"
 # sequence = Sequence.new
 # replay = Replay.new
 
-level = Level.new
-level.id="5e2704eb6e95525bbc2b1f7b";
-level.name="Nicoal le charbon"
-level.music.name="bondour"
-level.texture.tree="arbre a fleurs"
-level.creator.name="sdasd"
+# level = Level.new
+# level.id="5e2704eb6e95525bbc2b1f7b";
+# level.name="Niveau génial"
+# level.music.name="bondour"
+# level.texture.tree="arbre a fleurs"
+# level.creator.name="sdasd"
 
-pp level
+# pp level
 
 # a = SequenceItem.new # zone danger pour le to_hash
 # a.key="a"
@@ -62,8 +62,9 @@ pp level
 # # level.sequence
 # level.sequence.player.name="lol"
 
-pp Level.find("5e2704eb6e95525bbc2b1f7b")
+a= Level.find("5e29bff06e955287da072d6d")
 
+puts a.sequence.to_json
 # pp level.save
 
 # pp level.delete
