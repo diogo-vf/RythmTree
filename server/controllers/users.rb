@@ -1,6 +1,6 @@
 class UsersController
     @@instance = nil
-    
+
     public
     def self.inst
         return @@instance if @@instance
@@ -8,6 +8,6 @@ class UsersController
     end
 
     def register_user data, connection
-        "ok boomer"
+        "ok bommer"
     end
 end
