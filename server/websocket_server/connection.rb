@@ -1,4 +1,7 @@
 #https://tools.ietf.org/html/rfc6455
+
+require 'json'
+require_relative '../actions'
 class WSConnection
     attr_reader :id, :session, :key
 
@@ -29,17 +32,6 @@ class WSConnection
             puts "thread handling connection id #{@id} (key: #{@ws_key})"
             handleConnection
         }
-    end
-
-    def on_msg_register #+yield
-        evt_id = gen_uuid
-        @evt_call_backs[evt_id] = lambda{
-            |data|
-            yield data
-        }
-    end
-    def on_msg_unregister evt_id
-        @evt_call_backs.delete(evt_id)
     end
 
     def send_message body
@@ -112,11 +104,8 @@ class WSConnection
             length_array = 8.times.map {@session.getbyte} if payload_initial_length == 127
             payload_length = from_array_to_base(length_array, 256);
 
-                # puts "ws payload header | has_mask: #{has_mask}, payload_length: #{payload_length} bytes"
-
             #masking key
             masking_key_array = 4.times.map{@session.getbyte}
-                # puts "ws masking key #{masking_key_array}"
 
             #body
             masked_body_array = payload_length.times.map {@session.getbyte}
@@ -127,15 +116,30 @@ class WSConnection
             }
             body = unmasked_body_array.pack('C*').force_encoding("utf-8") #encode array into 8-bit integers str then convert to utf8 str
 
-            puts "ws body : #{body}"
             on_message body
-            close
         end
     end
     def on_message data
-        @evt_call_backs.keys.each{
-            |call_back_key|
-            @evt_call_backs[call_back_key].call data
+        actionThread = Thread.new{
+            msg_object = JSON.parse(data)
+            pp "new msg", msg_object
+            result = WSActions.on_ws_action(self, msg_object["action"], msg_object["data"])
+
+            #return
+            if(result && msg_object["requestId"])
+                request_id = msg_object["requestId"]
+                puts "action #{msg_object["action"]} needs return for connectionId #{request_id}"
+                return_data = {
+                    requestId: request_id,
+                    action: "returnData",
+                    data: result
+                }
+                pp return_data
+                puts "aaaa"
+                pp JSON.generate return_data
+                puts "bbb"
+                send_message(return_data.to_json)
+            end
         }
     end
 end

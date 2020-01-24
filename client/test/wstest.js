@@ -26,6 +26,7 @@ async function sendMsg(action, data = false, waitForResponse = false){ //if call
             awaitingResponse[requestId] = resolve;
         });
     }
+    console.log("send message", msgObject);
     ws.send(JSON.stringify(msgObject));
     //fakeSend(JSON.stringify(msgObject));
 

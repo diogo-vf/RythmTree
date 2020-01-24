@@ -4,6 +4,7 @@
 
 require 'pp'
 require_relative 'connection'
+require_relative '../actions'
 
 WS_SECURITY_KEY = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 class WebSocketServer
@@ -37,11 +38,6 @@ class WebSocketServer
         #store connection
         connection = WSConnection.new(session: session, ws_key: ws_key)
         @connections[connection.id] = connection
-
-        connection.on_msg_register{
-            |data|
-            puts "hello! i got the data: #{data}"
-        }
 
         {
             :http_code => :switching_protocols,
