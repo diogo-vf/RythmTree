@@ -17,5 +17,3 @@ require_relative "database/sequence"
 require_relative "database/sequenceArray"
 require_relative "database/level"
 require_relative "database/replay"
-
-require_relative "request_examples"

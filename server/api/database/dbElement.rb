@@ -95,7 +95,30 @@ class DBElement
 
         obj
     end
+
+    def self.find_all    
+        obj = self.new
+
+        obj.refresh_all_data
+    end
     
+    def refresh_all_data
+        # get information of object
+        hash = to_hash        
+
+        mongo = MongoDB.new
+        mongo.collection = @collection_name
+        collections = []
+        mongo.collection.find( {} ).each { |collection|
+            obj = self.class.new
+
+            clean_collection = Utils.bson_doc_to_hash collection
+            obj.apply_hash_data(clean_collection) 
+            collections.push obj
+        } 
+
+        collections
+    end
     
     def save
         raise "object #{self.class} not saveable" unless @collection_name
