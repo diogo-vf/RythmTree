@@ -1,6 +1,8 @@
+require_relative "dbElement"
+
 class Player < DBElement
     def initialize
-        @collection_name = "player"
+        @collection_name = "players"
         @attributes = {
             id: String,
             name: String,

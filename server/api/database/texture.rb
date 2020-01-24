@@ -1,3 +1,5 @@
+require_relative "dbElement"
+
 class Texture < DBElement
     def initialize
         @attributes = {

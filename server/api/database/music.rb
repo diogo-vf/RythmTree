@@ -1,13 +1,15 @@
+require_relative "dbElement"
+
 class Music < DBElement
     def initialize
         @collection_name = "musics"
         @attributes = {
             id: String,
             name: String,
-            duration: Fixnum,
+            duration: Integer,
             src: String,
-            bpm: Fixnum,
-            start_offset: Fixnum
+            bpm: Integer,
+            start_offset: Integer
         }
         super
     end

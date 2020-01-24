@@ -1,3 +1,9 @@
+require_relative "dbElement"
+require_relative "sequence"
+require_relative "texture"
+require_relative "music"
+require_relative "player"
+
 class Level < DBElement
     def initialize
         @collection_name = "levels"
@@ -5,11 +11,11 @@ class Level < DBElement
             id: String,
             name: String,
             difficulty: String,
-            hardcore: Fixnum,
+            hardcore: Integer,
             music: Music,
             sequence: Sequence,
             texture: Texture,
-            creator: Creator
+            creator: Player
         }
         super
     end

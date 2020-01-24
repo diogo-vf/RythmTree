@@ -1,11 +1,12 @@
+require_relative "dbElement"
+
 class SequenceItem < DBElement
     def initialize
         @attributes = {
             key: String, 
-            time: Fixnum,
-            duration: Fixnum 
+            time: Integer,
+            duration: Integer 
         }
         super
     end
 end
-

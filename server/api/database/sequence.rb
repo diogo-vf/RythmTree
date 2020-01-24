@@ -1,6 +1,10 @@
+require_relative "dbElement"
+require_relative "player"
+require_relative "sequenceItemArray"
+
 class Sequence < DBElement
     def initialize
-        @collection_name = "sequence"
+        @collection_name = "sequences"
         @attributes = {
             id: String,
             sequences: SequenceItemArray,
@@ -9,4 +13,3 @@ class Sequence < DBElement
         super
     end
 end
-

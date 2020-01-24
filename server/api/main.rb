@@ -1,18 +1,21 @@
+require "json"
+require "mongo"
+require "pp"
 
 require_relative "../config/config"
 require_relative "mongoDB"
-# require_relative "basicAPI/basicAPI"
-require_relative "inDeveloppement/api_diogo"
+require_relative "utils"
 
+require_relative "database/dbArray"
+require_relative "database/dbElement"
+require_relative "database/texture"
+require_relative "database/music"
+require_relative "database/player"
+require_relative "database/sequenceItem"
+require_relative "database/sequenceItemArray"
+require_relative "database/sequence"
+require_relative "database/sequenceArray"
+require_relative "database/level"
+require_relative "database/replay"
 
-hash={
-    "action": "get",
-    "collection_name": "level",
-    "data": {
-         "_id": '5e2198f66e955215e787420f',
-         name: "niveau" 
-    }
-}
-
-# connection=BasicAPI.connection
-# BasicAPI.actions(connection,hash)
+require_relative "request_examples"
