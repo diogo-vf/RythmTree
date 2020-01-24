@@ -53,6 +53,8 @@ var pagesConfig = {
         title: "Replay (player)" //as in video player :)
     },
     game:{
-        title: "Game"
+        title: "Partie en cours",
+        pageName: "Partie en cours",
+        view: "game"
     }
 };

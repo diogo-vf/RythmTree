@@ -101,19 +101,18 @@ a {
     border-color: #333;
     background-color: #666; }
     .slideCheckBox.dark label::after {
-      border-color: 1px solid #666;
+      border: 1px solid #666;
       background-color: #ccc; }
 
 /* Common */
 .common-button {
-  text-decoration: none;
+  text-decoration: none !important;
   font-weight: 600;
   border-radius: 6px;
   opacity: 1;
   padding: 5px 10px;
   text-align: center;
   border: none;
-  text-decoration: none !important;
   display: block;
   width: 100%;
   transition: 0.2s;
@@ -258,11 +257,18 @@ a {
   border: 3px solid #85999a;
   margin-left: 15% !important; }
 
+.common-canvas {
+  width: 100%;
+  height: 200px;
+  background: url(../../images/textures/woodTopRight.png) calc(100%) 0 no-repeat, url(../../images/textures/woodTopLeft.png) 0 0 no-repeat, url(../../images/textures/woodBottomRight.png) calc(100%) calc(100%) no-repeat, url(../../images/textures/woodBottomLeft.png) 0 calc(100%) no-repeat, url(../../images/textures/woodTop.png) calc(100%) 0 repeat-x, url(../../images/textures/woodLeft.png) 0 0 repeat-y, url(../../images/textures/woodRight.png) calc(100%) 0 repeat-y, url(../../images/textures/woodBottom.png) 0 calc(100%) repeat-x, url(../../images/textures/woodBgTop.png) 0 35px repeat-x, url(../../images/textures/woodBg.png) repeat; }
+
 .mainTitle {
   font-weight: bold;
   text-shadow: -2px 1px 0 blue;
   color: #16a7d7;
-  text-decoration: none; }
+  text-decoration: none;
+  width: 50%;
+  margin: 0 25%; }
 
 #userOptionsBtn > img {
   position: absolute;
@@ -536,5 +542,8 @@ h1 > span {
   justify-content: center;
   align-items: center;
   display: flex; }
+
+.tab-left {
+  margin-left: 30px; }
 
 /*# sourceMappingURL=main.css.map */

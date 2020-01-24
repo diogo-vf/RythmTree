@@ -1,5 +1,5 @@
 "use strict";
-function Actions(){
+function Actions() {
     var _this = this;
 
     //-------------------------------------------------------------------------------------
@@ -44,12 +44,18 @@ function Actions(){
             player_icon.classList.replace(currentClass, newclass);
         };
     };
-    this.onPageLoad.options = function(){
+    this.onPageLoad.options = function() {
         pagesManager.pages.options.container.addEventListener("change", function(){
             applyUserOptions({
                 leavesAnimation: chkUserOptionsLeaves.checked
             });
         });
+    };
+
+    this.onPageLoad.game = function () {
+        mainDiv.classList.remove("container");
+        mainDiv.classList.add("container-fluid");
+        this.gameContext = canvasGame.getContext("2d");
     };
     
     //-------------------------------------------------------------------------------------
@@ -77,7 +83,10 @@ function Actions(){
         } else {
             userOptionsBtn.classList.remove("none");
         }
-    }
+
+        mainDiv.classList.remove("container-fluid");
+        mainDiv.classList.add("container");
+    };
 
     //-------------------------------------------------------------------------------------
     //page actions on data
