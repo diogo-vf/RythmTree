@@ -1,0 +1,852 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Do Not Track -->
+    <script type="text/javascript">
+      window.trackingEnabled=function(){var o=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack;return!("1"===o||"yes"===o)}();
+    </script>
+
+    <!-- On-page personalization -->
+    <script type="text/javascript">
+      var hbdata={campaign:"ruby"};!function(){var a;"string"==typeof window.location.href&&(a=window.location.href.match(/ck_subscriber_id=(\d+)/))&&(hbdata.ck_subscriber_id=a[1])}();
+    </script>
+
+    <!-- RightMessage -->
+    <script type="text/javascript">
+      trackingEnabled&&function(e,t,n,a,i,r){i=n.createElement("script"),i.type="text/javascript",i.async=!0,i.src="https://tag.rightmessage.com/"+e+".js",r=n.getElementsByTagName("script")[0],r.parentNode.insertBefore(i,r),a=function(e,t,a){var i=n.createElement("style");return i.id="rmcloak"+a,i.type="text/css",i.appendChild(n.createTextNode(".rmcloak"+e+"{visibility:hidden}.rmcloak"+t+"{display:none}")),r.parentNode.insertBefore(i,r),i},i=a("","-hidden",""),a("-stay-invisible","-stay-hidden","-stay"),setTimeout(function(){i.parentNode&&i.parentNode.removeChild(i)},t)}("1661691228",2500,document);
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>Building a simple websockets server from scratch in Ruby - Honeybadger Developer Blog</title>
+<meta name="description" content="What exactly are websockets? How do they work? In this post we're going to answer these questions by building a simple WebSocket server from scratch in Ruby." />
+<meta name="site" content="Honeybadger Developer Blog" />
+
+    <!-- CSS -->
+    <link href="/assets/stylesheets/main.bundle.css?1577993715" rel="stylesheet" />
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+    <link href='/favicon.ico?1577993715' rel='shortcut icon'>
+    <link color='#EA5937' href='/favicon.svg?1577993715' rel='mask-icon'>
+
+    <link rel="alternate" type="application/atom+xml" href="/blog/feed.xml" title="Atom Feed">
+
+    <!-- Netlify Identity -->
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  </head>
+  <body class="blog blog_building-a-simple-websockets-server-from-scratch-in-ruby blog_building-a-simple-websockets-server-from-scratch-in-ruby_index">
+
+        <div>
+  <nav class="navbar navbar-expand-lg bg-transparent navbar-light">
+    <div class="container">
+      <a class="navbar-brand" href="/"><img src="/images/navbar_logo.svg?1577993715" height="30"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item ">
+            <a class="nav-link text-dark-grey" href="/tour/">Product Tour</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/plans/">Pricing</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/blog">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://docs.honeybadger.io/">Docs</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/contact/">Contact</a>
+          </li>
+          <li class="nav-item " style="font-style:italic;">
+            <a class="nav-link" href="/about/">Meet the 'Badgers</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="btn btn-info cta-nav mr-2" href="https://app.honeybadger.io/users/sign_up?plan_id=30087">Start Free Trial</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://app.honeybadger.io/users/sign_in">Log In</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+  <div class="c-blog-subnav">
+  <nav class="navbar navbar-expand">
+    <div class="container" style="padding-right:15px;padding-left:15px;">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="/blog/" title="Blog Home"><i class="fas fa-home" aira-hidden="true"></i><span class="a11y-text">Blog Home</span></a>
+        </li>
+          <li class="nav-item hidden-sm-down">
+            <a class="nav-link active" href="/blog/tags/ruby">Ruby</a>
+          </li>
+          <li class="nav-item hidden-sm-down">
+            <a class="nav-link " href="/blog/tags/honeybadger">Honeybadger</a>
+          </li>
+          <li class="nav-item hidden-sm-down">
+            <a class="nav-link " href="/blog/tags/rails">Rails</a>
+          </li>
+          <li class="nav-item hidden-sm-down">
+            <a class="nav-link " href="/blog/tags/javascript">JavaScript</a>
+          </li>
+          <li class="nav-item hidden-sm-down">
+            <a class="nav-link " href="/blog/tags/devops">DevOps</a>
+          </li>
+        <li class="nav-item">
+          <div class="dropdown">
+            <a href="#" class="nav-link tag-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="All Tags">
+              <span>Posts by Tag</span>
+              <i class="fas fa-caret-down"  aira-hidden="true"></i>
+            </a>
+            <div class="dropdown-menu c-tags-dropdown" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/blog/tags/ruby">ruby <span class="text-muted">(94)</span></a>
+                <a class="dropdown-item" href="/blog/tags/honeybadger">honeybadger <span class="text-muted">(62)</span></a>
+                <a class="dropdown-item" href="/blog/tags/rails">rails <span class="text-muted">(22)</span></a>
+                <a class="dropdown-item" href="/blog/tags/javascript">javascript <span class="text-muted">(9)</span></a>
+                <a class="dropdown-item" href="/blog/tags/devops">devops <span class="text-muted">(9)</span></a>
+                <a class="dropdown-item" href="/blog/tags/elixir">elixir <span class="text-muted">(6)</span></a>
+                <a class="dropdown-item" href="/blog/tags/FounderQuest">FounderQuest <span class="text-muted">(6)</span></a>
+                <a class="dropdown-item" href="/blog/tags/conferences">conferences <span class="text-muted">(5)</span></a>
+                <a class="dropdown-item" href="/blog/tags/developer-tools">developer-tools <span class="text-muted">(3)</span></a>
+                <a class="dropdown-item" href="/blog/tags/go">go <span class="text-muted">(3)</span></a>
+                <a class="dropdown-item" href="/blog/tags/heroku">heroku <span class="text-muted">(3)</span></a>
+                <a class="dropdown-item" href="/blog/tags/node">node <span class="text-muted">(3)</span></a>
+                <a class="dropdown-item" href="/blog/tags/events">events <span class="text-muted">(2)</span></a>
+                <a class="dropdown-item" href="/blog/tags/jekyll">jekyll <span class="text-muted">(2)</span></a>
+                <a class="dropdown-item" href="/blog/tags/startup-advice">startup-advice <span class="text-muted">(2)</span></a>
+                <a class="dropdown-item" href="/blog/tags/python">python <span class="text-muted">(2)</span></a>
+                <a class="dropdown-item" href="/blog/tags/guest-post">guest-post <span class="text-muted">(2)</span></a>
+                <a class="dropdown-item" href="/blog/tags/sidekiq">sidekiq <span class="text-muted">(2)</span></a>
+                <a class="dropdown-item" href="/blog/tags/security">security <span class="text-muted">(2)</span></a>
+                <a class="dropdown-item" href="/blog/tags/aws">aws <span class="text-muted">(2)</span></a>
+                <a class="dropdown-item" href="/blog/tags/case-studies">case-studies <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/front-end">front-end <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/performance">performance <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/allocation_stats">allocation_stats <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/integrations">integrations <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/bitbucket">bitbucket <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/mobile">mobile <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/gophercon">gophercon <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/golang">golang <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/clients">clients <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/testing">testing <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/laravel">laravel <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/php">php <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/vue">vue <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/serverless">serverless <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/lambda">lambda <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/turbolinks">turbolinks <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/debugging">debugging <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/redis">redis <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/CircleCI">CircleCI <span class="text-muted">(1)</span></a>
+                <a class="dropdown-item" href="/blog/tags/GitHub">GitHub <span class="text-muted">(1)</span></a>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto right-navbar">
+        <li class="nav-item">
+          <a class="nav-link subtle" href="/blog/write-for-us/">Write For Us</a>
+        </li>
+        <li class="nav-item">
+          <a title="RSS Feed" class="nav-link subtle" href="/blog/feed.xml"><i class="fas fa-rss" aira-hidden="true"><span class="a11y-text">RSS Feed</span></i></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+  <div class="c-blog-hero">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-8 col-lg-9">
+          <h1>Building a simple websockets server from scratch in Ruby</h1>
+          <p class="teaser">What exactly are websockets? How do they work? In this post we're going to answer these questions by building a simple WebSocket server from scratch in Ruby.</p>
+          <ul class="list-inline c-blog-meta">
+              <li class="list-inline-item">
+                <img src="/images/headshots/starrh.png?1577993715" class="avatar" alt="author photo">
+                By <a href="#authorDetails">Starr Horne</a>
+                <a href="https://twitter.com/starrhorne" class="author-twitter"><i class="fab fa-twitter" aira-hidden="true"></i><span class="a11y-text">Author Twitter</span></a>
+              </li>
+              <li class="list-inline-item tags">
+                <a href="/blog/tags/ruby">#ruby</a>
+              </li>
+            <li class="list-inline-item">
+              Feb 18, 2016
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container mb-5">
+    <div class="row">
+      <div class="col-xl-7 col-lg-8">
+        <div class="c-blog-post">
+          <article>
+            <p>Websockets are getting more and more press these days. We hear that they&#39;re &quot;the future.&quot; We hear that they&#39;re easier to use than ever thanks to ActionCable in Rails 5. But what exactly ARE websockets? How do they work?</p>
+
+<p>In this post we&#39;re going to answer these questions by building a simple WebSocket server from scratch in Ruby. When we&#39;re done we&#39;ll have achieved bi-directional communication between a browser and our server. </p>
+
+<blockquote>
+<p>The code in this post is meant as a learning exercise. If you want to implement websockets in a real production app, check out the excellent <a href="https://github.com/imanel/websocket-ruby">websocket-ruby</a> gem. You might also take a look at the <a href="https://tools.ietf.org/html/rfc6455">WebSocket Spec</a>.</p>
+</blockquote>
+
+<h2>So you&#39;ve never heard of websockets</h2>
+
+<p>Web sockets were invented to solve some problems inherent in normal HTTP connections. When you request a webpage using a normal HTTP connection, the server sends you the content and then closes the connection. If you want to request another page, you have to make another connection. This normally works fine, but it&#39;s not the best approach for some use cases:</p>
+
+<ul>
+<li>For some applications, like chat, the front end needs to be updated as soon as a new message comes in. If all you have is normal HTTP requests, that means that you have to continuously poll the server to see if there is new content.</li>
+<li>If your front-end application needs to make lots of small request to the server, the overhead of creating new connections for each request can become a performance issue. This is less of a problem in HTTP2. </li>
+</ul>
+
+<p>With Web sockets, you make one connection to the server which is then held open and used for bidirectional communication. </p>
+
+<h2>Client side</h2>
+
+<p>Web sockets are normally used for communication between a browser and a Web server. The browser side is implemented in JavaScript. In the example below I&#39;ve written a very simple piece of JavaScript to open a Web socket to my local server and send a message to it.</p>
+<div class="highlight"><pre class="highlight html"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;title&gt;</span>Websocket Client<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;script&gt;</span>
+    <span class="kd">var</span> <span class="nx">exampleSocket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="dl">"</span><span class="s2">ws://localhost:2345</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">exampleSocket</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">exampleSocket</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="dl">"</span><span class="s2">Can you hear me?</span><span class="dl">"</span><span class="p">);</span> 
+    <span class="p">};</span>
+    <span class="nx">exampleSocket</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<p>If I start up a little static server and open this file in my web browser, I get an error. That makes sense, because there is no server yet. We still have to build one. :-)</p>
+
+<p><img src="/images/2015/12/websocket_client_error.png?1577993715" alt="Websocket client without a server" /></p>
+
+<h2>Beginning the server</h2>
+
+<p>Web socket start out life as normal HTTP requests. They have kind of an odd lifecycle:</p>
+
+<ol>
+<li>The browser sends a normal HTTP request, with some special headers that say &quot;please make me a websocket.&quot;</li>
+<li>The server replies with a certain HTTP response, but DOESN&#39;T CLOSE THE CONNECTION.</li>
+<li>The browser and server then use a special websocket protocol to exchange frames of data over the open connection. </li>
+</ol>
+
+<p>So the first step for us is to build a Web server. In the code below, I&#39;m creating the simplest possible web server. It doesn&#39;t actually serve anything. It simply waits for a request then prints it to STDERR.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'socket'</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="no">TCPServer</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'localhost'</span><span class="p">,</span> <span class="mi">2345</span><span class="p">)</span>
+
+<span class="kp">loop</span> <span class="k">do</span>
+
+  <span class="c1"># Wait for a connection</span>
+  <span class="n">socket</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="nf">accept</span>
+  <span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Incoming Request"</span>
+
+  <span class="c1"># Read the HTTP request. We know it's finished when we see a line with nothing but \r\n</span>
+  <span class="n">http_request</span> <span class="o">=</span> <span class="s2">""</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">line</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="nf">gets</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">line</span> <span class="o">!=</span> <span class="s2">"</span><span class="se">\r\n</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">http_request</span> <span class="o">+=</span> <span class="n">line</span> 
+  <span class="k">end</span>
+  <span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="n">http_request</span>
+  <span class="n">socket</span><span class="p">.</span><span class="nf">close</span>
+<span class="k">end</span>  
+</code></pre></div>
+<p>If I run the server, and refresh my websocket testing page, I get this:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>$ ruby server1.rb
+Incoming Request
+GET / HTTP/1.1
+Host: localhost:2345
+Connection: Upgrade
+Upgrade: websocket
+Sec-WebSocket-Version: 13
+Sec-WebSocket-Key: cG8zEwcrcLnEftn2qohdKQ==
+</code></pre></div>
+<p>If you&#39;ll notice, this HTTP request has a bunch of headers that related to Web sockets. This is actually the first step in the websocket handshake</p>
+
+<h2>The handshake</h2>
+
+<p>All Web socket requests start out with a handshake. This is to make sure that both the client and the server both understand that Web sockets are about to happen and they both agree on the protocol version. It works like this:</p>
+
+<h3>Client sends a HTTP request like this</h3>
+<div class="highlight"><pre class="highlight plaintext"><code>GET / HTTP/1.1
+Host: localhost:2345
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Key: E4i4gDQc1XTIQcQxvf+ODA==
+Sec-WebSocket-Version: 13
+</code></pre></div>
+<p>The most important part of this request is the <code>Sec-WebSocket-Key</code>.  The client expects the server to return a modified version of this value as proof against XSS attacks and caching proxies.</p>
+
+<h3>Server responds</h3>
+<div class="highlight"><pre class="highlight plaintext"><code>HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: d9WHst60HtB4IvjOVevrexl0oLA=
+</code></pre></div>
+<p>The server response is boilerplate except for the <code>Sec-WebSocket-Accept</code> header. This header is generated like so:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="c1"># Take the value provided by the client, append a magic</span>
+<span class="c1"># string to it. Generate the SHA1 hash, then base64 encode it.  </span>
+<span class="no">Digest</span><span class="o">::</span><span class="no">SHA1</span><span class="p">.</span><span class="nf">base64digest</span><span class="p">([</span><span class="n">sec_websocket_accept</span><span class="p">,</span> <span class="s2">"258EAFA5-E914-47DA-95CA-C5AB0DC85B11"</span><span class="p">].</span><span class="nf">join</span><span class="p">)</span>
+</code></pre></div>
+<p>Your eyes are not lying to you. There is a magic constant involved.</p>
+
+<h3>Implementing the handshake</h3>
+
+<p>Let&#39;s update our server to complete the handshake. First, we&#39;ll pull the security token out of the request headers:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="c1"># Grab the security key from the headers. </span>
+<span class="c1"># If one isn't present, close the connection.</span>
+<span class="k">if</span> <span class="n">matches</span> <span class="o">=</span> <span class="n">http_request</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/^Sec-WebSocket-Key: (\S+)/</span><span class="p">)</span>
+  <span class="n">websocket_key</span> <span class="o">=</span> <span class="n">matches</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Websocket handshake detected with key: </span><span class="si">#{</span> <span class="n">websocket_key</span> <span class="si">}</span><span class="s2">"</span>
+<span class="k">else</span>
+  <span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Aborting non-websocket connection"</span>
+  <span class="n">socket</span><span class="p">.</span><span class="nf">close</span>
+  <span class="k">next</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Now, we use the security key to generate a valid response:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">response_key</span> <span class="o">=</span> <span class="no">Digest</span><span class="o">::</span><span class="no">SHA1</span><span class="p">.</span><span class="nf">base64digest</span><span class="p">([</span><span class="n">websocket_key</span><span class="p">,</span> <span class="s2">"258EAFA5-E914-47DA-95CA-C5AB0DC85B11"</span><span class="p">].</span><span class="nf">join</span><span class="p">)</span>
+<span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Responding to handshake with key: </span><span class="si">#{</span> <span class="n">response_key</span> <span class="si">}</span><span class="s2">"</span>
+
+<span class="n">socket</span><span class="p">.</span><span class="nf">write</span> <span class="o">&lt;&lt;-</span><span class="no">eos</span> <span class="sh">
+HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: </span><span class="si">#{</span> <span class="n">response_key</span> <span class="si">}</span><span class="sh">
+
+</span><span class="no">eos</span>
+
+<span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Handshake completed."</span>
+</code></pre></div>
+<p>When I refresh the websocket test page, I see now that there&#39;s no longer a connection error. The connection was established!</p>
+
+<p><img src="/images/2015/12/websocket_client_handshake_complete.png?1577993715" alt="Websocket client handshake complete" /></p>
+
+<p>Here&#39;s the output from the server, showing the security keys and the response key:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>$ ruby server2.rb
+Incoming Request
+Websocket handshake detected with key: Fh06+WnoTQQiVnX5saeYMg==
+Responding to handshake with key: nJg1c2upAHixOmXz7kV2bJ2g/YQ=
+Handshake completed.
+</code></pre></div>
+<h2>The websocket frame protocol</h2>
+
+<p>Once a WebSocket connection is established, HTTP is no longer used. Instead, data is exchanged via the WebSocket protocol.</p>
+
+<p>Frames are the basic unit of the WebSocket protocol.</p>
+
+<p>The WebSocket protocol is frame-based. But what does this mean?</p>
+
+<p>Whenever you ask your web browser to send data over WebSocket, or ask your server to respond, the data is broken up into a series of chunks in each of those chunks is wrapped in some metadata to make a frame.</p>
+
+<p>Here&#39;s what the frame structure looks like. The numbers along the top are bits. And some of the fields, like extended payload length may not always be present:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-------+-+-------------+-------------------------------+
+|F|R|R|R| opcode|M| Payload len |    Extended payload length    |
+|I|S|S|S|  (4)  |A|     (7)     |             (16/64)           |
+|N|V|V|V|       |S|             |   (if payload len==126/127)   |
+| |1|2|3|       |K|             |                               |
++-+-+-+-+-------+-+-------------+ - - - - - - - - - - - - - - - +
+|     Extended payload length continued, if payload len == 127  |
++ - - - - - - - - - - - - - - - +-------------------------------+
+|                               |Masking-key, if MASK set to 1  |
++-------------------------------+-------------------------------+
+| Masking-key (continued)       |          Payload Data         |
++-------------------------------- - - - - - - - - - - - - - - - +
+:                     Payload Data continued ...                :
++ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +
+|                     Payload Data continued ...                |
++---------------------------------------------------------------+
+</code></pre></div>
+<p>The first thing that may jump out at you is that this is a binary protocol. We&#39;re going to have to do some bit manipulation, but don&#39;t worry — it won&#39;t be that hard. The numbers along the top of the figure are bits. And some of the fields may not always be present. For example the extended payload length will be present if the payload is under 127 bytes.</p>
+
+<h2>Receiving data</h2>
+
+<p>Now their handshake is complete, we can start parsing the binary frame. To keep things simple, we&#39;re going to look at the incoming frame one byte at a time. After that, we&#39;ll put it all together so you can see it in action.</p>
+
+<h3>Byte 1: FIN and Opcode</h3>
+
+<p>From the table above, you can see that the first byte (the first eight bits) contains a few pieces of data:</p>
+
+<ul>
+<li><strong>FIN: 1 bit</strong> If this is false, then the message is split into multiple frames</li>
+<li><strong>opcode: 4 bits</strong> Tells us if the payload is text, binary, or if this is just a &quot;ping&quot; to keep the connection alive.</li>
+<li><strong>RSV: 3 bits</strong> These are unused in the current WebSockets spec.<br></li>
+</ul>
+
+<p>To get the first byte, we&#39;ll use the <code>IO#getbyte</code> method. And to extract the data, we&#39;ll use some simple bitmasking. If you&#39;re not familiar with bitwise operators, check out my other article <a href="/bitwise-hacks-in-ruby/">Bitwise hacks in Ruby</a> </p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">first_byte</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="nf">getbyte</span>
+<span class="n">fin</span> <span class="o">=</span> <span class="n">first_byte</span> <span class="o">&amp;</span> <span class="mb">0b10000000</span> 
+<span class="n">opcode</span> <span class="o">=</span> <span class="n">first_byte</span> <span class="o">&amp;</span> <span class="mb">0b00001111</span>
+
+<span class="c1"># Our server will only support single-frame, text messages.</span>
+<span class="c1"># Raise an exception if the client tries to send anything else.</span>
+<span class="k">raise</span> <span class="s2">"We don't support continuations"</span> <span class="k">unless</span> <span class="n">fin</span>
+<span class="k">raise</span> <span class="s2">"We only support opcode 1"</span> <span class="k">unless</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">1</span>
+</code></pre></div>
+<h3>Byte 2: MASK and payload length</h3>
+
+<p>The second byte of the frame contains more information about the payload.</p>
+
+<ul>
+<li><strong>MASK: 1 bit</strong> Boolean flag indicating if the payload is masked. If it&#39;s true, then the payload will have to be &quot;unmasked&quot; before use. This should ALWAYS be true for frames coming in from our client. The spec says so.</li>
+<li><strong>payload length: 7 bits</strong> If our payload is less than 126 bytes, the length is stored here. If this value is greater than 126, that means more bytes will follow to give us the length. </li>
+</ul>
+
+<p>Here&#39;s how we handle the second byte:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">second_byte</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="nf">getbyte</span>
+<span class="n">is_masked</span> <span class="o">=</span> <span class="n">second_byte</span> <span class="o">&amp;</span> <span class="mb">0b10000000</span>
+<span class="n">payload_size</span> <span class="o">=</span> <span class="n">second_byte</span> <span class="o">&amp;</span> <span class="mb">0b01111111</span>
+
+<span class="k">raise</span> <span class="s2">"All frames sent to a server should be masked according to the websocket spec"</span> <span class="k">unless</span> <span class="n">is_masked</span>
+<span class="k">raise</span> <span class="s2">"We only support payloads &lt; 126 bytes in length"</span> <span class="k">unless</span> <span class="n">payload_size</span> <span class="o">&lt;</span> <span class="mi">126</span>
+
+<span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Payload size: </span><span class="si">#{</span> <span class="n">payload_size</span> <span class="si">}</span><span class="s2"> bytes"</span>
+</code></pre></div>
+<h3>Bytes 3-7: The masking key</h3>
+
+<p>We expect that the payloads of all incoming frames will be masked. To unmask the content, we will have to XOR it against a masking key. </p>
+
+<p>This masking key makes up the next four bytes. We don&#39;t have to process it at all, we just read the bytes into an array. </p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">mask</span> <span class="o">=</span> <span class="mi">4</span><span class="p">.</span><span class="nf">times</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">socket</span><span class="p">.</span><span class="nf">getbyte</span> <span class="p">}</span>
+<span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Got mask: </span><span class="si">#{</span> <span class="n">mask</span><span class="p">.</span><span class="nf">inspect</span> <span class="si">}</span><span class="s2">"</span>
+</code></pre></div>
+<blockquote>
+<p>Please tell me if you know of a nicer way to read 4 bytes into an array. The <code>times.map</code> is a little strange, but it was the most concise approach I could think of. I&#39;m @StarrHorne on twitter. </p>
+</blockquote>
+
+<h3>Bytes 8 and up: The payload</h3>
+
+<p>Okay, we&#39;re done with metadata. Now can fetch the actual payload. </p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">data</span> <span class="o">=</span> <span class="n">payload_size</span><span class="p">.</span><span class="nf">times</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">socket</span><span class="p">.</span><span class="nf">getbyte</span> <span class="p">}</span>
+<span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Got masked data: </span><span class="si">#{</span> <span class="n">data</span><span class="p">.</span><span class="nf">inspect</span> <span class="si">}</span><span class="s2">"</span>
+</code></pre></div>
+<p>Remember that this payload is masked. So if you print it out, it will look like garbage. To unmask it, we simply XOR each byte with the corresponding byte of the mask. Since the mask is only four bytes long, we repeat it to match the length of the payload:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>unmasked_data = data.each_with_index.map { |byte, i| byte ^ mask[i % 4] }
+STDERR.puts "Unmasked the data: #{ unmasked_data.inspect }"
+</code></pre></div>
+<p>Now we have an array of bytes. We need to convert that into a unicode string. All text in Websockets is unicode. </p>
+<div class="highlight"><pre class="highlight plaintext"><code>STDERR.puts "Converted to a string: #{ unmasked_data.pack('C*').force_encoding('utf-8').inspect }"
+</code></pre></div>
+<h3>Putting it all together</h3>
+
+<p>When you put all of this code together, you get a script that looks like this:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'socket'</span> <span class="c1"># Provides TCPServer and TCPSocket classes</span>
+<span class="nb">require</span> <span class="s1">'digest/sha1'</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="no">TCPServer</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'localhost'</span><span class="p">,</span> <span class="mi">2345</span><span class="p">)</span>
+
+<span class="kp">loop</span> <span class="k">do</span>
+
+  <span class="c1"># Wait for a connection</span>
+  <span class="n">socket</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="nf">accept</span>
+  <span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Incoming Request"</span>
+
+  <span class="c1"># Read the HTTP request. We know it's finished when we see a line with nothing but \r\n</span>
+  <span class="n">http_request</span> <span class="o">=</span> <span class="s2">""</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">line</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="nf">gets</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">line</span> <span class="o">!=</span> <span class="s2">"</span><span class="se">\r\n</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">http_request</span> <span class="o">+=</span> <span class="n">line</span> 
+  <span class="k">end</span>
+
+  <span class="c1"># Grab the security key from the headers. If one isn't present, close the connection.</span>
+  <span class="k">if</span> <span class="n">matches</span> <span class="o">=</span> <span class="n">http_request</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/^Sec-WebSocket-Key: (\S+)/</span><span class="p">)</span>
+    <span class="n">websocket_key</span> <span class="o">=</span> <span class="n">matches</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Websocket handshake detected with key: </span><span class="si">#{</span> <span class="n">websocket_key</span> <span class="si">}</span><span class="s2">"</span>
+  <span class="k">else</span>
+    <span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Aborting non-websocket connection"</span>
+    <span class="n">socket</span><span class="p">.</span><span class="nf">close</span>
+    <span class="k">next</span>
+  <span class="k">end</span>
+
+
+  <span class="n">response_key</span> <span class="o">=</span> <span class="no">Digest</span><span class="o">::</span><span class="no">SHA1</span><span class="p">.</span><span class="nf">base64digest</span><span class="p">([</span><span class="n">websocket_key</span><span class="p">,</span> <span class="s2">"258EAFA5-E914-47DA-95CA-C5AB0DC85B11"</span><span class="p">].</span><span class="nf">join</span><span class="p">)</span>
+  <span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Responding to handshake with key: </span><span class="si">#{</span> <span class="n">response_key</span> <span class="si">}</span><span class="s2">"</span>
+
+  <span class="n">socket</span><span class="p">.</span><span class="nf">write</span> <span class="o">&lt;&lt;-</span><span class="no">eos</span> <span class="sh">
+HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: </span><span class="si">#{</span> <span class="n">response_key</span> <span class="si">}</span><span class="sh">
+
+</span><span class="no">  eos</span>
+
+  <span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Handshake completed. Starting to parse the websocket frame."</span>
+
+  <span class="n">first_byte</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="nf">getbyte</span>
+  <span class="n">fin</span> <span class="o">=</span> <span class="n">first_byte</span> <span class="o">&amp;</span> <span class="mb">0b10000000</span> 
+  <span class="n">opcode</span> <span class="o">=</span> <span class="n">first_byte</span> <span class="o">&amp;</span> <span class="mb">0b00001111</span>
+
+  <span class="k">raise</span> <span class="s2">"We don't support continuations"</span> <span class="k">unless</span> <span class="n">fin</span>
+  <span class="k">raise</span> <span class="s2">"We only support opcode 1"</span> <span class="k">unless</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">1</span>
+
+  <span class="n">second_byte</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="nf">getbyte</span>
+  <span class="n">is_masked</span> <span class="o">=</span> <span class="n">second_byte</span> <span class="o">&amp;</span> <span class="mb">0b10000000</span>
+  <span class="n">payload_size</span> <span class="o">=</span> <span class="n">second_byte</span> <span class="o">&amp;</span> <span class="mb">0b01111111</span>
+
+  <span class="k">raise</span> <span class="s2">"All incoming frames should be masked according to the websocket spec"</span> <span class="k">unless</span> <span class="n">is_masked</span>
+  <span class="k">raise</span> <span class="s2">"We only support payloads &lt; 126 bytes in length"</span> <span class="k">unless</span> <span class="n">payload_size</span> <span class="o">&lt;</span> <span class="mi">126</span>
+
+  <span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Payload size: </span><span class="si">#{</span> <span class="n">payload_size</span> <span class="si">}</span><span class="s2"> bytes"</span>
+
+  <span class="n">mask</span> <span class="o">=</span> <span class="mi">4</span><span class="p">.</span><span class="nf">times</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">socket</span><span class="p">.</span><span class="nf">getbyte</span> <span class="p">}</span>
+  <span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Got mask: </span><span class="si">#{</span> <span class="n">mask</span><span class="p">.</span><span class="nf">inspect</span> <span class="si">}</span><span class="s2">"</span>
+
+  <span class="n">data</span> <span class="o">=</span> <span class="n">payload_size</span><span class="p">.</span><span class="nf">times</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">socket</span><span class="p">.</span><span class="nf">getbyte</span> <span class="p">}</span>
+  <span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Got masked data: </span><span class="si">#{</span> <span class="n">data</span><span class="p">.</span><span class="nf">inspect</span> <span class="si">}</span><span class="s2">"</span>
+
+  <span class="n">unmasked_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">each_with_index</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">byte</span><span class="p">,</span> <span class="n">i</span><span class="o">|</span> <span class="n">byte</span> <span class="o">^</span> <span class="n">mask</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="mi">4</span><span class="p">]</span> <span class="p">}</span>
+  <span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Unmasked the data: </span><span class="si">#{</span> <span class="n">unmasked_data</span><span class="p">.</span><span class="nf">inspect</span> <span class="si">}</span><span class="s2">"</span>
+
+  <span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Converted to a string: </span><span class="si">#{</span> <span class="n">unmasked_data</span><span class="p">.</span><span class="nf">pack</span><span class="p">(</span><span class="s1">'C*'</span><span class="p">).</span><span class="nf">force_encoding</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">).</span><span class="nf">inspect</span> <span class="si">}</span><span class="s2">"</span>
+
+  <span class="n">socket</span><span class="p">.</span><span class="nf">close</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>When I refresh my WebSocket tester webpage and it makes a request to my server, here&#39;s the output that I see:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>$ ruby websocket_server.rb
+Incoming Request
+Websocket handshake detected with key: E4i4gDQc1XTIQcQxvf+ODA==
+Responding to handshake with key: d9WHst60HtB4IvjOVevrexl0oLA=
+Handshake completed. Starting to parse the websocket frame.
+Payload size: 16 bytes
+Got mask: [80, 191, 161, 254]
+Got masked data: [19, 222, 207, 222, 41, 208, 212, 222, 56, 218, 192, 140, 112, 210, 196, 193]
+Unmasked the data: [67, 97, 110, 32, 121, 111, 117, 32, 104, 101, 97, 114, 32, 109, 101, 63]
+Converted to a string: "Can you hear me?"
+</code></pre></div>
+<h2>Sending data back to the client</h2>
+
+<p>So we&#39;ve successfully sent a test message from our client to our toy WebSocket server. Now it would be cool to send a message back from the server to the client.</p>
+
+<p>This is a little less involved, as we don&#39;t have to deal with any of the masking stuff. Frames sent from server to client are always unmasked.</p>
+
+<p>Just like we consumed the frame one byte at a time, we&#39;re going to construct it one byte at a time.</p>
+
+<h3>Byte 1: FIN and opcode</h3>
+
+<p>Our payload is going to fit into one frame, and it&#39;s going to be text. That means that FIN will equal 1, and the opcode also equals one. When I combine those using the same bit format that we used before, I get a number:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="mb">0b10000001</span><span class="p">]</span>
+</code></pre></div>
+<h3>Byte 2: MASKED and payload length</h3>
+
+<p>Because this frame is going from the server to the client, MASKED will equal zero. That means that we can ignore it. The payload length is just the length of the string.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="mb">0b10000001</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="nf">size</span><span class="p">]</span>
+</code></pre></div>
+<h3>Bytes 3 and up: The payload</h3>
+
+<p>The payload is not masked, it&#39;s just a string.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">response</span> <span class="o">=</span> <span class="s2">"Loud and clear!"</span>
+<span class="no">STDERR</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Sending response: </span><span class="si">#{</span> <span class="n">response</span><span class="p">.</span><span class="nf">inspect</span> <span class="si">}</span><span class="s2">"</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="mb">0b10000001</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="nf">size</span><span class="p">,</span> <span class="n">response</span><span class="p">]</span>
+</code></pre></div>
+<h3>Bombs away!</h3>
+
+<p>At this point, we have an array containing the data that we want to send. We need to convert this to a string of bytes which we can send over the wire. To do this we will use the super-versatile <code>Array#pack</code> method.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">socket</span><span class="p">.</span><span class="nf">write</span> <span class="n">output</span><span class="p">.</span><span class="nf">pack</span><span class="p">(</span><span class="s2">"CCA</span><span class="si">#{</span> <span class="n">response</span><span class="p">.</span><span class="nf">size</span> <span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<p>That strange string <code>&quot;CCA#{ response.size }&quot;</code> tells <code>Array#pack</code> that the array contains two 8-bit unsigned ints, followed by a character string of the specified size. </p>
+
+<p>If I open up the network inspector in chrome, I can see the message came through loud and clear.</p>
+
+<p><img src="/images/2015/12/websocket_client_done.png?1577993715" alt="Websocket client received response" /></p>
+
+<h2>Extra Credit</h2>
+
+<p>That&#39;s it! I hope you&#39;ve learned something about WebSockets. There are a lot of things the server is missing. If you want to continue to exercise, you might look in them:</p>
+
+<ul>
+<li>Support for multi-frame payloads</li>
+<li>Binary payload support</li>
+<li>Ping / Pong support</li>
+<li>Long payload support</li>
+<li>Closing handshake</li>
+</ul>
+
+          </article>
+        </div>
+
+          <div class="row no-gutters c-blog-author" id="authorDetails">
+            <div class="col-sm-2">
+                <img src="/images/headshots/starrh.png?1577993715" class="avatar" alt="author photo">
+            </div>
+
+            <div class="col-sm-8">
+              <h4>Starr Horne</h4>
+              <p>Starr Horne is a Rubyist and Chief Javascripter at Honeybadger.io. When he's not neck-deep in other people's bugs, he enjoys making furniture with traditional hand-tools, reading history and brewing beer in his garage in Seattle.</p>
+                <a href="https://twitter.com/starrhorne" title="Twitter" rel="nofollow" class="twitter">
+                  <i class="fab fa-twitter" aira-hidden="true"></i>@starrhorne
+                  <span class="a11y-text">Author Twitter</span>
+                </a>
+            </div>
+          </div>
+
+      </div>
+
+
+
+      <div class="col-xl-4 col-lg-4 offset-xl-1">
+
+        <div class="c-very-special-messages c-very-special-messages-inlineable">
+
+
+              <div class="c-very-special-messages__item">
+                <div>
+                  &ldquo;We’ve looked at a lot of error management systems. Honeybadger is head and shoulders above the rest and somehow gets better with every new release.&rdquo;
+                  <div style="display: inline-block">
+                    <img class='circular' style="display: inline-block; max-width: 30px; margin: 0 5px 0 20px; " src='/images/michael.png?1577993715'>
+                    <small>Michael Smith</small>
+                  </div>
+                </div>
+                <a class="btn btn-info cta" href="https://app.honeybadger.io/users/sign_up?plan_id=30087">
+                  Try Error Monitoring Free for 15 Days
+                </a>
+              </div>
+
+              <div class="c-very-special-messages__item">
+                <div id="blog-footer-newsletter-form" class="rmcloak">
+  <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
+  <form action="https://app.convertkit.com/forms/998402/subscriptions" class="seva-form formkit-form form-inline pt-3" style="" method="post" data-sv-form="998402" data-uid="c9054e73a1" data-format="inline" data-version="5" data-options="{&quot;settings&quot;:{&quot;after_subscribe&quot;:{&quot;action&quot;:&quot;redirect&quot;,&quot;success_message&quot;:&quot;Success! Now check your email to confirm your subscription.&quot;,&quot;redirect_url&quot;:&quot;https://www.honeybadger.io/leveling-up-confirmation/?source=blog&quot;},&quot;modal&quot;:{&quot;trigger&quot;:null,&quot;scroll_percentage&quot;:null,&quot;timer&quot;:null,&quot;devices&quot;:null,&quot;show_once_every&quot;:null},&quot;recaptcha&quot;:{&quot;enabled&quot;:false},&quot;return_visitor&quot;:{&quot;action&quot;:&quot;hide&quot;,&quot;custom_content&quot;:&quot;&quot;},&quot;slide_in&quot;:{&quot;display_in&quot;:null,&quot;trigger&quot;:null,&quot;scroll_percentage&quot;:null,&quot;timer&quot;:null,&quot;devices&quot;:null,&quot;show_once_every&quot;:null}}}" min-width="400 500 600 700 800">
+    <h3>Level up your software development career</h3>
+    <p>Join our community of kick-ass developers as we learn engineering, DevOps, cloud architecture, and bootstrapping remote software companies. <a href="https://www.honeybadger.io/leveling-up/">Tell me more &rarr;</a></p>
+
+    <div data-style="clean">
+      <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
+      <div data-element="fields" data-stacked="false" class="seva-fields formkit-fields">
+        <input class="formkit-input form-control mb-1 mr-1" aria-label="Your first name" name="fields[first_name]" placeholder="Your first name" type="text">
+        <input class="formkit-input form-control mb-1 mr-1" name="email_address" placeholder="Your email address" required="" type="email">
+        <button data-element="submit" class="formkit-submit formkit-submit btn btn-success mb-1">
+          <div class="formkit-spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <span>Let me in</span>
+        </button>
+      </div>
+    </div>
+
+    <p><small class="text-muted">We're Honeybadger. We'll never send you spam; we <em>will</em> send you cool stuff like exclusive content, memes, and special swag.</small></p>
+
+    <input type="hidden" name="tags[]" value="1009431">
+    <input type="hidden" name="fields[newsletter_status]" value="subscribed">
+  </form>
+</div>
+
+              </div>
+
+              <div class="c-very-special-messages__item">
+                <div>
+                  Are you using <strong>Bugsnag, Rollbar, or Airbrake</strong> for your monitoring? Honeybadger includes exception, uptime, and check-in monitoring &mdash; all for probably less than you’re paying now. Discover why so many companies are switching to Honeybadger
+                  <a href="https://www.honeybadger.io/vs/error-trackers/">here</a>.
+                </div>
+                <a class="btn btn-info cta" href="https://app.honeybadger.io/users/sign_up?plan_id=30087">
+                  Try Error Monitoring Free for 15 Days
+                </a>
+              </div>
+
+              <div class="c-very-special-messages__item">
+                <div>
+                  <strong>Stop digging through chat logs</strong> to find the bug-fix someone mentioned last month. Honeybadger's built-in issue tracker keeps discussion central to each error, so that if it pops up again you'll be able to pick up right where you left off.
+                </div>
+                <a class="btn btn-info cta" href="https://app.honeybadger.io/users/sign_up?plan_id=30087">
+                  Try Error Monitoring Free for 15 Days
+                </a>
+              </div>
+
+              <div class="c-very-special-messages__item">
+                <div>
+                  "Wow &mdash; Customers are
+                  <strong>blown away</strong>
+                  that I email them so quickly after an error."
+                  <div style="display: inline-block">
+                    <img class='circular' style="display: inline-block; max-width: 30px; margin: 0 5px 0 20px;" src='/images/chris.png?1577993715'>
+                    <small>Chris Patton</small>
+                  </div>
+                </div>
+                <a class="btn btn-info cta" href="https://app.honeybadger.io/users/sign_up?plan_id=30087">
+                  Try Error Monitoring Free for 15 Days
+                </a>
+              </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+
+  <div class="footer footer-container-outer pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1 col-12 mt-5" style="margin-right: 0; padding-right: 0; margin-left: 0; padding-left: 0;">
+        <center><img src="/images/bolt.svg?1577993715" class="img-fluid" style="max-width: 100px;"></center>
+      </div>
+      <div class="col-md-3 col-6 mt-5">
+        <div class="footer__heading">Product</div>
+        <nav class="footer__nav">
+          <ul>
+            <li>
+              <a href="/tour/">Tour</a>
+            </li>
+            <li>
+              <a href="/integrations/">Integrations</a>
+            </li>
+            <li>
+              <a href="/plans/">Plans &amp; Pricing</a>
+            </li>
+            <li>
+              <a href="/gdpr/">GDPR</a>
+            </li>
+            <li>
+              <a href="http://docs.honeybadger.io/guides/security.html">Security</a>
+            </li>
+            <li>
+              <a href="/vs/error-trackers/">HB vs. Error Trackers</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-md-3 col-6 mt-5">
+        <div class="footer__heading">Stacks</div>
+        <div class="row">
+          <div class="col-lg-5 col-12">
+            <nav class="footer__nav">
+              <ul>
+                <li>
+                  <a href="/for/javascript/">JavaScript</a>
+                </li>
+                <li>
+                  <a href="/for/ruby/">Ruby</a>
+                </li>
+                <li>
+                  <a href="/for/elixir/">Elixir</a>
+                </li>
+                <li>
+                  <a href="/for/php/">PHP</a>
+                </li>
+                <li>
+                  <a href="/for/node/">Node</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="col-lg-5 col-12">
+            <nav class="footer__nav">
+              <ul>
+                <li>
+                  <a href="/for/python/">Python</a>
+                </li>
+                <li>
+                  <a href="/for/go/">Go</a>
+                </li>
+                <li>
+                  <a href="/for/java/">Java</a>
+                </li>
+                <li>
+                  <a href="/for/laravel/">Laravel</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-6 mt-5">
+        <div class="footer__heading">Company</div>
+        <nav class="footer__nav">
+          <ul>
+            <li>
+              <a href="/about/">Meet the 'Badgers</a>
+            </li>
+            <li>
+              <a href="/assets/">Brand Assets</a>
+            </li>
+            <li>
+              <a href="/tos/">Terms of Use</a>
+            </li>
+            <li>
+              <a href="/privacy/">Privacy Statement</a>
+            </li>
+            <li>
+              <a href="/contact/">Contact Us</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-md-2 col-6 mt-5">
+        <div class="footer__heading">Resources</div>
+        <nav class="footer__nav">
+          <ul>
+            <li>
+              <a href="https://docs.honeybadger.io/">Developer Docs</a>
+            </li>
+            <li>
+              <a href="http://blog.honeybadger.io/">Developer Blog</a>
+            </li>
+            <li>
+              <a href="/leveling-up">Leveling Up</a>
+            </li>
+            <li>
+              <a href="https://www.exceptionalcreatures.com/">Exceptional Creatures</a>
+            </li>
+            <li>
+              <a href="https://twitter.com/honeybadgerapp"><i class="fab fa-twitter" aria-hidden="true"></i> Twitter</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div id="do-not-track" class="row">
+      <div class="offset-md-1 col-md-11 mt-3">
+        <nav class="footer___av">
+          <ul>
+            <li>
+              <a href="/do-not-track"><img src="/images/emoji.jpg?1577993715" width="18" height="18"> You're not being tracked</a>
+            </li>
+          </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+    <script src="/assets/javascripts/main.bundle.js?1577993715"></script>
+
+    <!-- Wistia -->
+    <script async='' charset='ISO-8859-1' src='//fast.wistia.com/assets/external/E-v1.js'></script>
+
+    <!-- Segment -->
+    <script>
+      trackingEnabled&&function(){var e=window.analytics=window.analytics||[];if(!e.initialize)if(e.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{e.invoked=!0,e.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"],e.factory=function(t){return function(){var n=Array.prototype.slice.call(arguments);return n.unshift(t),e.push(n),e}};for(var t=0;t<e.methods.length;t++){var n=e.methods[t];e[n]=e.factory(n)}e.load=function(t,n){var r=document.createElement("script");r.type="text/javascript",r.async=!0,r.src="https://cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(r,a),e._loadOptions=n},e.SNIPPET_VERSION="4.1.0",e.load("Vh0hrL9NfiyA8PXfEW4pPCQbrkG2bBAy",{integrations:{All:!0,Intercom:!1}}),e.page()}}();
+    </script>
+
+      <script type="text/javascript">
+        tag([740329]);
+      </script>
+
+  </body>
+</html>

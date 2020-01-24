@@ -22,7 +22,7 @@ function Builder(){
 
 	//other
 	this.addContentLoader = function(container, className = ""){
-		var elem = container.addElement("div", `contentLoader ${className}`);
+		var elem = container.addElement("div", {class:`contentLoader ${className}`});
 		return {
 			element: elem,
 			remove: function(){elem.remove()}

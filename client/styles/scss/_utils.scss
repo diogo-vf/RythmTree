@@ -1,0 +1,55 @@
+/* Utils class */
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.space-top {
+  margin-top: 15px;
+}
+
+.space-bottom {
+  margin-bottom: 15px;
+}
+
+.big-space-bottom {
+  margin-bottom: 100px;
+}
+
+.take-space-bottom {
+  padding-bottom: 40px;
+}
+
+.big-space-top {
+  margin-top: 100px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.none {
+  display: none!important;
+}
+
+.align-center {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}

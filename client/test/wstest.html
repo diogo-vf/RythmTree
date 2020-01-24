@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <script src="/scripts/core/utils.js"></script>
+        <script src="wstest.js"></script>
+    </head>
+    <body>
+        <button onclick="sendMsg('hello')">send a msg</button>
+        <button onclick="register('jean')">Auth as jean</button>
+        <button onclick="register('paul')">Auth as paul</button>
+        <button onclick="register('patoche')">Auth as patoche</button>
+        <br/>
+        <input type="number" id="countinput" value="0"/>
+        <button onclick="bytesSend(countinput.value)">send bytes</button>
+    </body>
+</html>
