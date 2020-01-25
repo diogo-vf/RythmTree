@@ -10,6 +10,7 @@
 
 .center {
   text-align: center;
+  text-align-last:center;
 }
 
 .no-margin {
@@ -52,4 +53,12 @@
   justify-content: center;
   align-items: center;
   display: flex;
+}
+
+.tab-left {
+  margin-left: 30px;
+}
+
+.hidden {
+  display: none;
 }

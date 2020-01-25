@@ -1,5 +1,5 @@
 "use strict";
-function Actions(){
+function Actions() {
     var _this = this;
 
     //-------------------------------------------------------------------------------------
@@ -44,12 +44,31 @@ function Actions(){
             player_icon.classList.replace(currentClass, newclass);
         };
     };
-    this.onPageLoad.options = function(){
+    this.onPageLoad.options = function() {
         pagesManager.pages.options.container.addEventListener("change", function(){
             applyUserOptions({
                 leavesAnimation: chkUserOptionsLeaves.checked
             });
         });
+    };
+
+    this.onPageLoad.game = function () {
+        mainDiv.classList.remove("container");
+        mainDiv.classList.add("container-fluid");
+        const gameContext = canvasGame.getContext("2d");
+        gameInput.focus()
+        gameInput.onkeypress = function (evt) {
+            let char = evt.key;
+            canvasGame.width = canvasGame.clientWidth;
+            canvasGame.height = canvasGame.clientHeight;
+            gameContext.clearRect(0,0,canvasGame.clientWidth,canvasGame.clientHeight);
+            gameContext.font = "30px Arial";
+            gameContext.fillStyle = "red";
+            gameContext.textAlign = "center";
+            gameContext.fillText(char.toUpperCase(), canvasGame.clientWidth/2, canvasGame.clientHeight/2);
+        };
+        // Focus the field when unfocus to continue to listen key even after a "tab"
+        gameInput.addEventListener("focusout", () => {gameInput.focus()});
     };
     
     //-------------------------------------------------------------------------------------
@@ -70,14 +89,17 @@ function Actions(){
     
     //page action on ANY page display
     this.onAnyPageDisplay = function({pageName = false, pageConfig = false}){
-        pageNameDisplay.innerText = (pageConfig.pageName || "");
+        pageNameDisplay.innerText = (pageConfig.pageName || pageConfig.title || "");
         //options button
         if(pageConfig.hideOptionsBtn){
             userOptionsBtn.classList.add("none");
         } else {
             userOptionsBtn.classList.remove("none");
         }
-    }
+        // Remove class set by game to be non-fluid
+        mainDiv.classList.remove("container-fluid");
+        mainDiv.classList.add("container");
+    };
 
     //-------------------------------------------------------------------------------------
     //page actions on data
@@ -108,7 +130,27 @@ function Actions(){
         applyUserOptions();
         utils.setDynamicLinks(testTopMenu);
 	    console.log("init completed");
-    }
+    };
+
+    this.switchMenu = (evt) => {
+        const classSwitch = "switch-menu";
+        const toggleSwitchClass = () => {
+            const list = document.getElementsByClassName("common-button");
+            for (let i in list) {
+                const elem = list[i];
+                if (elem.classList !== undefined)
+                    elem.classList.toggle(classSwitch);
+            }
+        }
+        toggleSwitchClass();
+
+        const link = evt.target.dataset.redirect;
+        setTimeout(() => {
+            toggleSwitchClass();
+            pagesManager.changePage(link);
+        },500);
+    };
+
     //functions
     function applyUserOptions(userOptions = false){
         var oldUserOptions = getUserOptions();
