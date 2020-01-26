@@ -1,6 +1,6 @@
 require_relative "dbElement"
 require "json"
-require "mongo"
+require "mongo" unless NO_DB
 
 class DBArray < Array    
     def initialize
