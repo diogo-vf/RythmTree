@@ -10,12 +10,12 @@ function Actions() {
     this.onPageLoad.login = function(){
         loginForm.addEventListener("submit", async function(){
             //login
-            utils.getGlobalLoader().show({withBackground:true});
+            Utils.getGlobalLoader().show({withBackground:true});
             console.log("login! (fake)");
             pagesManager.loadView("home");
             await async_setTimeout(1000);
             console.log("logged in! (fake)");
-            utils.getGlobalLoader().hide();
+            Utils.getGlobalLoader().hide();
             pagesManager.changePage("home");
         });
     }
@@ -117,7 +117,7 @@ function Actions() {
     //other actions
     //-------------------------------------------------------------------------------------
     this.onBeforeBoot = function(){
-        utils.setDynamicLinks(document.body); //dynamic links on layout
+        Utils.setDynamicLinks(document.body); //dynamic links on layout
         console.log("server whitelist to copy:", `[nil, "", "${Object.keys(pagesConfig).join('", "')}"]`);
     }
     this.onAfterBoot = function(){
@@ -128,7 +128,7 @@ function Actions() {
             link.href = `/${ind}`;
         }
         applyUserOptions();
-        utils.setDynamicLinks(testTopMenu);
+        Utils.setDynamicLinks(testTopMenu);
 	    console.log("init completed");
     };
 
