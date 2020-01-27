@@ -10,7 +10,7 @@ require_relative "../websocket_server/listener"
 class HTTPServer
     def self.start
         server = HTTP.new
-        server.listen(5678) {
+        server.listen(HTTP_PORT) {
             |error = false, request = false, session = false|
 
             #error
