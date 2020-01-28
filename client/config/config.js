@@ -1,6 +1,6 @@
 var config = {
     viewsLocation: "/views",
-    websocketLocation: false,
+    websocketLocation: `ws://${location.host}/websocket`,
     landingPage: "login",
     viewsExtension: ".html",
     preloadAllViews: false,
