@@ -5,21 +5,6 @@ function DataSources(){
 			{name: "Royaume champignon"},
 			{name: "Jungle"},
 			{name: "Jungle Hardcore"},
-			{name: "Royaume champignon"},
-			{name: "Jungle"},
-			{name: "Jungle Hardcore"},
-			{name: "Royaume champignon"},
-			{name: "Jungle"},
-			{name: "Jungle Hardcore"},
-			{name: "Royaume champignon"},
-			{name: "Jungle"},
-			{name: "Jungle Hardcore"},
-			{name: "Royaume champignon"},
-			{name: "Jungle"},
-			{name: "Jungle Hardcore"},
-			{name: "Royaume champignon"},
-			{name: "Jungle"},
-			{name: "Jungle Hardcore"},
 		]
 	};
 

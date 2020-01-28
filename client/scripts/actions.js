@@ -231,7 +231,10 @@ function Actions() {
 
     this.sendLevel = () => {
         // Send it to server
-        console.log(_this.level);
+        if (_this.level.sequence !== []) {
+            console.log(_this.level);
+            pagesManager.loadView("home");
+        }
     };
 
     //functions

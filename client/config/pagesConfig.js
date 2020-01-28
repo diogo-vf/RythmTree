@@ -60,7 +60,8 @@ var pagesConfig = {
         view: "replay_level"
     },
     replays:{
-        title: "Replays"
+        title: "Replay",
+        view: "replay"
     },
     replay_player:{
         title: "Replay (player)" //as in video player :)
