@@ -49,5 +49,9 @@ var pagesConfig = {
     },
     game:{
         title: "Game"
+    },
+    demo:{
+        title: "Demonstration",
+        pageName: "demo"
     }
 };
