@@ -17,7 +17,7 @@ function Builder(){
 		}
 		
 		//apply links
-		utils.setDynamicLinks(container);
+		Utils.setDynamicLinks(container);
 	};
 
 	//other

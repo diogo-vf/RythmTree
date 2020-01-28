@@ -14,7 +14,6 @@ MIME_TYPES = {
   "gif": "image/gif",
   "webp": "image/webp"
 }
-FILE_READ_BUFFER_SIZE = 255
 
 class WebServer
   def self.on_request request
@@ -36,10 +35,7 @@ class WebServer
     begin
         body_content = ""
         File.open(filepath, 'rb'){|file|
-            loop do
-                break unless buf = file.gets(nil, FILE_READ_BUFFER_SIZE)
-                body_content += buf
-            end
+          body_content += file.read
         }
     rescue => exception
         puts "error! " + exception.to_s
@@ -59,7 +55,9 @@ class WebServer
       :body => body_content,
       :http_code => :ok,
       :headers => {
-          "Content-Type": mime_type
+          "Content-Length": body_content.length,
+          "Content-Type": mime_type,
+          "Cache-Control": "public, max-age=7200",
       }
     }
   end
