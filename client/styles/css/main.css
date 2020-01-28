@@ -175,6 +175,11 @@ a {
       .common-button.texture.wood:hover {
         background-image: url(../../images/textures/buttonLong_brown_pressed.png);
         font-size: 22px; }
+      .common-button.texture.wood.disabled {
+        opacity: 0.5; }
+        .common-button.texture.wood.disabled:hover {
+          background-image: url(../../images/textures/buttonLong_brown.png);
+          font-size: 20px; }
     .common-button.texture.brick {
       background-image: url(../../images/textures/buttonLong_blue.png);
       background-repeat: no-repeat;

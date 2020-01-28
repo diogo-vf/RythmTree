@@ -9,6 +9,8 @@ function Actions() {
     };
     let currentKeys = {};
     const song = new Audio();
+    let currentSong = "";
+    let currentSongTime = 0;
 
     //-------------------------------------------------------------------------------------
     //page actions on load
@@ -95,6 +97,16 @@ function Actions() {
         currentKeys[evt.keyCode] = {
             time: getSongTime()
         };
+
+        let char = evt.key;
+        const gameContext = canvasGame.getContext("2d");
+        canvasGame.width = canvasGame.clientWidth;
+        canvasGame.height = canvasGame.clientHeight;
+        gameContext.clearRect(0,0,canvasGame.clientWidth,canvasGame.clientHeight);
+        gameContext.font = "30px Arial";
+        gameContext.fillStyle = "white";
+        gameContext.textAlign = "center";
+        gameContext.fillText(char.toUpperCase(), canvasGame.clientWidth/2, canvasGame.clientHeight/2);
     }
 
     function keyUp(evt) {
@@ -115,9 +127,19 @@ function Actions() {
 
         //display
         _this.level.rythm = JSON.stringify(_this.level.sequence);
+
+        let char = evt.key;
+        const gameContext = canvasGame.getContext("2d");
+        canvasGame.width = canvasGame.clientWidth;
+        canvasGame.height = canvasGame.clientHeight;
+        gameContext.clearRect(0,0,canvasGame.clientWidth,canvasGame.clientHeight);
+        gameContext.font = "30px Arial";
+        gameContext.fillStyle = "white";
+        gameContext.textAlign = "center";
+        gameContext.fillText(char.toUpperCase(), canvasGame.clientWidth/2, canvasGame.clientHeight/2);
     }
 
-    function getSongTime(){
+    function getSongTime() {
         return Math.round(song.currentTime * 1000);
     }
     
@@ -208,32 +230,82 @@ function Actions() {
 
     this.switchStatus = () => {
       if (this.level.status === 0) {
-          infoLevelEditor.innerText = "";
-          const p = infoLevelEditor.addElement("p", {class: "common-text"});
-          p.textContent = "Enregistrement des touches...";
-          this.level.status = 1;
-          this.playMusic();
-      }
+            this.playMusic();
+            infoLevelEditor.innerText = "";
+            const p = infoLevelEditor.addElement("p", {class: "common-text"});
+            p.textContent = "Chargement de la musique...";
+            const inter = setInterval(() => {
+                if (0 !== getSongTime()) {
+                    clearInterval(inter);
+                    infoLevelEditor.innerText = "";
+                    const p = infoLevelEditor.addElement("p", {class: "common-text"});
+                    p.textContent = "Enregistrement des touches...";
+                    this.level.status = 1;
+                    this.level.sequence = [];
+                }
+            },1000);
+        }
     };
 
     this.changeSelectedMusic = (evt) => {
         this.level.song = musicSelector.options[evt.target.selectedIndex].value;
     };
 
+    this.resetKey = () => {
+        infoLevelEditor.innerText = "";
+        const btn = infoLevelEditor.addElement("button", {class: "common-button texture wood"});
+        btn.onclick = _this.switchStatus;
+        btn.textContent = "Recommencer";
+        this.level.status = 0;
+        song.pause();
+        currentSong = "";
+    }
+
     this.playMusic = () => {
-      if (this.level.song !== "") {
-          const playbackRate = song.playbackRate;
-          song.src = "../"+this.level.song;
-          song.playbackRate = playbackRate;
-          song.play();
-      }
+        if (this.level.song !== "") {
+            if (currentSong !== "../"+this.level.song) {
+                const playbackRate = song.playbackRate;
+                song.src = "../"+this.level.song;
+                currentSong = "../"+this.level.song;
+                song.playbackRate = playbackRate;
+            }
+            if (timeSong !== undefined) {
+                const inter = setInterval(() => {
+                    if (currentSongTime === getSongTime() && 0 !== getSongTime()) {
+                        clearInterval(inter);
+                        infoLevelEditor.innerText = "";
+                        const btn = infoLevelEditor.addElement("button", {class: "common-button texture wood"});
+                        btn.onclick = _this.switchStatus;
+                        btn.textContent = "Recommencer";
+                        this.level.status = 0;
+                    }
+                    currentSongTime = getSongTime();
+                    let minTime = (currentSongTime/60000 < 10 ? "0" : "") + Math.round(currentSongTime/60000),
+                        secTime = (currentSongTime%60000 < 10 ? "0" : "") + Math.round((currentSongTime%60000)/1000);
+                    timeSong.textContent = "Temps: "+ minTime+":"+secTime;
+                },1000);
+            }
+            songControl.onclick = this.pauseMusic;
+            songControl.src = "../images/textures/pause.png"
+            song.play();
+        }
+    };
+
+    this.pauseMusic = () => {
+        if (this.level.song !== "") {
+            songControl.onclick = this.playMusic;
+            songControl.src = "../images/textures/play.png"
+            song.pause();
+        }
     };
 
     this.sendLevel = () => {
         // Send it to server
-        if (_this.level.sequence !== []) {
-            console.log(_this.level);
+        _this.level.name = levelName.value;
+        if (_this.level.sequence !== [] && levelName.value !== "") {
             pagesManager.loadView("home");
+        } else {
+            alert("Erreur");
         }
     };
 

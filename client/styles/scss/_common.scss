@@ -238,6 +238,15 @@ a {
         background-image: url(../../images/textures/buttonLong_brown_pressed.png);
         font-size: 22px;
       }
+
+      &.disabled {
+        opacity: 0.5;
+
+        &:hover {
+          background-image: url(../../images/textures/buttonLong_brown.png);
+          font-size: 20px;
+        }
+      }
     }
 
     &.brick {
