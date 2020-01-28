@@ -269,7 +269,7 @@ function Actions() {
                 currentSong = "../"+this.level.song;
                 song.playbackRate = playbackRate;
             }
-            if (timeSong !== undefined) {
+            if (window.timeSong) {
                 const inter = setInterval(() => {
                     if (currentSongTime === getSongTime() && 0 !== getSongTime()) {
                         clearInterval(inter);
