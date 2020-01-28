@@ -1,0 +1,32 @@
+<div class="container-fluid big-space-top">
+    <div class="row">
+        <div class="col-6 offset-3 space-top center" id="infoLevelEditor">
+            <button class="common-button texture wood" onclick="actions.switchStatus()">
+                Commencer
+            </button>
+        </div>
+    </div>
+    <div class="row big-space-top space-bottom">
+        <div class="col-10 offset-1 common-canvas wood-texture no-padding">
+            <canvas
+                    id="canvasGame"
+                    class="align-center"
+            >
+                <input type="text" class="hidden" id="gameInput" />
+            </canvas>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 offset-1">
+            <p class="common-text" id="timeSong"></p>
+        </div>
+        <div class="col-4 offset-4">
+            <button type="submit" class="common-button texture wood" onclick="actions.resetKey()">Reset</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 offset-3 space-top big-space-bottom">
+            <button type="submit" class="common-button texture wood" onclick="actions.switchMenu(event)" data-redirect="new_level">Valider</button>
+        </div>
+    </div>
+</div>
