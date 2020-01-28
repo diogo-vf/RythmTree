@@ -11,4 +11,10 @@ class PlayersController
     def get_all
         DBElement.array_to_hash Player.find_all
     end
+
+    def insert data
+        player = Player.new
+        player.name="lol"
+        player.save
+    end
 end

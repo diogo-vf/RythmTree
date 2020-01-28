@@ -29,6 +29,14 @@ function Actions() {
             pagesManager.changePage("home");
         });
     }
+    this.onPageLoad.demo = function() {
+        createPlayer.addEventListener("click", async function(event){
+            var result = await websocket.sendRequest("createPlayer");
+            var content = createPlayer.parentElement.parentElement.querySelector(".content");
+            content.textContent = result;
+        });
+    }
+
     this.onPageLoad.home = function() {
         change_player_left.onclick = function(evt) {
             const currentClass = player_icon.classList[0];
