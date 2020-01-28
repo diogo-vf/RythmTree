@@ -14,4 +14,13 @@ function Adapters(){
 		a.textContent = data.name;
 		return box;
 	}
+
+	// Level Editor Adapter
+	this.levelEditorAdapter = function(container, data) {
+		const option = container.addElement("option"),
+			minTime = (data.duration/60000 < 10 ? "0" : "") + Math.round(data.duration/60000),
+			secTime = (data.duration%60000 < 10 ? "0" : "") + Math.round((data.duration%60000)/1000);
+		option.textContent = data.name +" - "+ minTime +":"+secTime;
+		option.value = data.src;
+	}
 }

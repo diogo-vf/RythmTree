@@ -31,10 +31,21 @@ var pagesConfig = {
         view: "lobby"
     },
     new_level:{
-        title: "Create level"
+        title: "Create level",
+        pageName: "Création de niveau",
+        view: "new_level",
+        data: [
+            {
+                source: "music",
+                container: "#musicSelector",
+                adapter: "levelEditorAdapter"
+            }
+        ]
     },
     level_editor:{
-        title: "Create level (editor)"
+        title: "Création de rythme",
+        pageName: "Création de rythm",
+        view: "level_editor"
     },
     levels:{
         title: "Replay",

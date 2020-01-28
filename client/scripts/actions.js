@@ -1,6 +1,14 @@
 "use strict";
 function Actions() {
     var _this = this;
+    this.level = {
+        song: "",
+        sequence: [],
+        status: 0,
+        name: "",
+    };
+    let currentKeys = {};
+    const song = new Audio();
 
     //-------------------------------------------------------------------------------------
     //page actions on load
@@ -70,6 +78,48 @@ function Actions() {
         // Focus the field when unfocus to continue to listen key even after a "tab"
         gameInput.addEventListener("focusout", () => {gameInput.focus()});
     };
+
+    this.onPageLoad.level_editor = function () {
+        const gameContext = canvasGame.getContext("2d");
+        gameInput.focus()
+        gameInput.addEventListener("keydown", keyDown);
+        gameInput.addEventListener("keyup", keyUp);
+        // Focus the field when unfocus to continue to listen key even after a "tab"
+        gameInput.addEventListener("focusout", () => {gameInput.focus()});
+    };
+
+    function keyDown(evt) {
+        if(currentKeys[evt.keyCode]){
+            return;
+        }
+        currentKeys[evt.keyCode] = {
+            time: getSongTime()
+        };
+    }
+
+    function keyUp(evt) {
+        if(!currentKeys[evt.keyCode]){
+            console.warn("no prior keydown!");
+            return;
+        }
+        var downObject = currentKeys[evt.keyCode];
+        //remove from currentKeys
+        currentKeys[evt.keyCode] = false;
+
+        //add to sequence
+        _this.level.sequence.push({
+            time: downObject.time,
+            key: evt.key,
+            duration: getSongTime() - downObject.time
+        });
+
+        //display
+        _this.level.rythm = JSON.stringify(_this.level.sequence);
+    }
+
+    function getSongTime(){
+        return Math.round(song.currentTime * 1000);
+    }
     
     //-------------------------------------------------------------------------------------
     //page actions on display
@@ -85,6 +135,11 @@ function Actions() {
     this.onPageDisplay.options = function(){
         var userOptions = getUserOptions();
         chkUserOptionsLeaves.checked = userOptions.leavesAnimation;
+    };
+
+    this.onPageDisplay.level_editor = function () {
+        mainDiv.classList.remove("container");
+        mainDiv.classList.add("container-fluid");
     };
     
     //page action on ANY page display
@@ -149,6 +204,34 @@ function Actions() {
             toggleSwitchClass();
             pagesManager.changePage(link);
         },500);
+    };
+
+    this.switchStatus = () => {
+      if (this.level.status === 0) {
+          infoLevelEditor.innerText = "";
+          const p = infoLevelEditor.addElement("p", {class: "common-text"});
+          p.textContent = "Enregistrement des touches...";
+          this.level.status = 1;
+          this.playMusic();
+      }
+    };
+
+    this.changeSelectedMusic = (evt) => {
+        this.level.song = musicSelector.options[evt.target.selectedIndex].value;
+    };
+
+    this.playMusic = () => {
+      if (this.level.song !== "") {
+          const playbackRate = song.playbackRate;
+          song.src = "../"+this.level.song;
+          song.playbackRate = playbackRate;
+          song.play();
+      }
+    };
+
+    this.sendLevel = () => {
+        // Send it to server
+        console.log(_this.level);
     };
 
     //functions
