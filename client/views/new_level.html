@@ -1,0 +1,34 @@
+<div class="container big-space-top">
+    <div class="row">
+        <div class="col-3 offset-1 align-center">
+            <p class="common-text">Nom du niveau: </p>
+        </div>
+        <div class="col-4">
+            <input type="text" placeholder="Ex: Jungle" id="levelName" class="common-input texture light center" autocomplete="off" required/>
+        </div>
+    </div>
+    <div class="row space-top">
+        <div class="col-3 offset-1 align-center">
+            <p class="common-text">Musique: </p>
+        </div>
+        <div class="col-4">
+            <select id="musicSelector" class="common-input texture light center" onchange="actions.changeSelectedMusic(event)"></select>
+        </div>
+        <div class="col-1 align-center left">
+            <img id="songControl" src="../images/textures/play.png" onclick="actions.playMusic()" />
+        </div>
+    </div>
+    <div class="row space-top">
+        <div class="col-3 offset-1 align-center">
+            <p class="common-text">Rythme: </p>
+        </div>
+        <div class="col-4">
+            <button type="submit" class="common-button texture wood" onclick="actions.switchMenu(event)" data-redirect="level_editor">Création de rythme</button>
+        </div>
+    </div>
+    <div class="row take-space-bottom">
+        <div class="col-6 offset-3 space-top">
+            <button type="submit" class="common-button texture wood" onclick="actions.sendLevel()">Créer</button>
+        </div>
+    </div>
+</div>

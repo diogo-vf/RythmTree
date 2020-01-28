@@ -8,8 +8,19 @@ function Adapters(){
 	};
 
 	//level
-	this.levelAdapter = function(container, data){
-		var box = container.addElement("div", {class:"level"});//example
+	this.levelAdapter = function(container, data) {
+		const box = container.addElement("div", {class:"col-3 space-bottom align-center common-card wood-texture"});
+		const a = box.addElement("a", {href: "/replays", class: "common-text wood center"});
+		a.textContent = data.name;
 		return box;
+	}
+
+	// Level Editor Adapter
+	this.levelEditorAdapter = function(container, data) {
+		const option = container.addElement("option"),
+			minTime = (data.duration/60000 < 10 ? "0" : "") + Math.round(data.duration/60000),
+			secTime = (data.duration%60000 < 10 ? "0" : "") + Math.round((data.duration%60000)/1000) + (Math.round((data.duration%60000)/1000) === 1 ? "0" : "");
+		option.textContent = data.name +" - "+ minTime +":"+secTime;
+		option.value = data.src;
 	}
 }

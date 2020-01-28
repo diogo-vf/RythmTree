@@ -1,15 +1,16 @@
 /* Utils class */
 
 .left {
-  text-align: left;
+  text-align-last: left !important;
 }
 
 .right {
-  text-align: right;
+  text-align-last: right !important;
 }
 
 .center {
   text-align: center;
+  text-align-last:center;
 }
 
 .no-margin {
@@ -52,4 +53,12 @@
   justify-content: center;
   align-items: center;
   display: flex;
+}
+
+.tab-left {
+  margin-left: 30px;
+}
+
+.hidden {
+  display: none;
 }
