@@ -18,6 +18,15 @@ class HTTP
         tcp_server = TCPServer.new port
         puts "Listening on port #{port}"
         while session = tcp_server.accept
+            on_connection(session){
+                |err, req, sess|
+                yield err, req, sess
+            }
+        end
+    end
+
+    def on_connection session #+yield
+        Thread.new{
             request_lines = [];
             while (line = session.gets) && (line != "\r\n") #tmp until body
                 request_lines.push line;
@@ -54,7 +63,7 @@ class HTTP
             unless return_data[:prevent_session_close]
                 session.close
             end
-        end
+        }
     end
 
     #STATIC METHODS
