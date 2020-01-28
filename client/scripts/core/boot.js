@@ -7,7 +7,7 @@ var elements = {};
 
 //instanciate managers
 var pagesManager = new PagesManager();
-var apiManager = new ApiManager();
+var websocket = new WebsocketManager();
 var builder = new Builder();
 var adapters = new Adapters();
 var actions = new Actions();

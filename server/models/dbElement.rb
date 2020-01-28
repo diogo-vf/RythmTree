@@ -1,6 +1,6 @@
-require "mongo"
+require "mongo" unless NO_DB
 require "json"
-require_relative "mongoDB"
+require_relative "mongoDB" unless NO_DB
 require_relative "dbArray"
 
 class DBElement

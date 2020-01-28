@@ -87,8 +87,8 @@ function generateUUID() { // Public Domain/MIT
     });
 }
 //_UTILS METHODS
-var utils = {};
-utils.getGlobalLoader = function(){
+var Utils = {};
+Utils.getGlobalLoader = function(){
 	if(!elements.globalLoader){
 		elements.globalLoader = {};
 		elements.globalLoader.container = document.body.addElement("div", {class: "globalLoaderContainer none"});
@@ -116,21 +116,25 @@ utils.getGlobalLoader = function(){
 	}
 	return elements.globalLoader;
 };
-utils.infoBox = function(message, time = 5000){
+Utils.infoBox = function(message, time = 5000){
 	var infoBox = document.body.addElement("div", {class: "infoMessageBox"});
 	infoBox.innerText = message;
-	requestAnimationFrame(function(){
-		infoBox.style.opacity = 1;
-		setTimeout(function(){
-			infoBox.style.opacity = 0;
-			setTimeout(function(){
-				infoBox.remove();
-			}, 0.5 * 1000);
-		}, time);
-	});
-	return infoBox;
+	requestAnimationFrame(async function(){
+        infoBox.style.opacity = 1;
+        if(time != Infinity){
+            await async_setTimeout(time)
+            remove();
+        }
+    });
+    async function remove(){
+        await async_requestAnimationFrame();
+        infoBox.style.opacity = 0;
+        await async_setTimeout(0.5*1000);
+		infoBox.remove();
+    }
+	return {elem:infoBox, remove};
 };
-utils.decodeQuery = function(queryString){
+Utils.decodeQuery = function(queryString){
 	if(!queryString){
 		return false;
 	}
@@ -147,7 +151,7 @@ utils.decodeQuery = function(queryString){
 	}
 	return queryObject;
 };
-utils.encodeQuery = function(queryData){
+Utils.encodeQuery = function(queryData){
 	var encodedStr = ""
 	for(var indQuery in queryData){
 		encodedStr += encodeURIComponent(indQuery);
@@ -158,17 +162,17 @@ utils.encodeQuery = function(queryData){
 	return encodedStr.slice(0, -1);
 }
 
-utils.setDynamicLinks = function(parent){
+Utils.setDynamicLinks = function(parent){
 	var linksList = parent.getElementsByTagName("a");
 	for(var indLink = 0; indLink < linksList.length; indLink++){
-		utils.setDynamicLink(linksList[indLink]);
+		Utils.setDynamicLink(linksList[indLink]);
 	}
 };
-utils.setDynamicLink = function(elem){
+Utils.setDynamicLink = function(elem){
 	var href = elem.pathname;
 	var hrefArray = href.split("/");
     var page = hrefArray[1];
-	var query = utils.decodeQuery(elem.search)
+	var query = Utils.decodeQuery(elem.search)
 	var path = (hrefArray.slice(2) || false); //get path
 	if(pagesConfig[page]){//only adds event if the page target exists
         //add event
