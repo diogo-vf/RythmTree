@@ -82,12 +82,10 @@ function Actions() {
     };
 
     this.onPageLoad.level_editor = function () {
-        const gameContext = canvasGame.getContext("2d");
-        gameInput.focus()
-        gameInput.addEventListener("keydown", keyDown);
-        gameInput.addEventListener("keyup", keyUp);
-        // Focus the field when unfocus to continue to listen key even after a "tab"
-        gameInput.addEventListener("focusout", () => {gameInput.focus()});
+        document.body.removeEventListener("keydown", keyDown);
+        document.body.removeEventListener("keyup", keyUp);
+        document.body.addEventListener("keydown", keyDown);
+        document.body.addEventListener("keyup", keyUp);
     };
 
     function keyDown(evt) {
@@ -210,6 +208,10 @@ function Actions() {
     };
 
     this.switchMenu = (evt) => {
+        if (song) {
+            song.pause();
+            currentSong = "";
+        }
         const classSwitch = "switch-menu";
         const toggleSwitchClass = () => {
             const list = document.getElementsByClassName("common-button");
@@ -259,7 +261,7 @@ function Actions() {
         this.level.status = 0;
         song.pause();
         currentSong = "";
-    }
+    };
 
     this.playMusic = () => {
         if (this.level.song !== "") {
@@ -279,9 +281,9 @@ function Actions() {
                         btn.textContent = "Recommencer";
                         this.level.status = 0;
                     }
-                    currentSongTime = getSongTime();
-                    let minTime = (currentSongTime/60000 < 10 ? "0" : "") + Math.round(currentSongTime/60000),
-                        secTime = (currentSongTime%60000 < 10 ? "0" : "") + Math.round((currentSongTime%60000)/1000);
+                    currentSongTime = Math.floor(getSongTime()/1000);
+                    let minTime = (currentSongTime/60 < 10 ? "0" : "") + Math.floor(currentSongTime/60),
+                        secTime = (currentSongTime%60 < 10 ? "0" : "") + Math.floor(currentSongTime%60);
                     timeSong.textContent = "Temps: "+ minTime+":"+secTime;
                 },1000);
             }
