@@ -9,7 +9,7 @@ class UsersController
 
     def register_user data, connection
         puts "register for user #{data["name"]}"
-        return {
+        {
             :name => data["name"]
         }
     end

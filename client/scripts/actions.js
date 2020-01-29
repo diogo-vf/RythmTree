@@ -172,7 +172,7 @@ function Actions() {
 
     //login
     this.onPageDisplay.login = function () {
-        userNameInput.value = "";
+        //userNameInput.value = "";
     };
 
     //page action on ANY page display
