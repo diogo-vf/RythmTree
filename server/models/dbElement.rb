@@ -62,7 +62,7 @@ class DBElement
     def apply_hash_data(hash_to_convert)
         hash_to_convert.each{ |key, value|
             if key == :_id
-                @attributes_data[:id]=value
+                @attributes_data[:id]=value.to_s
                 next
             end
 

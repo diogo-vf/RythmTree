@@ -1,5 +1,5 @@
 WEB_DIR = __dir__ + "/../../client"
-ROOT_ALIASES = [nil, "", "error", "login", "home", "options", "new_game", "lobby_host", "lobby", "new_level", "level_editor", "levels", "replays", "replay_player", "game"]
+ROOT_ALIASES = [nil, "", "error", "login", "home", "options", "new_game", "lobby_host", "lobby", "new_level", "level_editor", "levels", "replays", "replay_player", "game", "demo"]
 ROOT_DOCUMENT_PATH = "#{WEB_DIR}/root.html"
 MIME_TYPES = {
   "css": "text/css",

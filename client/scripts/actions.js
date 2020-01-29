@@ -30,8 +30,237 @@ function Actions() {
             globalMemory.loginTarget = false;
         });
     }
-    this.onPageLoad.home = function () {
-        change_player_left.onclick = function (evt) {
+    this.onPageLoad.demo = function() {
+        var globalMethod;
+        var globalAttributs;
+        var exist=false;
+
+        /**
+         * Player
+         */
+        createPlayer.addEventListener("click", function(event){
+            
+            var form = document.querySelector("form");
+            form.classList.toggle("d-none");
+
+            if(exist) return;
+
+            var formGroupName = form.addElement("div",{class: "form-group"});
+            var labelName = formGroupName.addElement("label",{for: "username"});
+            labelName.textContent = "insert a name of player: ";
+            var pseudos = ["NoxCaedibux", "Azertycraft", "Tryliom"];
+            formGroupName.addElement("input",{
+                id: "username", 
+                type: "text", 
+                class: "form-control", 
+                value: pseudos[Math.floor(Math.random()*pseudos.length)]
+            });
+            form.addElement("input", {type: "submit", value: "create", class: "common-button texture wood"})
+            form.action = "#";            
+            globalMethod = insertPlayer;
+            globalAttributs = {name: username.value}
+            exist = true;
+        });
+
+        async function insertPlayer()
+        {
+            var result = await websocket.sendRequest("createPlayer", globalAttributs);
+            var content = createPlayer.parentElement.parentElement.querySelector(".content");
+            content.textContent = JSON.stringify(result);
+        }
+
+        listPlayer.addEventListener("click", async function(event){
+            var result = await websocket.sendRequest("getPlayers");
+            var content = listPlayer.parentElement.parentElement.querySelector(".content");
+            content.textContent = JSON.stringify(result);
+        });
+        
+        /**
+         * Music
+         */
+        createMusic.addEventListener("click", function(event){
+            
+            var form = document.querySelector("form");
+            form.classList.toggle("d-none");
+
+            if(exist) return;
+
+            var formGroupMusicName = form.addElement("div",{class: "form-group"});
+            var labelName = formGroupMusicName.addElement("label",{for: "musicName"});
+            labelName.textContent = "insert a music name: ";
+            var musics = ["Route arc-en-ciel M.Wii", "Jump up super star", "light ssbu"];
+            formGroupMusicName.addElement("input",{
+                id: "musicName", 
+                type: "text", 
+                class: "form-control", 
+                value: musics[Math.floor(Math.random()*musics.length)]
+            });
+
+            var formGroupDuration = form.addElement("div",{class: "form-group"});
+            var labelDuration = formGroupDuration.addElement("label",{for: "duration"});
+            labelDuration.textContent = "duration: ";
+            formGroupDuration.addElement("input",{
+                id: "duration", 
+                type: "number", 
+                class: "form-control", 
+                value: 180000
+            });
+
+            var formGroupSRC = form.addElement("div",{class: "form-group"});
+            var labelSRC = formGroupSRC.addElement("label",{for: "src"});
+            labelSRC.textContent = "Source: ";
+            formGroupSRC.addElement("input",{
+                id: "src", 
+                type: "text", 
+                class: "form-control", 
+                value: "/public/songs"
+            });
+
+            var formGroupBPM = form.addElement("div",{class: "form-group"});
+            var labelBPM = formGroupBPM.addElement("label",{for: "bpm"});
+            labelBPM.textContent = "BPM: ";
+            formGroupBPM.addElement("input",{
+                id: "bpm", 
+                type: "number", 
+                class: "form-control", 
+                value: 65
+            });
+
+            var formGroupOffset = form.addElement("div",{class: "form-group"});
+            var labelOffset = formGroupOffset.addElement("label",{for: "start_offset"});
+            labelOffset.textContent = "start offset: ";
+            formGroupOffset.addElement("input",{
+                id: "start_offset", 
+                type: "number", 
+                class: "form-control", 
+                value: 2000
+            });
+
+            form.addElement("input", {type: "submit", value: "create", class: "common-button texture wood"})
+            form.action = "javascript:";            
+            globalMethod = insertMusic;
+            globalAttributs = {name: musicName.value, duration: duration.value, src: src.value, bpm: bpm.value, start_offset: start_offset.value}
+            
+            exist = true;
+        });
+
+        async function insertMusic()
+        {
+            var result = await websocket.sendRequest("createMusic", globalAttributs);
+            var content = createMusic.parentElement.parentElement.querySelector(".content");
+            content.textContent = JSON.stringify(result);
+        }
+
+        listMusic.addEventListener("click", async function(event){
+            var result = await websocket.sendRequest("getMusics");
+            var content = listMusic.parentElement.parentElement.querySelector(".content");
+            content.textContent = JSON.stringify(result);
+        });
+
+        /**
+         * Level
+         */
+        createLevel.addEventListener("click", async function(event){
+            var form = document.querySelector("form");
+            form.classList.toggle("d-none");
+
+            if(exist) return;
+
+            var formGroupLevelName = form.addElement("div",{class: "form-group"});
+            var labelName = formGroupLevelName.addElement("label",{for: "levelName"});
+            labelName.textContent = "insert a level name: ";
+            var levels = ["Rapteur", "kyle", "NOland"];
+            formGroupLevelName.addElement("input",{
+                id: "levelName", 
+                type: "text", 
+                class: "form-control", 
+                value: levels[Math.floor(Math.random()*levels.length)]
+            });
+
+            var formGroupdifficulty= form.addElement("div",{class: "form-group"});
+            var labelDifficulty = formGroupdifficulty.addElement("label",{for: "difficulty"});
+            labelDifficulty.textContent = "difficulty: (easy, medium, hard) ";
+            var difficulties = ["easy", "medium", "hard"];
+            formGroupdifficulty.addElement("input",{
+                id: "difficulty", 
+                type: "text", 
+                class: "form-control", 
+                value: difficulties[Math.floor(Math.random()*difficulties.length)]
+            });
+
+            var formGroupHardcore= form.addElement("div",{class: "form-group"});
+            var labelHardcore = formGroupHardcore.addElement("label",{for: "hardcore"});
+            labelHardcore.textContent = "hardcore: 0 or 1 ";
+            var hardcoreArray = [0,1];
+            formGroupHardcore.addElement("input",{
+                id: "hardcore", 
+                type: "numer", 
+                max: 1,
+                min: 0,
+                step: 1,
+                class: "form-control", 
+                value: hardcoreArray[Math.floor(Math.random()*hardcoreArray.length)]
+            });
+
+            var formGroupMusic= form.addElement("div",{class: "form-group"});
+            var labelMusic = formGroupMusic.addElement("label",{for: "music"});
+            labelMusic.textContent = "id of once music of database";
+            var hardcoreArray = [0,1];
+            formGroupMusic.addElement("input",{
+                id: "music", 
+                type: "text", 
+                disabled: true,
+                class: "form-control", 
+                value: await websocket.sendRequest("getFirstMusic")
+            });
+
+            var formGroupCreator= form.addElement("div",{class: "form-group"});
+            var labelCreator = formGroupCreator.addElement("label",{for: "creator"});
+            labelCreator.textContent = "id of once Player of database";
+            var hardcoreArray = [0,1];
+            formGroupCreator.addElement("input",{
+                id: "creator", 
+                type: "text", 
+                disabled: true,
+                class: "form-control", 
+                value: await websocket.sendRequest("getFirstPlayer")
+            });
+
+            form.addElement("input", {type: "submit", value: "create", class: "common-button texture wood"})
+            form.action = "javascript:";            
+            globalMethod = insertLevel;
+            globalAttributs = {name: levelName.value, difficulty: difficulty.value, hardcore: hardcore.value, musicID: music.value, creator: creator.value}
+            
+            exist = true;
+
+        })
+
+        async function insertLevel()
+        {
+            var result = await websocket.sendRequest("insertLevel", globalAttributs);
+            var content = createLevel.parentElement.parentElement.querySelector(".content");
+            content.textContent = JSON.stringify(result);
+        }
+        
+        listLevel.addEventListener("click", async function(event){
+            var result = await websocket.sendRequest("getLevels");
+            var content = listLevel.parentElement.parentElement.querySelector(".content");
+            content.textContent = JSON.stringify(result);
+        });
+        /**
+         * Submit
+         */ 
+        document.querySelector("form").addEventListener("submit", async function(event){
+            globalMethod(globalAttributs);
+            var form = document.querySelector("form");
+            form.removeChilds();
+            form.classList.toggle("d-none");
+            exist = false;
+        });
+    }
+
+    this.onPageLoad.home = function() {
+        change_player_left.onclick = function(evt) {
             const currentClass = player_icon.classList[0];
             const name = currentClass.substring(10, 11);
             let newclass = "img-player";

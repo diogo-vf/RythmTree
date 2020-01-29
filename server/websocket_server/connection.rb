@@ -36,7 +36,7 @@ class WSConnection
 
     def send_message body
         puts "send_message"
-        puts "body size:#{body.size}"
+        puts "body size:#{body.bytesize}"
         #header
         fin = 1
         opcode = 1
@@ -47,16 +47,17 @@ class WSConnection
         has_mask = 0 #develop that if you want to encrypt data
         has_mask_val = has_mask * 128
         #length
-        payload_header_array = [has_mask_val + body.size] # <126
-        if body.size >= (2**16 - 1)#>16bit
-            payload_header_array = [has_mask_val + 127] + Utils.to_base_array(body.size, 256, 8)
-        elsif body.size >= 125 #>~7bit
-            payload_header_array = [has_mask_val + 126] + Utils.to_base_array(body.size, 256, 2)
+        body_lenght = body.bytesize
+        payload_header_array = [has_mask_val + body_lenght] # <126
+        if body_lenght >= (2**16 - 1)#>16bit
+            payload_header_array = [has_mask_val + 127] + Utils.to_base_array(body_lenght, 256, 8)
+        elsif body_lenght >= 125 #>~7bit
+            payload_header_array = [has_mask_val + 126] + Utils.to_base_array(body_lenght, 256, 2)
         end
 
         #response
         response_array = [header_byte] + payload_header_array + [body]
-        response_pack_param_str = "CC#{payload_header_array.size}A#{body.size}"
+        response_pack_param_str = "CC#{payload_header_array.size}A#{body_lenght}"
         response = response_array.pack response_pack_param_str#writes 2 8-bit ints followed by body string (should be changed when supporting longer payloads)
         begin
             @session.write response
@@ -133,6 +134,7 @@ class WSConnection
                     action: "returnData",
                     data: result
                 }
+                
                 send_message(return_data.to_json)
             end
         }
