@@ -399,6 +399,15 @@ a {
   }
 }
 
+#songControl {
+  transform: scale(1);
+  transition: 500ms;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
 .mainTitle {
   font-weight: bold;
   text-shadow: -2px 1px 0 blue;

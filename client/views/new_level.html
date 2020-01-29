@@ -12,7 +12,9 @@
             <p class="common-text">Musique: </p>
         </div>
         <div class="col-4">
-            <select id="musicSelector" class="common-input texture light center" onchange="actions.changeSelectedMusic(event)"></select>
+            <select id="musicSelector" class="common-input texture light center" onchange="actions.changeSelectedMusic(event)">
+                <option value="" disabled selected hidden>Please Choose...</option>
+            </select>
         </div>
         <div class="col-1 align-center left">
             <img id="songControl" src="../images/textures/play.png" onclick="actions.playMusic()" />

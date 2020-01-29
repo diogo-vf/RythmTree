@@ -283,6 +283,12 @@ a {
     transform: scale(1.2);
     z-index: 1; }
 
+#songControl {
+  transform: scale(1);
+  transition: 500ms; }
+  #songControl:hover {
+    transform: scale(1.2); }
+
 .mainTitle {
   font-weight: bold;
   text-shadow: -2px 1px 0 blue;
