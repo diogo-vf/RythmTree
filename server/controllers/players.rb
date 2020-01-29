@@ -8,13 +8,22 @@ class PlayersController
         @@instance = self.new
     end
 
-    def get_all
+    def find_all
         DBElement.array_to_hash Player.find_all
     end
+    
+    def find id
+        Player.find id 
+    end
+    def find_first
+        Player.find_all.first
+    end
 
-    def insert data
+    def insert name
         player = Player.new
-        player.name="lol"
+        player.name = name
         player.save
+
+        player.id
     end
 end

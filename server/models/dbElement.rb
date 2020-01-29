@@ -36,9 +36,7 @@ class DBElement
             
             # Getter
             define_singleton_method(attr) { @attributes_data[attr] }            
-            if attr == :id
-                define_singleton_method(attr) { @attributes_data[attr].to_s } 
-            end
+            define_singleton_method(attr) { @attributes_data[attr].to_s } if attr == :id
         end
     end
 
