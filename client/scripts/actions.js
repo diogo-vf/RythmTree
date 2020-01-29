@@ -57,12 +57,12 @@ function Actions() {
             form.addElement("input", {type: "submit", value: "create", class: "common-button texture wood"})
             form.action = "#";            
             globalMethod = insertPlayer;
-            globalAttributs = {name: username.value}
             exist = true;
         });
 
         async function insertPlayer()
         {
+            globalAttributs = {name: username.value}
             var result = await websocket.sendRequest("createPlayer", globalAttributs);
             var content = createPlayer.parentElement.parentElement.querySelector(".content");
             content.textContent = JSON.stringify(result);
@@ -138,13 +138,13 @@ function Actions() {
             form.addElement("input", {type: "submit", value: "create", class: "common-button texture wood"})
             form.action = "javascript:";            
             globalMethod = insertMusic;
-            globalAttributs = {name: musicName.value, duration: duration.value, src: src.value, bpm: bpm.value, start_offset: start_offset.value}
             
             exist = true;
         });
 
         async function insertMusic()
         {
+            globalAttributs = {name: musicName.value, duration: duration.value, src: src.value, bpm: bpm.value, start_offset: start_offset.value}
             var result = await websocket.sendRequest("createMusic", globalAttributs);
             var content = createMusic.parentElement.parentElement.querySelector(".content");
             content.textContent = JSON.stringify(result);
@@ -228,14 +228,14 @@ function Actions() {
             form.addElement("input", {type: "submit", value: "create", class: "common-button texture wood"})
             form.action = "javascript:";            
             globalMethod = insertLevel;
-            globalAttributs = {name: levelName.value, difficulty: difficulty.value, hardcore: hardcore.value, musicID: music.value, creator: creator.value}
             
             exist = true;
-
+            
         })
-
+        
         async function insertLevel()
         {
+            globalAttributs = {name: levelName.value, difficulty: difficulty.value, hardcore: hardcore.value, musicID: music.value, creator: creator.value}
             var result = await websocket.sendRequest("insertLevel", globalAttributs);
             var content = createLevel.parentElement.parentElement.querySelector(".content");
             content.textContent = JSON.stringify(result);
