@@ -196,15 +196,14 @@ a {
     height: 22px; }
 
 .switch-menu {
-  animation: switchmenu 500ms 0s forwards;
-  position: absolute; }
+  animation: switchmenu 500ms 0s forwards; }
 
 @keyframes switchmenu {
   0% {
     transform: scale(1) rotate(0);
     opacity: 1; }
   100% {
-    transform: scale(0) rotate(180deg);
+    transform: scale(0) rotate(180deg) translateY(68px);
     opacity: 0; } }
 .zoom-interaction {
   transform: scale(1);

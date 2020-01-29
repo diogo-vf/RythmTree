@@ -227,7 +227,7 @@ function Actions() {
         setTimeout(() => {
             toggleSwitchClass();
             pagesManager.changePage(link);
-        },500);
+        },300);
     };
 
     this.switchStatus = () => {
