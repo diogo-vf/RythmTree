@@ -70,5 +70,9 @@ var pagesConfig = {
         title: "Partie en cours",
         pageName: "Partie en cours",
         view: "game"
+    },
+    demo:{
+        title: "Demonstration",
+        pageName: "demo"
     }
 };
