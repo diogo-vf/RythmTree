@@ -65,13 +65,13 @@ function Actions() {
         {
             var result = await websocket.sendRequest("createPlayer", globalAttributs);
             var content = createPlayer.parentElement.parentElement.querySelector(".content");
-            content.textContent = result;
+            content.textContent = JSON.stringify(result);
         }
 
         listPlayer.addEventListener("click", async function(event){
             var result = await websocket.sendRequest("getPlayers");
             var content = listPlayer.parentElement.parentElement.querySelector(".content");
-            content.textContent = result;
+            content.textContent = JSON.stringify(result);
         });
         
         /**
@@ -147,18 +147,18 @@ function Actions() {
         {
             var result = await websocket.sendRequest("createMusic", globalAttributs);
             var content = createMusic.parentElement.parentElement.querySelector(".content");
-            content.textContent = result;
+            content.textContent = JSON.stringify(result);
         }
 
         listMusic.addEventListener("click", async function(event){
             var result = await websocket.sendRequest("getMusics");
             var content = listMusic.parentElement.parentElement.querySelector(".content");
-            content.textContent = result;
+            content.textContent = JSON.stringify(result);
         });
 
         /**
          * Level
-         *//*
+         */
         createLevel.addEventListener("click", async function(event){
             var form = document.querySelector("form");
             form.classList.toggle("d-none");
@@ -238,14 +238,14 @@ function Actions() {
         {
             var result = await websocket.sendRequest("insertLevel", globalAttributs);
             var content = createLevel.parentElement.parentElement.querySelector(".content");
-            content.textContent = result;
+            content.textContent = JSON.stringify(result);
         }
         
         listLevel.addEventListener("click", async function(event){
             var result = await websocket.sendRequest("getLevels");
             var content = listLevel.parentElement.parentElement.querySelector(".content");
-            content.textContent = result;
-        });*/
+            content.textContent = JSON.stringify(result);
+        });
         /**
          * Submit
          */ 

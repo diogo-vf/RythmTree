@@ -13,16 +13,14 @@ class WSActions
                 UsersController.inst.register_user data, connection 
             when "createPlayer"
                 last_id = PlayersController.inst.insert data["name"]
-                result = PlayersController.inst.find(last_id).to_json
-
-                "User Added: #{result}"
+                
+                PlayersController.inst.find(last_id).to_hash
             when "getPlayers"
-                result = PlayersController.inst.find_all.to_json
-                "#{result}"
+                PlayersController.inst.find_all
             when "getFirstPlayer"
                 PlayersController.inst.find_first.id
             when "getMusics"
-                MusicsController.inst.find_all.to_json
+                MusicsController.inst.find_all
             when "createMusic"
                 hash = {
                     name: data["name"],
@@ -33,7 +31,7 @@ class WSActions
                 }                
 
                 last_id = MusicsController.inst.insert hash
-                result = MusicsController.inst.find(last_id).to_json
+                result = MusicsController.inst.find(last_id).to_hash
             when "getFirstMusic"
                 MusicsController.inst.find_first.id
             when "insertLevel"
@@ -54,9 +52,9 @@ class WSActions
 
                 last_level = LevelsController.inst.insert hash
 
-                LevelsController.inst.find(last_level).to_json
+                LevelsController.inst.find(last_level).to_hash
             when "getLevels"
-                LevelsController.inst.find_all.to_json
+                LevelsController.inst.find_all
         end
     end
 end
