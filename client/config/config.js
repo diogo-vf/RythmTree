@@ -6,7 +6,8 @@ var config = {
     preloadAllViews: false,
     pagesContainerSelector: "#pagesContainer",
     pageTitlePrefix: "Rythm Tree - ",
-    //text
+    //text (move this in translator in the future)
     messageNoData: "Nothing to show here...",
-    messageErrorPageLoad: "A problem occured while loading the page."
+    messageErrorPageLoad: "A problem occured while loading the page.",
+    messageMustLogin: "You must log in to access this page."
 };

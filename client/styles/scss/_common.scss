@@ -10,12 +10,10 @@ $woodTexture: url(../../images/textures/woodTopRight.png) calc(100%) 0 no-repeat
   url(../../images/textures/woodTopLeft.png) 0 0 no-repeat,
   url(../../images/textures/woodBottomRight.png) calc(100%) calc(100%) no-repeat,
   url(../../images/textures/woodBottomLeft.png) 0 calc(100%) no-repeat,
-  url(../../images/textures/woodTop.png) calc(100%) 0 repeat-x,
-  url(../../images/textures/woodLeft.png) 0 0 repeat-y,
+  url(../../images/textures/woodTop.png) calc(100%) 0 repeat-x, url(../../images/textures/woodLeft.png) 0 0 repeat-y,
   url(../../images/textures/woodRight.png) calc(100%) 0 repeat-y,
   url(../../images/textures/woodBottom.png) 0 calc(100%) repeat-x,
-  url(../../images/textures/woodBgTop.png) 0 35px repeat-x,
-  url(../../images/textures/woodBg.png) repeat;
+  url(../../images/textures/woodBgTop.png) 0 35px repeat-x, url(../../images/textures/woodBg.png) repeat;
 
 $grayTexture: url(../../images/textures/houseGrayTopRight.png) calc(100%) 0 no-repeat,
   url(../../images/textures/houseGrayTopLeft.png) 0 0 no-repeat,
@@ -31,8 +29,7 @@ $grayTexture: url(../../images/textures/houseGrayTopRight.png) calc(100%) 0 no-r
   url(../../images/textures/houseGrayAlt.png) 30% 85% no-repeat,
   url(../../images/textures/houseGrayAlt.png) 80% 25% no-repeat,
   url(../../images/textures/houseGrayAlt.png) 95% 85% no-repeat,
-  url(../../images/textures/houseGrayAlt.png) 60% 80% no-repeat,
-  url(../../images/textures/houseGray.png) repeat;
+  url(../../images/textures/houseGrayAlt.png) 60% 80% no-repeat, url(../../images/textures/houseGray.png) repeat;
 
 /*loader*/
 .globalLoaderContainer {
@@ -291,7 +288,6 @@ a {
   }
 }
 
-
 .zoom-interaction {
   transform: scale(1);
   transition: transform 0.2s;
@@ -351,7 +347,7 @@ a {
       background-image: url(../../images/textures/buttonLong_grey.png);
       background-repeat: no-repeat;
       background-size: cover;
-      color: rgba(163,163,163,1);
+      color: black;
     }
   }
 }
@@ -424,6 +420,19 @@ a {
   width: 50px;
   right: 40px;
   top: 20px;
+}
+
+#logoutBtn {
+  background-image: url(/images/disconnect.svg);
+  background-position: center;
+  background-size: contain;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 15px;
+  left: 40px;
+  border: 0;
+  background-color: transparent;
 }
 
 .common-text {

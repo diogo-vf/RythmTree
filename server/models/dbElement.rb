@@ -80,20 +80,27 @@ class DBElement
 
         mongo = MongoDB.new
         mongo.collection = @collection_name
+        data_to_search={}
+        data_to_search[:_id] = hash[:id] if hash[:id]
+        data_to_search[:name] = hash[:name] if hash[:name]
         
-        collection = mongo.collection.find( {_id: hash[:id]} ).first 
-        
-        raise "#{self.class} object without data" if collection.to_s == ""
+        collection = mongo.collection.find( data_to_search ).first 
+        raise playerNotFound, "#{self.class} object without data" if collection.to_s == ""
 
         clean_collection = Utils.bson_doc_to_hash collection
         apply_hash_data(clean_collection)  
     end
 
-    def self.find id        
-        obj = self.new        
-        obj.id = id
-        
-        obj.refresh_data    
+    def self.find hash        
+        obj = self.new    
+            
+        obj.id =  hash[:id] if hash[:id]
+        obj.name =  hash[:name] if hash[:name]
+        begin
+            obj.refresh_data
+        rescue
+            return nil
+        end
 
         obj
     end

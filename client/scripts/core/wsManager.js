@@ -18,6 +18,10 @@ function WebsocketManager() {
                 reconnectionAttemps = 0; //reset
             }
             _this.status = "open";
+
+            if(actions.onWebsocketConnection){
+                actions.onWebsocketConnection();
+            }
         });
         connection.addEventListener("close", async () => {
             console.log("websocket connection lost, retrying...");

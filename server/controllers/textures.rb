@@ -11,8 +11,9 @@ class TexturesController
     def find_all
         DBElement.array_to_hash Texture.find_all
     end
-    def find id
-        Texture.find id 
+    def find hash
+        raise "#{self.class} variable not a hash" unless hash.is_a? Hash
+        Texture.find hash
     end
 
     def create hash

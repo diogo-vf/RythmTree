@@ -15,8 +15,9 @@ class MusicsController
         Music.find_all.first
     end
     
-    def find id
-        Music.find id 
+    def find hash
+        raise "#{self.class} variable not a hash" unless hash.is_a? Hash
+        Music.find hash
     end
 
     def insert hash

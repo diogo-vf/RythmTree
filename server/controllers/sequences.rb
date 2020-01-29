@@ -9,8 +9,9 @@ class SequencesController
         @@instance = self.new
     end
 
-    def find id
-        Sequence.find id
+    def find hash
+        raise "#{self.class} variable not a hash" unless hash.is_a? Hash
+        Sequence.find hash
     end
 
     def insert hash

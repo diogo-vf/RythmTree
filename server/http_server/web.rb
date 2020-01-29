@@ -57,7 +57,7 @@ class WebServer
       :headers => {
           "Content-Length": body_content.length,
           "Content-Type": mime_type,
-          "Cache-Control": "public, max-age=7200",
+          #"Cache-Control": "public, max-age=7200",
       }
     }
   end

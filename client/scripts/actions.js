@@ -16,17 +16,18 @@ function Actions() {
     //page actions on load
     //-------------------------------------------------------------------------------------
     this.onPageLoad = {};
-    this.onPageLoad.welcome = function(){};
-    this.onPageLoad.login = function(){
-        loginForm.addEventListener("submit", async function(){
-            //login
-            Utils.getGlobalLoader().show({withBackground:true});
-            console.log("login! (fake)");
-            pagesManager.loadView("home");
-            await async_setTimeout(1000);
-            console.log("logged in! (fake)");
+    this.onPageLoad.login = function () {
+        loginForm.addEventListener("submit", async function () {
+            Utils.getGlobalLoader().show({ withBackground: true });
+
+            var userName = userNameInput.value;
+            console.log(`logging as ${userName}`);
+
+            await wsRegister(userName);
+
             Utils.getGlobalLoader().hide();
-            pagesManager.changePage("home");
+            pagesManager.changePage(globalMemory.loginTarget || "home");
+            globalMemory.loginTarget = false;
         });
     }
     this.onPageLoad.demo = function() {
@@ -264,27 +265,33 @@ function Actions() {
             const name = currentClass.substring(10, 11);
             let newclass = "img-player";
             if (name === "1")
-                newclass+="3";
+                newclass += "3";
             else
-                newclass+=""+(parseInt(name)-1);
+                newclass += "" + (parseInt(name) - 1);
 
             player_icon.classList.replace(currentClass, newclass);
         };
 
-        change_player_right.onclick = function(evt) {
+        change_player_right.onclick = function (evt) {
             const currentClass = player_icon.classList[0];
             const name = currentClass.substring(10, 11);
             let newclass = "img-player";
             if (name === "3")
-                newclass+="1";
+                newclass += "1";
             else
-                newclass+=""+(parseInt(name)+1);
+                newclass += "" + (parseInt(name) + 1);
 
             player_icon.classList.replace(currentClass, newclass);
         };
+
+        logoutBtn.addEventListener("click", function (ev) {
+            Cookies.delete("logged");
+            globalMemory.logged = false;
+            pagesManager.changePage("login");
+        });
     };
-    this.onPageLoad.options = function() {
-        pagesManager.pages.options.container.addEventListener("change", function(){
+    this.onPageLoad.options = function () {
+        pagesManager.pages.options.container.addEventListener("change", function () {
             applyUserOptions({
                 leavesAnimation: chkUserOptionsLeaves.checked
             });
@@ -300,14 +307,14 @@ function Actions() {
             let char = evt.key;
             canvasGame.width = canvasGame.clientWidth;
             canvasGame.height = canvasGame.clientHeight;
-            gameContext.clearRect(0,0,canvasGame.clientWidth,canvasGame.clientHeight);
+            gameContext.clearRect(0, 0, canvasGame.clientWidth, canvasGame.clientHeight);
             gameContext.font = "30px Arial";
             gameContext.fillStyle = "red";
             gameContext.textAlign = "center";
-            gameContext.fillText(char.toUpperCase(), canvasGame.clientWidth/2, canvasGame.clientHeight/2);
+            gameContext.fillText(char.toUpperCase(), canvasGame.clientWidth / 2, canvasGame.clientHeight / 2);
         };
         // Focus the field when unfocus to continue to listen key even after a "tab"
-        gameInput.addEventListener("focusout", () => {gameInput.focus()});
+        gameInput.addEventListener("focusout", () => { gameInput.focus() });
     };
 
     this.onPageLoad.level_editor = function () {
@@ -318,7 +325,7 @@ function Actions() {
     };
 
     function keyDown(evt) {
-        if(currentKeys[evt.keyCode]){
+        if (currentKeys[evt.keyCode]) {
             return;
         }
         currentKeys[evt.keyCode] = {
@@ -329,15 +336,15 @@ function Actions() {
         const gameContext = canvasGame.getContext("2d");
         canvasGame.width = canvasGame.clientWidth;
         canvasGame.height = canvasGame.clientHeight;
-        gameContext.clearRect(0,0,canvasGame.clientWidth,canvasGame.clientHeight);
+        gameContext.clearRect(0, 0, canvasGame.clientWidth, canvasGame.clientHeight);
         gameContext.font = "30px Arial";
         gameContext.fillStyle = "white";
         gameContext.textAlign = "center";
-        gameContext.fillText(char.toUpperCase(), canvasGame.clientWidth/2, canvasGame.clientHeight/2);
+        gameContext.fillText(char.toUpperCase(), canvasGame.clientWidth / 2, canvasGame.clientHeight / 2);
     }
 
     function keyUp(evt) {
-        if(!currentKeys[evt.keyCode]){
+        if (!currentKeys[evt.keyCode]) {
             console.warn("no prior keydown!");
             return;
         }
@@ -359,33 +366,34 @@ function Actions() {
         const gameContext = canvasGame.getContext("2d");
         canvasGame.width = canvasGame.clientWidth;
         canvasGame.height = canvasGame.clientHeight;
-        gameContext.clearRect(0,0,canvasGame.clientWidth,canvasGame.clientHeight);
+        gameContext.clearRect(0, 0, canvasGame.clientWidth, canvasGame.clientHeight);
         gameContext.font = "30px Arial";
         gameContext.fillStyle = "white";
         gameContext.textAlign = "center";
-        gameContext.fillText(char.toUpperCase(), canvasGame.clientWidth/2, canvasGame.clientHeight/2);
+        gameContext.fillText(char.toUpperCase(), canvasGame.clientWidth / 2, canvasGame.clientHeight / 2);
     }
 
     function getSongTime() {
         return Math.round(song.currentTime * 1000);
     }
-    
+
     //-------------------------------------------------------------------------------------
     //page actions on display
     //-------------------------------------------------------------------------------------
     this.onPageDisplay = {};
-    this.onPageDisplay.error = function(){
-        if(globalMemory.error){
+    this.onPageDisplay.error = function () {
+        if (globalMemory.error) {
             errorStatusCode.innerText = (globalMemory.error.code || "");
             errorClientMsg.innerText = (globalMemory.error.msg || "");
         }
     };
+
     //options
-    this.onPageDisplay.options = function(){
+    this.onPageDisplay.options = function () {
         var userOptions = getUserOptions();
         chkUserOptionsLeaves.checked = userOptions.leavesAnimation;
     };
-
+    //level editor
     this.onPageDisplay.level_editor = function () {
         mainDiv.classList.remove("container");
         mainDiv.classList.add("container-fluid");
@@ -396,11 +404,22 @@ function Actions() {
         songControl.src = "../images/textures/play.png";
     };
     
+    //login
+    this.onPageDisplay.login = function () {
+        //userNameInput.value = "";
+    };
+
     //page action on ANY page display
-    this.onAnyPageDisplay = function({pageName = false, pageConfig = false}){
+    this.onAnyPageDisplay = function ({ pageName = false, pageConfig = false }) {
         pageNameDisplay.innerText = (pageConfig.pageName || pageConfig.title || "");
+        //check login
+        if (!pageConfig.noLoginCheck && !globalMemory.logged) {
+            Utils.infoBox(config.messageMustLogin);
+            globalMemory.loginTarget = pageName;
+            pagesManager.changePage("login");
+        }
         //options button
-        if(pageConfig.hideOptionsBtn){
+        if (pageConfig.hideOptionsBtn) {
             userOptionsBtn.classList.add("none");
         } else {
             userOptionsBtn.classList.remove("none");
@@ -414,32 +433,43 @@ function Actions() {
     //page actions on data
     //-------------------------------------------------------------------------------------
     this.onPageData = {};
-    this.onPageData.replays = function(){};
-    
+    this.onPageData.replays = function () { };
+
     //-------------------------------------------------------------------------------------
     //page specific methods
     //-------------------------------------------------------------------------------------
     this.pageMethods = {};
-    this.pageMethods.replays = function(){};
+    this.pageMethods.replays = function () { };
 
     //-------------------------------------------------------------------------------------
     //other actions
     //-------------------------------------------------------------------------------------
-    this.onBeforeBoot = function(){
+    this.onBeforeBoot = function () {
         Utils.setDynamicLinks(document.body); //dynamic links on layout
         console.log("server whitelist to copy:", `[nil, "", "${Object.keys(pagesConfig).join('", "')}"]`);
-    }
-    this.onAfterBoot = function(){
-        for(var ind in pagesConfig){
-            var link = testTopMenu.addElement("a");
-            var btn = link.addElement("button");
-            btn.innerText = ind;
-            link.href = `/${ind}`;
+        //login cookie
+        var userObjStr = Cookies.get("logged");
+        if (userObjStr) {
+            globalMemory.logged = JSON.parse(userObjStr);
         }
+    }
+    this.onAfterBoot = function () {
         applyUserOptions();
         Utils.setDynamicLinks(testTopMenu);
-	    console.log("init completed");
+        console.log("init completed");
     };
+    this.onWebsocketConnection = function () {
+        if (globalMemory.logged) {
+            wsRegister(globalMemory.logged.name);
+        }
+    };
+
+    async function wsRegister(name) {
+        var userObj = await websocket.sendRequest("registerUser", {name});
+        Cookies.set("logged", JSON.stringify(userObj));
+        globalMemory.logged = userObj;
+        console.log(`logged as ${userObj.name}`);
+    }
 
     this.switchMenu = (evt) => {
         if (song) {
@@ -465,21 +495,21 @@ function Actions() {
     };
 
     this.switchStatus = () => {
-      if (this.level.status === 0) {
+        if (this.level.status === 0) {
             this.playMusic();
             infoLevelEditor.innerText = "";
-            const p = infoLevelEditor.addElement("p", {class: "common-text"});
+            const p = infoLevelEditor.addElement("p", { class: "common-text" });
             p.textContent = "Chargement de la musique...";
             const inter = setInterval(() => {
                 if (0 !== getSongTime()) {
                     clearInterval(inter);
                     infoLevelEditor.innerText = "";
-                    const p = infoLevelEditor.addElement("p", {class: "common-text"});
+                    const p = infoLevelEditor.addElement("p", { class: "common-text" });
                     p.textContent = "Enregistrement des touches...";
                     this.level.status = 1;
                     this.level.sequence = [];
                 }
-            },1000);
+            }, 1000);
         }
     };
 
@@ -489,7 +519,7 @@ function Actions() {
 
     this.resetKey = () => {
         infoLevelEditor.innerText = "";
-        const btn = infoLevelEditor.addElement("button", {class: "common-button texture wood"});
+        const btn = infoLevelEditor.addElement("button", { class: "common-button texture wood" });
         btn.onclick = _this.switchStatus;
         btn.textContent = "Recommencer";
         this.level.status = 0;
@@ -499,10 +529,10 @@ function Actions() {
 
     this.playMusic = () => {
         if (this.level.song !== "") {
-            if (currentSong !== "../"+this.level.song) {
+            if (currentSong !== "../" + this.level.song) {
                 const playbackRate = song.playbackRate;
-                song.src = "../"+this.level.song;
-                currentSong = "../"+this.level.song;
+                song.src = "../" + this.level.song;
+                currentSong = "../" + this.level.song;
                 song.playbackRate = playbackRate;
             }
             if (window.timeSong) {
@@ -510,16 +540,16 @@ function Actions() {
                     if (currentSongTime === getSongTime() && 0 !== getSongTime()) {
                         clearInterval(inter);
                         infoLevelEditor.innerText = "";
-                        const btn = infoLevelEditor.addElement("button", {class: "common-button texture wood"});
+                        const btn = infoLevelEditor.addElement("button", { class: "common-button texture wood" });
                         btn.onclick = _this.switchStatus;
                         btn.textContent = "Recommencer";
                         this.level.status = 0;
                     }
-                    currentSongTime = Math.floor(getSongTime()/1000);
-                    let minTime = (currentSongTime/60 < 10 ? "0" : "") + Math.floor(currentSongTime/60),
-                        secTime = (currentSongTime%60 < 10 ? "0" : "") + Math.floor(currentSongTime%60);
-                    timeSong.textContent = "Temps: "+ minTime+":"+secTime;
-                },1000);
+                    currentSongTime = Math.floor(getSongTime() / 1000);
+                    let minTime = (currentSongTime / 60 < 10 ? "0" : "") + Math.floor(currentSongTime / 60),
+                        secTime = (currentSongTime % 60 < 10 ? "0" : "") + Math.floor(currentSongTime % 60);
+                    timeSong.textContent = "Temps: " + minTime + ":" + secTime;
+                }, 1000);
             }
             songControl.onclick = this.pauseMusic;
             songControl.src = "../images/textures/pause.png"
@@ -546,38 +576,38 @@ function Actions() {
     };
 
     //functions
-    function applyUserOptions(userOptions = false){
+    function applyUserOptions(userOptions = false) {
         var oldUserOptions = getUserOptions();
-        if(!userOptions){//bricolage de first load
+        if (!userOptions) {//bricolage de first load
             userOptions = oldUserOptions;
             oldUserOptions = {};
         }
-        
+
         //apply
-        if((oldUserOptions.leavesAnimation != userOptions.leavesAnimation)){
-            if(userOptions.leavesAnimation){//yes
+        if ((oldUserOptions.leavesAnimation != userOptions.leavesAnimation)) {
+            if (userOptions.leavesAnimation) {//yes
                 generateLeaves(leaves);
-            }else{//no
+            } else {//no
                 leaves.removeChilds();
             }
         }
         //store
         Cookies.set("userOptions", JSON.stringify(userOptions));
     }
-    function getUserOptions(){
+    function getUserOptions() {
         var userOptionsStr = Cookies.get("userOptions");
-        if(userOptionsStr){
+        if (userOptionsStr) {
             console.log(userOptionsStr);
             return JSON.parse(userOptionsStr);
         }
-        return{ //default
+        return { //default
             leavesAnimation: true
         }
     }
-    function generateLeaves(container){
-        for (let i=0;i<window.innerWidth/8;i++) {
+    function generateLeaves(container) {
+        for (let i = 0; i < window.innerWidth / 8; i++) {
             let delay = Math.random() * 15;
-            let leaf = container.addElement("i", {style: `animation-delay: ${delay}s`});
+            let leaf = container.addElement("i", { style: `animation-delay: ${delay}s` });
         }
     }
 }
