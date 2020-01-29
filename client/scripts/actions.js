@@ -449,12 +449,6 @@ function Actions() {
         }
     }
     this.onAfterBoot = function () {
-        for (var ind in pagesConfig) {
-            var link = testTopMenu.addElement("a");
-            var btn = link.addElement("button");
-            btn.innerText = ind;
-            link.href = `/${ind}`;
-        }
         applyUserOptions();
         Utils.setDynamicLinks(testTopMenu);
         console.log("init completed");
