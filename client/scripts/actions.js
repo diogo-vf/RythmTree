@@ -466,7 +466,7 @@ function Actions() {
     };
 
     async function wsRegister(name) {
-        var userObj = await websocket.sendRequest("register", {name});
+        var userObj = await websocket.sendRequest("registerUser", {name});
         Cookies.set("logged", JSON.stringify(userObj));
         globalMemory.logged = userObj;
         console.log(`logged as ${userObj.name}`);
