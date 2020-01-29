@@ -16,7 +16,15 @@ function Adapters(){
 	}
 
 	// Level Editor Adapter
-	this.levelEditorAdapter = function(container, data) {
+	this.insertMusicList = function(container, data) {
+		if (!container.innerText) {
+			let option = container.addElement("option");
+			option.value = "";
+			option.selected = true;
+			option.hidden = true;
+			option.disabled = true;
+			option.textContent = "Choisir...";
+		}
 		const option = container.addElement("option"),
 			minTime = (data.duration/60000 < 10 ? "0" : "") + Math.round(data.duration/60000),
 			secTime = (data.duration%60000 < 10 ? "0" : "") + Math.round((data.duration%60000)/1000) + (Math.round((data.duration%60000)/1000) === 1 ? "0" : "");
