@@ -38,7 +38,7 @@ var pagesConfig = {
             {
                 source: "music",
                 container: "#musicSelector",
-                adapter: "levelEditorAdapter"
+                adapter: "insertMusicList"
             }
         ]
     },

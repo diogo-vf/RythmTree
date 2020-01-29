@@ -261,8 +261,9 @@ a {
   padding: 10px 15px 25px 15px; }
 
 .common-player-box {
-  box-shadow: 0px 3px 0px #667a7b;
-  border: 3px solid #85999a; }
+  box-shadow: 0 3px 0 #667a7b;
+  border: 3px solid #85999a;
+  background: #acc0c1; }
 
 .common-canvas {
   width: 100%;

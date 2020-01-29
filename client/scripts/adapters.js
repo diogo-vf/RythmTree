@@ -16,7 +16,7 @@ function Adapters(){
 	}
 
 	// Level Editor Adapter
-	this.levelEditorAdapter = function(container, data) {
+	this.insertMusicList = function(container, data) {
 		if (!container.innerText) {
 			let option = container.addElement("option");
 			option.value = "";
