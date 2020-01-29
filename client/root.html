@@ -1,0 +1,48 @@
+<!DOCTYPE html5>
+<head>
+    <!--meta-->
+    <meta charset="utf-8"/>
+    <!--styles-->
+    <link rel="stylesheet" href="/styles/css/main.css"/>
+    <!--libs-->
+        <!--add your external libraries here-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--config-->
+    <script src="/scripts/adapters.js"></script>
+	<script src="/scripts/dataSources.js"></script>
+    <script src="/scripts/actions.js"></script>
+    <script src="/config/pagesConfig.js"></script>
+    <script src="/config/config.js"></script>
+    <!--core-->
+	<script src="/scripts/core/utils.js"></script>
+    <script src="/scripts/core/pagesManager.js"></script>
+	<script src="/scripts/core/builder.js"></script>
+    <script src="/scripts/core/wsManager.js"></script>
+	<!--boot-->
+    <script src="/scripts/core/boot.js"></script>
+</head>
+<!-- template, build your base page template here-->
+<body>
+    <menu id="testTopMenu"></menu>
+    <div id="leaves"></div>
+    <div id="mainDiv" class="container">
+        <div class="row">
+            <div class="col center">
+                <a href="/home">
+                    <h1 class="mainTitle cursor-pointer zoom-interaction">Rythm Tree</h1>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div id="pagesContainer" class="common-box gray-texture">
+                    <a href="/options" id="userOptionsBtn" class="cursor-pointer">
+                        <img src="/images/gear.ico" class="zoom-interaction"/>
+                    </a>
+                    <h2 id="pageNameDisplay" class="center common-page-title"></h2>
+                    <!--page built at the bottom-->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

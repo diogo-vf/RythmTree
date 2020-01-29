@@ -1,0 +1,24 @@
+html {
+  cursor: url(../../images/textures/cursorGauntlet_blue.png), auto;
+}
+
+body {
+  min-height: 100vh;
+  background: url(../../images/textures/hill_small.png) 42vw calc(100vh - 246px) no-repeat fixed,
+    url(../../images/textures/hill_large.png) 35vw calc(100vh - 286px) no-repeat fixed,
+    url(../../images/textures/hill_large.png) 70vw calc(100vh - 286px) no-repeat fixed,
+    url(../../images/textures/bush.png) 15vw calc(100vh - 212px) no-repeat fixed,
+    url(../../images/textures/grassMid.png) 0 calc(100vh - 140px) repeat-x fixed,
+    url(../../images/textures/grassCenter.png) 0 calc(100vh - 70px) repeat-x fixed,
+    url(../../images/textures/liquidWater.png) repeat fixed;
+
+    &, & *{
+      cursor: url(../../images/textures/cursorGauntlet_blue.png), auto;
+    }
+}
+
+@import "_pages.scss";
+@import "_common.scss";
+@import "_leaf.scss";
+@import "_error.scss";
+@import "_utils.scss";
