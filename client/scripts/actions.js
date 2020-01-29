@@ -161,6 +161,11 @@ function Actions() {
         mainDiv.classList.remove("container");
         mainDiv.classList.add("container-fluid");
     };
+
+    this.onPageDisplay.new_level = function () {
+        songControl.onclick = _this.playMusic;
+        songControl.src = "../images/textures/play.png";
+    };
     
     //page action on ANY page display
     this.onAnyPageDisplay = function({pageName = false, pageConfig = false}){
