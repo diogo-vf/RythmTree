@@ -4,7 +4,7 @@ function WebsocketManager() {
     this.status = "new" //new, open, reconnecting, closed
     this.connectionId = false;
     var connection = false;
-    var awaitingResponses = {};
+    var awaitingResponse = {};
     //reconnection
     var reconnectionAttemps = 0;
     var reconnectionInfoBox = false;
@@ -18,6 +18,10 @@ function WebsocketManager() {
                 reconnectionAttemps = 0; //reset
             }
             _this.status = "open";
+
+            if(actions.onWebsocketConnection){
+                actions.onWebsocketConnection();
+            }
         });
         connection.addEventListener("close", async () => {
             console.log("websocket connection lost, retrying...");
@@ -36,7 +40,7 @@ function WebsocketManager() {
             await async_setTimeout(500);
             init();
         });
-        connection.addEventListener("message", function () {
+        connection.addEventListener("message", function (evt) {
             var response = JSON.parse(evt.data);
             console.log("onmessage", response);
             if (response.action = "respond" && response.requestId) {
@@ -65,7 +69,7 @@ function WebsocketManager() {
         return
     }
     this.sendRequest = async function(action, data = false){
-        return await sendMsg(action, data, true);
+        return await _this.sendMsg(action, data, true);
     }
     init();
 }

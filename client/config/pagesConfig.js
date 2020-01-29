@@ -1,10 +1,12 @@
 var pagesConfig = {
     error: {
-        title: "Error"
+        title: "Error",
+        noLoginCheck: true
     },
     login:{
         title: "Login",
-        pageName: "Login"
+        pageName: "Login",
+        noLoginCheck: true
     },
     home:{
         title: "Home",
@@ -13,7 +15,8 @@ var pagesConfig = {
     options:{
         title: "Options",
         pageName: "Options",
-        hideOptionsBtn: true
+        hideOptionsBtn: true,
+        noLoginCheck: true
     },
     new_game:{
         title: "Choix de la partie",

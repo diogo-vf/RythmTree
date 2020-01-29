@@ -8,6 +8,9 @@ class UsersController
     end
 
     def register_user data, connection
-        "ok bommer"
+        puts "register for user #{data["name"]}"
+        return {
+            :name => data["name"]
+        }
     end
 end
