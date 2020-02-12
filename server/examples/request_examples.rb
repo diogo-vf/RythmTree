@@ -1,3 +1,15 @@
+require_relative "../config/config"
+require_relative '../models/dbElement'
+require_relative '../models/dbArray'
+require_relative '../models/level'
+require_relative '../models/player'
+require_relative '../models/music'
+require_relative '../models/sequenceItem'
+require_relative '../models/sequence'
+require_relative '../models/texture'
+require_relative '../models/level'
+require_relative '../utils'
+
 ############################################
 #  CREATE Level                            #
 ############################################
@@ -77,4 +89,4 @@ level2.delete
 #  GET ALL Level                           #
 ############################################
 
-Level.find_all
+pp Level.find_all

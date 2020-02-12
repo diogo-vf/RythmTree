@@ -74,51 +74,29 @@ class DBElement
         }
     end
 
-    def refresh_data
-        # get information of object
-        hash = to_hash        
-
-        mongo = MongoDB.new
-        mongo.collection = @collection_name
-        data_to_search={}
-        data_to_search[:_id] = hash[:id] if hash[:id]
-        data_to_search[:name] = hash[:name] if hash[:name]
-        
-        collection = mongo.collection.find( data_to_search ).first 
-        raise playerNotFound, "#{self.class} object without data" if collection.to_s == ""
-
-        clean_collection = Utils.bson_doc_to_hash collection
-        apply_hash_data(clean_collection)  
-    end
-
-    def self.find hash        
+    def self.find id        
         obj = self.new    
-            
-        obj.id =  hash[:id] if hash[:id]
-        obj.name =  hash[:name] if hash[:name]
-        begin
-            obj.refresh_data
-        rescue
-            return nil
-        end
-
-        obj
+        data = {}
+        data[:_id] = BSON::ObjectId.from_string(id)
+        obj.refresh_data(data).first
+    rescue => exception
+        raise "Your id isn't an id of mongo exemple -> '5e2198f66e955215e787420f'"
     end
 
     def self.find_all    
         obj = self.new
 
-        obj.refresh_all_data
+        obj.refresh_data
     end
     
-    def refresh_all_data
+    def refresh_data id = nil
         # get information of object
-        hash = to_hash        
-
+        hash = to_hash
+        
         mongo = MongoDB.new
         mongo.collection = @collection_name
         collections = []
-        mongo.collection.find( {} ).each { |collection|
+        mongo.collection.find( id ).each { |collection|
             obj = self.class.new
 
             clean_collection = Utils.bson_doc_to_hash collection
@@ -126,7 +104,7 @@ class DBElement
             collections.push obj
         } 
 
-        collections
+        collections    
     end
     
     def save
