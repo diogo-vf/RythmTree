@@ -89,14 +89,14 @@ class DBElement
         obj.refresh_data
     end
     
-    def refresh_data id = nil
+    def refresh_data data = nil
         # get information of object
         hash = to_hash
         
         mongo = MongoDB.new
         mongo.collection = @collection_name
         collections = []
-        mongo.collection.find( id ).each { |collection|
+        mongo.collection.find( data ).each { |collection|
             obj = self.class.new
 
             clean_collection = Utils.bson_doc_to_hash collection
