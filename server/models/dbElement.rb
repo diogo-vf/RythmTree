@@ -89,6 +89,16 @@ class DBElement
         obj.refresh_data
     end
     
+    def self.where hash
+        raise "Where method require an hash" unless hash.is_a? Hash
+
+        obj = self.new
+
+        array = obj.refresh_data hash
+        return array.first if array.length == 1
+        array
+    end
+
     def refresh_data data = nil
         # get information of object
         hash = to_hash
