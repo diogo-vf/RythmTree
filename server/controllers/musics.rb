@@ -15,9 +15,9 @@ class MusicsController
         Music.find_all.first
     end
     
-    def find hash
-        raise "#{self.class} variable not a hash" unless hash.is_a? Hash
-        Music.find hash
+    def find id
+        raise "#{self.class}, Line 18: variable not a Integer" unless id.is_a? String
+        Level.find id
     end
 
     def insert hash

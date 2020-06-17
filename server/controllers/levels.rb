@@ -14,11 +14,10 @@ class LevelsController
     def find_first
         Level.find_all.first
     end
-    def find hash
-        raise "#{self.class} variable not a hash" unless hash.is_a? Hash
-        Level.find hash
+    def find id
+        raise "#{self.class}, Line 18: variable not a Integer" unless id.is_a? String
+        Level.find id
     end
-
     def insert hash
         raise "#{self.class} variable not a hash" unless hash.is_a? Hash
         level = Level.new

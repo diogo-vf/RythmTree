@@ -74,10 +74,10 @@ class DBElement
         }
     end
 
-    def self.find hash 
+    def self.find id 
         obj = self.new    
         data = {}
-        data[:_id] = BSON::ObjectId.from_string(hash[:id])
+        data[:_id] = BSON::ObjectId.from_string(id)
         obj.refresh_data(data).first
     rescue => exception
         raise "Your id isn't an id of mongo example -> '5e2198f66e955215e787420f', Exception #{exception}"

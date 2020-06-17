@@ -9,10 +9,10 @@ class WSActions
     def self.on_ws_action(connection, action, data)
         case action
             when "registerUser"
-                PlayersController.inst.register_user(data, connection).to_hash
+                PlayersController.inst.register_user(data, connection)
             when "createPlayer"
                 last_id = PlayersController.inst.insert data["name"]
-                PlayersController.inst.find({id: last_id}).to_hash
+                PlayersController.inst.find(last_id).to_hash
             when "getPlayers"
                 PlayersController.inst.find_all
             when "getFirstPlayer"

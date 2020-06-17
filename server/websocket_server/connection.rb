@@ -122,7 +122,8 @@ class WSConnection
     def on_message data
         actionThread = Thread.new{
             msg_object = JSON.parse(data)
-            pp "new msg", msg_object
+            # TODO show/disable new data
+            # pp "new msg", msg_object 
             result = WSActions.on_ws_action(self, msg_object["action"], msg_object["data"])
 
             #return
