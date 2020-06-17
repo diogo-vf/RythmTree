@@ -102,7 +102,6 @@ class DBElement
     def refresh_data data = nil
         # get information of object
         hash = to_hash
-        
         mongo = MongoDB.new
         mongo.collection = @collection_name
         collections = []

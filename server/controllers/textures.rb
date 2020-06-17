@@ -13,7 +13,7 @@ class TexturesController
     end
     def find id
         raise "#{self.class}, Line 18: variable not a Integer" unless id.is_a? String
-        Level.find id
+        Texture.find id
     end
 
     def create hash

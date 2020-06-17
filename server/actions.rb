@@ -29,27 +29,27 @@ class WSActions
                 }                
 
                 last_id = MusicsController.inst.insert hash
-                MusicsController.inst.find({id: last_id}).to_hash
+                MusicsController.inst.find(last_id).to_hash                
             when "getFirstMusic"
                 MusicsController.inst.find_first.id
             when "insertLevel"
                 textureHash = {tree: "arbre à fleurs", platform: "feuille standard"}
                 texture = TexturesController.inst.create textureHash
-                player = PlayersController.inst.find({id: data["creator"]})
+                player = PlayersController.inst.find(data["creator"])
                 sequenceHash = {player: player}
                 sequence_id = SequencesController.inst.insert sequenceHash
                 hash = {
                     name: data["name"],
                     difficulty: data["difficulty"], 
                     hardcore: data["hardcore"].to_i, 
-                    music: MusicsController.inst.find({id: data["musicID"]}),
+                    music: MusicsController.inst.find(data["musicID"]),
                     texture: texture,
                     creator: player,
-                    sequence: SequencesController.inst.find({id: sequence_id})
+                    sequence: SequencesController.inst.find(sequence_id)
                 }     
 
                 last_id = LevelsController.inst.insert hash
-                LevelsController.inst.find({id: last_id}).to_hash
+                LevelsController.inst.find(last_id).to_hash
             when "getLevels"                
                 LevelsController.inst.find_all
         end

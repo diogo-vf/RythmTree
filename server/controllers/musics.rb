@@ -16,8 +16,7 @@ class MusicsController
     end
     
     def find id
-        raise "#{self.class}, Line 18: variable not a Integer" unless id.is_a? String
-        Level.find id
+        Music.find id
     end
 
     def insert hash
