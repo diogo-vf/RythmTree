@@ -56,7 +56,7 @@ function Actions() {
                 value: pseudos[Math.floor(Math.random()*pseudos.length)]
             });
             form.addElement("input", {type: "submit", value: "create", class: "common-button texture wood"})
-            form.action = "#";            
+            form.action = "javascript:";    
             globalMethod = insertPlayer;
             exist = true;
         });

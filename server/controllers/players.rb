@@ -15,9 +15,8 @@ class PlayersController
         DBElement.array_to_hash Player.find_all
     end
     
-    def find hash
-        raise "#{self.class} variable not a hash" unless hash.is_a? Hash
-        Player.find hash
+    def find id
+        Player.find id
     end
     def find_first
         Player.find_all.first
@@ -31,11 +30,11 @@ class PlayersController
         player.id
     end
     def register_user data, connection  
-        player = Player.find({name: data["name"]})
+        player = Player.where({name: data["name"]})
 
         unless player
             id = insert(data["name"])
-            player = Player.find({name: data["name"]})
+            player = Player.find(id)
         end 
 
         #add to logged

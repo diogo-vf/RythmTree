@@ -76,6 +76,7 @@ var pagesConfig = {
     },
     demo:{
         title: "Demonstration",
-        pageName: "demo"
+        pageName: "demo",
+        noLoginCheck: true
     }
 };

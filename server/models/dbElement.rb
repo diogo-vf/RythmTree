@@ -74,13 +74,13 @@ class DBElement
         }
     end
 
-    def self.find id        
+    def self.find id 
         obj = self.new    
         data = {}
         data[:_id] = BSON::ObjectId.from_string(id)
         obj.refresh_data(data).first
     rescue => exception
-        raise "Your id isn't an id of mongo exemple -> '5e2198f66e955215e787420f'"
+        raise "Your id isn't an id of mongo example -> '5e2198f66e955215e787420f', Exception #{exception}"
     end
 
     def self.find_all    
@@ -102,7 +102,6 @@ class DBElement
     def refresh_data data = nil
         # get information of object
         hash = to_hash
-        
         mongo = MongoDB.new
         mongo.collection = @collection_name
         collections = []
