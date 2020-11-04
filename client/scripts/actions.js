@@ -413,7 +413,7 @@ function Actions() {
     this.onAnyPageDisplay = function ({ pageName = false, pageConfig = false }) {
         pageNameDisplay.innerText = (pageConfig.pageName || pageConfig.title || "");
         //check login
-        if (!pageConfig.noLoginCheck && !globalMemory.logged) {
+        if (!pageConfig.noLoginCheck && !globalMemory.logged && !config.noLoginCheck) {
             Utils.infoBox(config.messageMustLogin);
             globalMemory.loginTarget = pageName;
             pagesManager.changePage("login");
